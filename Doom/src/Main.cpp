@@ -53,7 +53,7 @@ int main()
 	ShadersLibrary::Load("shaderTexture", "res/shaders/vsp.glsl", NULL, "res/shaders/fsp.glsl");
 	ShadersLibrary::Load("shaderColor", "res/shaders/v_simplest.glsl", NULL, "res/shaders/f_simplest.glsl");
 
-	Model model2("res/models/OffRoad Car/OFF -Road car  3D Models.obj", "shaderTexture", { 
+	Model model2("res/models/OffRoad Car/offroad_car.obj", "shaderTexture", { 
 		{ 0, "Texture/Body.png" },
 		{ 1, "Texture/Rim.png" },
 		{ 2, "Texture/Rim.png" },
@@ -61,6 +61,8 @@ int main()
 		{ 4, "Texture/Rim.png" }
 		});
 	Model model1("res/models/Horse/Horse.obj", "shaderTexture", { { 0, "Texture/map.jpg" }, {0, "Texture/map bump.jpg" } });
+
+	Model model3("/res/models/Rock1/Rock1.obj", "shaderColor");
 
 	glfwSetKeyCallback(Window::GetGLFWwindow(), keyCallback);
 
@@ -83,16 +85,12 @@ int main()
 
 		float size = 0.01f;
 
-		for (int i = 0; i < 50; i++)
-		{
-			Renderer::DrawModel(model2, glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, i * 5.0f)), glm::vec3(size, size, size)));
-		}
+		Renderer::DrawModel(model1, glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 0, 0)), glm::vec3(size, size, size)));
+		Renderer::DrawModel(model2, glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)), glm::vec3(size, size, size)));
+		Renderer::DrawModel(model3, glm::mat4(1));
 
-		for (int i = 0; i < 50; i++)
-		{
-			Renderer::DrawModel(model1, glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 0, i * 5.0f)), glm::vec3(size, size, size)));
-		}
-
+		
+		
 		glfwSwapBuffers(Window::GetGLFWwindow()); //Przerzuæ tySlny bufor na przedni
 		glfwPollEvents(); //Wykonaj procedury callback w zaleznoœci od zdarzeñ jakie zasz³y.
 	}
