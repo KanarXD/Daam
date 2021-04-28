@@ -12,7 +12,7 @@ private:
 public:
 	static void SetProjection(float aspectRatio);
 
-	static void SetCamera(const Camera& camera);
+	static void SetCamera(const Camera* camera);
 
 	static void DrawModel(const Model& model, const glm::mat4& M);
 

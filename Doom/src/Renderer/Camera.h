@@ -3,42 +3,59 @@
 class Camera
 {
 private:
+	static Camera* instance;
 	glm::vec3 position;
-	glm::vec3 lookAtPosition;
-	float rotationX;
-	float rotationY;
-public:
-	Camera();
+	glm::vec3 front;
+	glm::vec3 rotation;
+	glm::vec3 rotationStep;
+	glm::vec3 movementStep;
 
-	Camera(const glm::vec3& position, float rotationX, float rotationY);
+public:
+	static Camera* GetInstance(const glm::vec3& position = glm::vec3(0), const glm::vec3& rotation = glm::vec3(0));
+	void Update(float deltaTime);
+	static void Destroy();
 
 	void SetPosition(const glm::vec3& position);
-
-	void SetRotationX(float value);
-
-	void SetRotationY(float value);
-
-	void MoveAlong(float value);
-
-	void MoveHorizonally(float value);
-
-	void MoveVertically(float value);
-
-	void RotateX(float value);
-
-	void RotateY(float value);
+	void SetFront(const glm::vec3& front);
 
 	inline const glm::vec3& GetPosition() const { return position; }
+	inline const glm::vec3& GetFront() const { return front; }
+	inline glm::vec3 GetLootAtPosition() const { return position + front; }
 
-	inline const glm::vec3& GetLootAtPosition() const { return lookAtPosition; }
+	void Move(glm::vec3 values) { MoveX(values.x); MoveY(values.y); MoveZ(values.z); }
+	void MoveX(float value);
+	void MoveY(float value);
+	void MoveZ(float value);
 
-	inline float GetRotationX() const { return rotationX; }
+	void Rotate(glm::vec3 angles) { this->rotation += angles; }
+	void RotateX(float angle) { this->rotation.x += angle; }
+	void RotateY(float angle) { this->rotation.y += angle; }
+	void RotateZ(float angle) { this->rotation.z += angle; }
 
-	inline float GetRotationY() const { return rotationY; }
+	void SetRotation(glm::vec3 rotation) { this->rotation = rotation; }
+	void SetRotationX(float rotationX) { this->rotation.x = rotationX; }
+	void SetRotationY(float rotationY) { this->rotation.y = rotationY; }
+	void SetRotationZ(float rotationZ) { this->rotation.z = rotationZ; }
+
+	inline glm::vec3 GetRotation() const { return rotation; }
+
+	void SetRotationStep(glm::vec3 rotationStep) { this->rotationStep = rotationStep; }
+	void SetRotationStepX(float rotationStepX) { this->rotationStep.x = rotationStepX; }
+	void SetRotationStepY(float rotationStepY) { this->rotationStep.y = rotationStepY; }
+	void SetRotationStepZ(float rotationStepZ) { this->rotationStep.z = rotationStepZ; }
+
+	inline glm::vec3 GetRotationStep() const { return rotationStep; }
+
+	void SetMovementStep(glm::vec3 movementStep) { this->movementStep = movementStep; }
+	void SetMovementStepX(float movementStepX) { this->movementStep.x = movementStepX; }
+	void SetMovementStepY(float movementStepY) { this->movementStep.y = movementStepY; }
+	void SetMovementStepZ(float movementStepZ) { this->movementStep.z = movementStepZ; }
+
+	inline glm::vec3 GetMovementStep() const { return movementStep; }
 
 private:
-	glm::vec3 RotatePosition(float angleX, float angleY) const;
+	Camera(const glm::vec3& position, glm::vec3 rotation);
 
-	void UpdateLookAtPosition();
+	glm::vec3 RotatePosition(glm::vec3 rotation) const;
 };
 

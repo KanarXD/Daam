@@ -8,6 +8,7 @@ private:
 	static uint32_t width;
 	static uint32_t height;
 	static float aspectRatio;
+
 public:
 	static void Create(const std::string& title, uint32_t width, uint32_t height);
 

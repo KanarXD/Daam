@@ -10,7 +10,6 @@ uint32_t Window::width = 0;
 uint32_t Window::height = 0;
 float Window::aspectRatio = 1;
 
-
 void Window::Create(const std::string& title, uint32_t width, uint32_t height)
 {
 	Window::title = title;
