@@ -42,7 +42,7 @@ void Input::Setup(GLFWwindow* window)
 void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if (action == GLFW_PRESS) {
-		float mSpeed = 2.5f;
+		float mSpeed = 10.0f;
 		float rSpeed = 1.0f;
 		switch (key) {
 		case GLFW_KEY_W:		Camera::GetInstance()->SetMovementStepZ(mSpeed);	break;

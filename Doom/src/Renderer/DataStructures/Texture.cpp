@@ -11,8 +11,6 @@ Texture::Texture(const std::string& filePath, unsigned char* image, uint32_t wid
 {
 	glGenTextures(1, &textureId); //Zainicjuj jeden uchwyt
 	glBindTexture(GL_TEXTURE_2D, textureId); //Uaktywnij uchwyt
-	//Wczytaj obrazek do pamiêci KG skojarzonej z uchwytem
-	glTexImage2D(GL_TEXTURE_2D, 0, 4, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (unsigned char*)image.data());
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

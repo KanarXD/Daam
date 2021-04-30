@@ -34,8 +34,6 @@ void Camera::MoveX(float value)
 
 void Camera::MoveY(float value)
 {
-	this->rotationX += value;
-	UpdateLookAtPosition();
 }
 
 void Camera::MoveZ(float value)
@@ -46,13 +44,6 @@ void Camera::MoveZ(float value)
 void Camera::SetPosition(const glm::vec3& position)
 {
 	this->position = position;
-	UpdateLookAtPosition();
-}
-
-void Camera::SetRotationX(float value)
-{
-	this->rotationX = value;
-	UpdateLookAtPosition();
 }
 
 void Camera::SetFront(const glm::vec3& front) 
@@ -69,9 +60,4 @@ glm::vec3 Camera::RotatePosition(glm::vec3 rotation) const
 	M = glm::rotate(M, rotation.x, glm::vec3(1, 0, 0));
 	dir = M * dir;
 	return glm::vec3(dir);
-}
-
-void Camera::UpdateLookAtPosition()
-{
-	lookAtPosition = position + RotatePosition(rotationX, rotationY);
 }

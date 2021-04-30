@@ -19,7 +19,7 @@ int main()
 	Window::Create("DOOM", 800, 600);
 	TextureLibrary::Init();
 	Camera::GetInstance();
-	Input::GetInstance(1.0f);
+	Input::GetInstance();
 	ShadersLibrary::Load("shaderCT", "res/shaders/v_simple_texture_color.glsl", NULL, "res/shaders/f_simple_texture_color.glsl");
 	ShadersLibrary::Load("shaderD", "res/shaders/v_debug.glsl", NULL, "res/shaders/f_debug.glsl");
 
@@ -39,6 +39,9 @@ int main()
 
 	glfwSetTime(0); //Zeruj timer
 	LOGINFO("drawing...");
+
+	LOGWARNING(sizeof(Vertex));
+
 	while (!glfwWindowShouldClose(Window::GetGLFWwindow())) //Tak d³ugo jak okno nie powinno zostaæ zamkniête
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

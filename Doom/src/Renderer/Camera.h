@@ -16,8 +16,6 @@ public:
 	void Update(float deltaTime);
 	static void Destroy();
 
-	Camera(const glm::vec3& position, float rotationX, float rotationY);
-
 	void SetPosition(const glm::vec3& position);
 	void SetFront(const glm::vec3& front);
 

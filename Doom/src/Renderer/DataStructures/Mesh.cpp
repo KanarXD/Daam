@@ -28,7 +28,6 @@ void Mesh::Bind(const ShaderProgram* shaderProgram) const
 	glUniform1i(shaderProgram->u("isTexture"), useTextures);
 	if (useTextures)
 	{
-	Mesh::Bind(shaderProgram);
 		static const char* names[] = { "textureMap0", "textureMap1", "textureMap2", "textureMap3", "textureMap4" };
 
 		for (uint32_t i = 0; i < textureVector.size(); i++)

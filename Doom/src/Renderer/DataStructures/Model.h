@@ -15,8 +15,6 @@ public:
 
 	Model(const std::string& modelPath, const std::string& shaderName, const std::vector<std::pair<uint32_t, const std::string> >& texturePathVector);
 	
-	~Model();
-
 	const ShaderProgram* GetShaderProgram() const { return shaderProgram; }
 
 	void DrawMeshes() const;
