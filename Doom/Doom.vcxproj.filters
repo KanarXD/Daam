@@ -72,9 +72,6 @@
     <ClCompile Include="src\Window\Input.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utility\Log.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\DataStructures\Model.h">

@@ -74,8 +74,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Utility\Log.h" />
-    <ClInclude Include="src\Window\Input.h" />
     <ClInclude Include="src\Renderer\Camera.h" />
     <ClInclude Include="src\Utility\Log.h" />
     <ClInclude Include="src\Utility\stb_image.h" />
