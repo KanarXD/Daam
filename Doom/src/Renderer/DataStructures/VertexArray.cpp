@@ -28,13 +28,16 @@ void VertexArray::AddBuffer(const VertexBuffer& vertexBuffer, const VertexBuffer
 		#pragma warning(default:4312) 
 		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
 	}
-
+	Unbind();
+	vertexBuffer.Unbind();
 }
 
 void VertexArray::AddBuffer(const IndexBuffer& indexBuffer)
 {
 	Bind();
 	indexBuffer.Bind();
+	Unbind();
+	indexBuffer.Unbind();
 }
 
 void VertexArray::Bind() const

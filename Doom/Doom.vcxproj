@@ -11,9 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Utility\Log.cpp" />
-    <ClCompile Include="src\Window\Input.cpp" />
     <ClCompile Include="src\Renderer\Camera.cpp" />
+    <ClCompile Include="src\Utility\Log.cpp" />
+    <ClCompile Include="src\Utility\stb_image.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="src\Renderer\DataStructures\IndexBuffer.cpp" />
     <ClCompile Include="src\Renderer\DataStructures\Mesh.cpp" />
     <ClCompile Include="src\Main.cpp">
@@ -64,6 +67,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Window\Input.cpp" />
     <ClCompile Include="src\Window\Window.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
@@ -73,6 +77,8 @@
     <ClInclude Include="src\Utility\Log.h" />
     <ClInclude Include="src\Window\Input.h" />
     <ClInclude Include="src\Renderer\Camera.h" />
+    <ClInclude Include="src\Utility\Log.h" />
+    <ClInclude Include="src\Utility\stb_image.h" />
     <ClInclude Include="src\Renderer\DataStructures\IndexBuffer.h" />
     <ClInclude Include="src\Renderer\DataStructures\Mesh.h" />
     <ClInclude Include="src\pch.h" />
@@ -88,6 +94,7 @@
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Utility\Constants.h" />
     <ClInclude Include="src\Utility\lodepng.h" />
+    <ClInclude Include="src\Window\Input.h" />
     <ClInclude Include="src\Window\Window.h" />
   </ItemGroup>
   <ItemGroup>

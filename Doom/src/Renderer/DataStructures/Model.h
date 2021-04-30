@@ -8,7 +8,7 @@ class Model
 {
 private:
 	const ShaderProgram* shaderProgram;
-	std::vector<Mesh*> meshVector;
+	std::vector<Mesh> meshVector;
 	std::string directory;
 public:
 	Model(const std::string& modelPath, const std::string& shaderName);

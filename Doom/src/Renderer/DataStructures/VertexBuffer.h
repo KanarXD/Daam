@@ -4,15 +4,15 @@ class VertexBuffer
 {
 private:
 	uint32_t bufferId;
-	uint64_t size;
+	uint32_t size;
 public:
-	VertexBuffer(void* data, uint64_t size);
+	VertexBuffer(void* data, uint32_t size);
 	~VertexBuffer();
 
 	void Bind() const;
 	void Unbind() const;
 
-	uint64_t GetSize() const { return size; }
+	uint32_t GetSize() const { return size; }
 
 };
 

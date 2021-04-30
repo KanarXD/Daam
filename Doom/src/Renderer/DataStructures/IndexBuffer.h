@@ -5,9 +5,9 @@ class IndexBuffer
 {
 private:
 	uint32_t bufferId;
-	uint64_t count = 0;
+	uint32_t count = 0;
 public:
-	IndexBuffer(uint32_t* data, uint64_t count);
+	IndexBuffer(uint32_t* data, uint32_t count);
 
 	~IndexBuffer();
 
@@ -15,6 +15,6 @@ public:
 
 	void Unbind() const;
 
-	inline uint64_t GetCount() const { return count; }
+	inline uint32_t GetCount() const { return count; }
 };
 

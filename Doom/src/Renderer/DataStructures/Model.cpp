@@ -18,35 +18,38 @@ Model::Model(const std::string& modelPath, const std::string& shaderName, const 
 {
     for (auto& texturePath : texturePathVector)
     {
-        std::string path = directory + texturePath.second;
-        TextureLibrary::Load(path);
-        const Texture* texture = TextureLibrary::Get(path);
-        if (texture != nullptr && texturePath.first < meshVector.size())
-        {
-            LOGTRACE("Model:", modelPath, "Adding texture to mesh");
-            ((TextureMesh*)meshVector[texturePath.first])->AddTexture(texture);
-        }
-        else
-        {
-            LOGERROR("texturePathVector ERROR: ", path);;
-        }
-    }
-}
+        if (texturePath.first < meshVector.size()) {
+            if (texturePath.second == "NOTEXTURE")
+            {
+                LOGTRACE("Model:", modelPath, "NO TEXTURE");
+                meshVector[texturePath.first].SetUseTextures(false);
+                continue;
+            }
 
-Model::~Model()
-{
-    for (const Mesh* mesh : meshVector)
-    {
-        delete mesh;
+            std::string path = directory + texturePath.second;
+            TextureLibrary::Load(path);
+            const Texture* texture = TextureLibrary::Get(path);
+            if (texture != nullptr)
+            {
+                LOGTRACE("Model:", modelPath, "Adding texture to mesh");
+                meshVector[texturePath.first].AddTexture(texture);
+                meshVector[texturePath.first].SetUseTextures(true);
+            }
+            else
+            {
+                LOGERROR("texturePathVector ERROR: ", path);;
+            }
+        }
     }
+
 }
 
 void Model::DrawMeshes() const
 {
-	for (const Mesh* mesh : meshVector)
+	for (const Mesh& mesh : meshVector)
 	{
-		mesh->Bind(shaderProgram);
-		glDrawElements(GL_TRIANGLES, (GLsizei)mesh->GetIndicesCount(), GL_UNSIGNED_INT, 0);
+		mesh.Bind(shaderProgram);
+		glDrawElements(GL_TRIANGLES, mesh.GetIndicesCount(), GL_UNSIGNED_INT, nullptr);
 	}
 }
 
@@ -59,6 +62,9 @@ void Model::loadModel(const std::string& modelPath)
         LOGERROR("Could not load model at ", modelPath, importer.GetErrorString());
 		return;
 	}
+
+
+    meshVector.reserve(scene->mNumMeshes);
 
 	processNode(scene->mRootNode, scene);
 }
@@ -87,18 +93,22 @@ void Model::processMesh(aiMesh* mesh, const aiScene* scene)
         vertices[i].position = {
             mesh->mVertices[i].x, 
             mesh->mVertices[i].y,
-            mesh->mVertices[i].z,
-            1.0f
+            mesh->mVertices[i].z
         };
 
         // normal vectors
-        vertices[i].normal = {
+        if (mesh->HasNormals())
+        {
+            vertices[i].normal = {
             mesh->mNormals[i].x,
             mesh->mNormals[i].y,
-            mesh->mNormals[i].z,
-            1.0f
-        };
-
+            mesh->mNormals[i].z
+            };
+        }
+        else {
+            vertices[i].normal = { 0, 0, 0 };
+        }
+        
         // textures
         if (mesh->mTextureCoords[0]) {
             vertices[i].textureCoords = {
@@ -111,12 +121,18 @@ void Model::processMesh(aiMesh* mesh, const aiScene* scene)
         }
 
         // tangent vector
-        vertices[i].tangent = {
-            mesh->mTangents[i].x,
-            mesh->mTangents[i].y,
-            mesh->mTangents[i].z,
-            1.0f
-        };
+        if (mesh->HasTangentsAndBitangents())
+        {
+            vertices[i].tangent = {
+                mesh->mTangents[i].x,
+                mesh->mTangents[i].y,
+                mesh->mTangents[i].z
+            };
+        }
+        else {
+            vertices[i].tangent = { 0, 0, 0 };
+        }
+
     }
 
     // process indices
@@ -127,32 +143,43 @@ void Model::processMesh(aiMesh* mesh, const aiScene* scene)
         }
     }
 
-    std::vector<std::string> textureNames;
+    meshVector.emplace_back(vertices, indices);
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-
-   
     static aiTextureType TextureTypes[] = { aiTextureType_DIFFUSE,  aiTextureType_NORMALS };
-    
-    if (mesh->HasTextureCoords(0U))
-    {
+
+    if (mesh->mMaterialIndex >= 0) {
+
+        std::vector<std::string> textureNames;
+
         for (size_t i = 0; i < 2; i++)
         {
             aiString str;
             material->GetTexture(TextureTypes[i], 0, &str);
-
-            std::string path = directory + str.C_Str();
-
-            TextureLibrary::Load(path);
-
-            if (TextureLibrary::Get(path) != nullptr)
+            if (strlen(str.C_Str()) > 0)
             {
-                textureNames.push_back(path);
+                std::string path = directory + str.C_Str();
+
+                TextureLibrary::Load(path);
+
+                const Texture* texture = TextureLibrary::Get(path);
+                if (texture != nullptr)
+                {
+                    meshVector.back().AddTexture(texture);
+                    meshVector.back().SetUseTextures(true);
+                }
             }
+
+            aiColor4D diff(1.0f);
+            aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &diff);
+
+            aiColor4D spec(1.0f);
+            aiGetMaterialColor(material, AI_MATKEY_COLOR_SPECULAR, &spec);
+
+            meshVector.back().AddColors({ diff.r, diff.g, diff.b, diff.a }, { spec.r, spec.g, spec.b, spec.a });
+
         }
     }
-    
-    meshVector.push_back(new TextureMesh(vertices, indices, textureNames));
 }
 
 

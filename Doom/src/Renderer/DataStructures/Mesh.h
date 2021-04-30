@@ -11,9 +11,9 @@ struct Vec4 { float x, y, z, w; };
 
 struct Vertex 
 {
-	Vec4 position;
-	Vec4 normal;
-	Vec4 tangent;
+	Vec3 position;
+	Vec3 normal;
+	Vec3 tangent;
 	Vec2 textureCoords;
 };
 
@@ -23,12 +23,16 @@ private:
 	VertexBuffer vertexBuffer;
 	IndexBuffer indexBuffer;
 	VertexArray vertexArray;
+	std::vector<const Texture*> textureVector;
+	glm::vec4 diffuse;
+	glm::vec4 specular;
+	bool useTextures;
 public:
 	Mesh(std::vector<Vertex>& vertices, std::vector<uint32_t>& indices);
 
 	virtual ~Mesh() = default;
 
-	uint64_t GetIndicesCount() const { return indexBuffer.GetCount(); }
+	uint32_t GetIndicesCount() const { return indexBuffer.GetCount(); }
 
 	virtual void Bind(const ShaderProgram* shaderProgram) const;
 };
@@ -44,18 +48,10 @@ public:
 
 	void AddTexture(const Texture* texture);
 
+	void AddColors(const glm::vec4& diffuse, const glm::vec4& specular);
+
+	void SetUseTextures(bool value);
 
 };
 
-class ColorMesh : public Mesh
-{
-private:
-	glm::vec4 diffuse;
-	glm::vec4 specular;
-public:
-	ColorMesh(std::vector<Vertex>& vertices, std::vector<uint32_t>& indices, const glm::vec4& diffuse, const glm::vec4& specular);
-
-	void Bind(const ShaderProgram* shaderProgram) const override;
-
-};
 

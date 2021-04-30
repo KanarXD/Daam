@@ -1,44 +1,46 @@
 #include "pch.h"
 #include "Camera.h"
 
-Camera::Camera()
-	: Camera(glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f)
+Camera* Camera::instance = nullptr;
+
+Camera* Camera::GetInstance(const glm::vec3& position, const glm::vec3& rotation)
 {
+	if (instance == nullptr) instance = new Camera(position, rotation);
+	return instance;
 }
 
-Camera::Camera(const glm::vec3& position, float rotationX, float rotationY)
-	: position(position), rotationX(rotationX), rotationY(rotationY)
+void Camera::Update(float deltaTime)
 {
-	UpdateLookAtPosition();
+	// Rotate(rotationStep * deltaTime);
+	rotation.y = atan2(front.x, front.z);
+	Move(movementStep * deltaTime);
+	// front = RotatePosition(rotation);
 }
 
-void Camera::MoveAlong(float value)
-{
-	position += value * RotatePosition(0.0f, rotationY);
-	UpdateLookAtPosition();
+void Camera::Destroy() {
+	delete instance;
 }
 
-void Camera::MoveHorizonally(float value)
+Camera::Camera(const glm::vec3& position, glm::vec3 rotation)
+	: position(position), rotation(rotation), rotationStep(glm::vec3(0)), movementStep(glm::vec3(0))
 {
-	position += value * RotatePosition(0, rotationY + consts::PI / 2.0f);
-	UpdateLookAtPosition();
+	front = RotatePosition(rotation);
 }
 
-void Camera::MoveVertically(float value)
+void Camera::MoveX(float value)
 {
-	UpdateLookAtPosition();
+	position += value * RotatePosition(glm::vec3(0, rotation.y + glm::pi<float>() / 2.0f, 0));
 }
 
-void Camera::RotateX(float value)
+void Camera::MoveY(float value)
 {
 	this->rotationX += value;
 	UpdateLookAtPosition();
 }
 
-void Camera::RotateY(float value)
+void Camera::MoveZ(float value)
 {
-	this->rotationY += value;
-	UpdateLookAtPosition();
+	position += value * RotatePosition(glm::vec3(0, rotation.y, 0));
 }
 
 void Camera::SetPosition(const glm::vec3& position)
@@ -53,18 +55,18 @@ void Camera::SetRotationX(float value)
 	UpdateLookAtPosition();
 }
 
-void Camera::SetRotationY(float value)
+void Camera::SetFront(const glm::vec3& front) 
 {
-	this->rotationY = value;
-	UpdateLookAtPosition();
+	this->front = front;
 }
 
-glm::vec3 Camera::RotatePosition(float angleX, float angleY) const
+glm::vec3 Camera::RotatePosition(glm::vec3 rotation) const
 {
-	glm::vec4 dir = glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
-	glm::mat4 M(1.0f);
-	M = glm::rotate(M, angleY, glm::vec3(0.0f, 1.0f, 0.0f));
-	M = glm::rotate(M, angleX, glm::vec3(1.0f, 0.0f, 0.0f));
+	glm::vec4 dir = glm::vec4(0, 0, 1, 0);
+	glm::mat4 M(1);
+	M = glm::rotate(M, rotation.z, glm::vec3(0, 0, 1));
+	M = glm::rotate(M, rotation.y, glm::vec3(0, 1, 0));
+	M = glm::rotate(M, rotation.x, glm::vec3(1, 0, 0));
 	dir = M * dir;
 	return glm::vec3(dir);
 }

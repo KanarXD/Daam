@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "VertexBuffer.h"
 
-VertexBuffer::VertexBuffer(void* data, uint64_t size)
+VertexBuffer::VertexBuffer(void* data, uint32_t size)
     : size(size)
 {
     glGenBuffers(1, &bufferId);

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "TextureLibrary.h"
-#include "Utility/lodepng.h"
+#include "Utility/stb_image.h"
 
 
 
@@ -36,14 +36,19 @@ bool TextureLibrary::Load(const std::string& texturePath)
 			return false;
 		}
 	}
-	uint32_t width, height;
-	std::vector<unsigned char> image;
-	unsigned error = lodepng::decode(image, width, height, texturePath);
-	if (error)
+
+	int32_t width, height, bpp;
+	//stbi_set_flip_vertically_on_load(1);
+	unsigned char* image = stbi_load(texturePath.c_str(), &width, &height, &bpp, 4);
+
+	if (image == nullptr)
 	{
 		LOGERROR("load texture", texturePath, "read error");
 		return false;
 	}
+
 	textureList.emplace_back(texturePath, image, width, height);
+	stbi_image_free(image);
+
 	return true;
 }

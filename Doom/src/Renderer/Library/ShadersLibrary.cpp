@@ -13,7 +13,7 @@ const ShaderProgram* ShadersLibrary::Get(const std::string& name)
 			return &shader;
 		}
 	}
-	std::cout << "shader does not exists! \n";
+	LOGERROR("shader does not exists!");
 	return nullptr;
 }
 
@@ -24,7 +24,7 @@ bool ShadersLibrary::Load(const std::string& name, const char* vertexShaderFile,
 	{
 		if (shader.GetName() == name)
 		{
-			std::cout << "shader name exists! \n";
+			LOGWARNING("shader name exists!");
 			return false;
 		}
 	}
