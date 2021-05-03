@@ -2,53 +2,41 @@
 #include "TextureLibrary.h"
 #include "Utility/stb_image.h"
 
-
-
-std::list<Texture> TextureLibrary::textureList;
-int32_t TextureLibrary::textureUnits = 0;
-
-void TextureLibrary::Init()
+std::shared_ptr<TextureLibrary> TextureLibrary::GetInstance()
 {
-	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &textureUnits);
-	LOGINFO("texture units: ", textureUnits);
+	static std::shared_ptr<TextureLibrary> textureLibraryInstance(new TextureLibrary());
+	return textureLibraryInstance;
 }
 
-const Texture* TextureLibrary::Get(const std::string& texturePath)
+std::optional<const Texture*> TextureLibrary::Get(const std::string& texturePath) const
 {
-	for (const Texture& texture : textureList)
-	{
-		if (texture.GetPath() == texturePath)
-		{
-			return &texture;
-		}
-	}
+	auto texture = Library::Get(texturePath);
+	if (texture.has_value())
+		return texture.value();
 	LOGERROR("texture", texturePath, "does not exists!");
-	return nullptr;
+	return {};
 }
 
-bool TextureLibrary::Load(const std::string& texturePath)
+std::optional<const Texture*> TextureLibrary::Load(const std::string& texturePath)
 {
-	for (const Texture& texture : textureList)
-	{
-		if (texture.GetPath() == texturePath)
-		{
-			LOGWARNING("load texture name:", texturePath, "exists!");
-			return false;
-		}
-	}
+	auto texture = FindElement(texturePath);
+	if (texture.has_value())
+		return texture.value();
 
-	int32_t width, height, bpp;
 	//stbi_set_flip_vertically_on_load(1);
+	int32_t width, height, bpp;
 	unsigned char* image = stbi_load(texturePath.c_str(), &width, &height, &bpp, 4);
 
 	if (image == nullptr)
 	{
 		LOGERROR("load texture", texturePath, "read error");
-		return false;
+		return {};
 	}
 
-	textureList.emplace_back(texturePath, image, width, height);
+	const Texture* tex = InsertData(texturePath, image, width, height);
 	stbi_image_free(image);
 
-	return true;
+	return tex;
 }
+
+

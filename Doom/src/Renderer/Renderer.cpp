@@ -21,6 +21,8 @@ void Renderer::SetDrawDistance(float value)
 	drawDistance = value;
 }
 
+
+
 void Renderer::DrawModel(const Model& model, const glm::mat4& M)
 {
 	const ShaderProgram* shaderProgram = model.GetShaderProgram();
@@ -43,4 +45,21 @@ void Renderer::Draw(VertexArray& vertexArray, uint32_t indicesCount, ShaderProgr
 	glUniformMatrix4fv(shaderProgram.u("M"), 1, false, glm::value_ptr(M));
 
 	glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, nullptr);
+}
+
+void Renderer::DrawCubeMap(const CubeMap& cubeMap)
+{
+	glDepthFunc(GL_LEQUAL);
+
+	cubeMap.Bind();
+
+	const ShaderProgram* shaderProgram = cubeMap.GetShaderProgram();
+	
+	glm::mat4 view = glm::mat4(glm::mat3(V));
+
+	glUniformMatrix4fv(shaderProgram->u("P"), 1, false, glm::value_ptr(P));
+	glUniformMatrix4fv(shaderProgram->u("V"), 1, false, glm::value_ptr(view));
+	
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDepthFunc(GL_LESS);
 }

@@ -1,8 +1,10 @@
 ﻿#pragma once
 
-class ShaderProgram {
+#include "Renderer/Library/Library.h"
+
+class ShaderProgram : public LibraryElement
+{
 private:
-	const std::string name;
 	GLuint shaderProgram; //Uchwyt reprezentujący program cieniujacy
 	GLuint vertexShader; //Uchwyt reprezentujący vertex shader
 	GLuint geometryShader; //Uchwyt reprezentujący geometry shader
@@ -15,7 +17,6 @@ public:
 	void use() const; //Włącza wykorzystywanie programu cieniującego
 	GLuint u(const char* variableName) const; //Pobiera numer slotu związanego z daną zmienną jednorodną
 	GLuint a(const char* variableName) const; //Pobiera numer slotu związanego z danym atrybutem
-	const std::string& GetName() const { return name; }
 };
 
 

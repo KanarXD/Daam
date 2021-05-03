@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\DataStructures\CubeMap.cpp" />
     <ClCompile Include="src\Renderer\Camera.cpp" />
     <ClCompile Include="src\Utility\Log.cpp" />
     <ClCompile Include="src\Utility\stb_image.cpp">
@@ -63,10 +64,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Utility\lodepng.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="src\Window\Input.cpp" />
     <ClCompile Include="src\Window\Window.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
@@ -74,7 +71,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\DataStructures\CubeMap.h" />
     <ClInclude Include="src\Renderer\Camera.h" />
+    <ClInclude Include="src\Renderer\Library\Library.h" />
     <ClInclude Include="src\Utility\Log.h" />
     <ClInclude Include="src\Utility\stb_image.h" />
     <ClInclude Include="src\Renderer\DataStructures\IndexBuffer.h" />
@@ -91,7 +90,6 @@
     <ClInclude Include="src\Renderer\Library\TextureLibrary.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Utility\Constants.h" />
-    <ClInclude Include="src\Utility\lodepng.h" />
     <ClInclude Include="src\Window\Input.h" />
     <ClInclude Include="src\Window\Window.h" />
   </ItemGroup>
@@ -157,6 +155,8 @@
       <ProgramDataBaseFileName>$(IntDir)$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -178,6 +178,8 @@
       <ProgramDataBaseFileName>$(IntDir)$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

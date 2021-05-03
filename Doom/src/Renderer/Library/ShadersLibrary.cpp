@@ -2,34 +2,29 @@
 
 #include "ShadersLibrary.h"
 
-std::list<ShaderProgram> ShadersLibrary::shaderProgramList;
 
-const ShaderProgram* ShadersLibrary::Get(const std::string& name)
+
+std::shared_ptr<ShadersLibrary> ShadersLibrary::GetInstance()
 {
-	for (const ShaderProgram& shader : shaderProgramList)
-	{
-		if (shader.GetName() == name)
-		{
-			return &shader;
-		}
-	}
-	LOGERROR("shader does not exists!");
-	return nullptr;
+	static std::shared_ptr<ShadersLibrary> shadersLibraryInstance(new ShadersLibrary());
+	return shadersLibraryInstance;
 }
 
-
-bool ShadersLibrary::Load(const std::string& name, const char* vertexShaderFile, const char* geometryShaderFile, const char* fragmentShaderFile)
+std::optional<const ShaderProgram*> ShadersLibrary::Get(const std::string& name) const
 {
-	for (const ShaderProgram& shader : shaderProgramList)
-	{
-		if (shader.GetName() == name)
-		{
-			LOGWARNING("shader name exists!");
-			return false;
-		}
-	}
+	auto shaderProgram = FindElement(name);
+	if (shaderProgram.has_value())
+		return shaderProgram.value();
+	LOGERROR("shader does not exists!");
+	return {};
+}
 
-	shaderProgramList.emplace_back(name, vertexShaderFile, geometryShaderFile, fragmentShaderFile);
-	return true;
+std::optional<const ShaderProgram*> ShadersLibrary::Load(const std::string& name, const char* vertexShaderFile, const char* geometryShaderFile, const char* fragmentShaderFile)
+{
+	auto shaderProgram = FindElement(name);
+	if (shaderProgram.has_value())
+		return shaderProgram.value();
+
+	return InsertData(name, vertexShaderFile, geometryShaderFile, fragmentShaderFile);
 }
 

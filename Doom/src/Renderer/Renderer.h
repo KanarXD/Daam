@@ -1,7 +1,7 @@
 #pragma once
 
-#include "DataStructures/VertexArray.h"
 #include "DataStructures/Model.h"
+#include "DataStructures/CubeMap.h"
 #include "Renderer/Camera.h"
 
 class Renderer
@@ -20,6 +20,8 @@ public:
 	static void DrawModel(const Model& model, const glm::mat4& M);
 
 	static void Draw(VertexArray& vertexArray, uint32_t indicesCount, ShaderProgram& shaderProgram, const glm::mat4& M);
+
+	static void DrawCubeMap(const CubeMap& cubeMap);
 
 };
 
