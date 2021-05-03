@@ -90,25 +90,20 @@ void Input::CursorPos(GLFWwindow* window, double x, double y)
 		lastMousePosition = glm::vec2(x, y);
 		mouseFirstTime = false;
 	}
-	
+
 	float xOffset = (x - lastMousePosition.x) * mouseSensitivity;
 	float yOffset = (lastMousePosition.y - y) * mouseSensitivity;
-
 	lastMousePosition = glm::vec2(x, y);
 	
 	rotY += xOffset;
 	rotX += yOffset;
 
-	rotX -= y * mouseSensitivity;
 	rotX = glm::clamp(rotX, -80.0f, 80.0f);
 
 	glm::vec3 direction;
 	direction.x = cos(glm::radians(rotY)) * cos(glm::radians(rotX));
 	direction.y = sin(glm::radians(rotX));
 	direction.z = sin(glm::radians(rotY)) * cos(glm::radians(rotX));
-
-
-	std::cout << rotY << " " << rotX + 45 << std::endl;
 
 	Player::LookAt(glm::normalize(direction));
 }

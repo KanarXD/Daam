@@ -20,7 +20,6 @@ int main()
 	Window::Create("DOOM", 800, 600);
 	TextureLibrary::Init();
 	Player::Init();
-	Renderer::SetProjection(Player::GetCamera(), Window::GetAspectRatio());
 	Input::GetInstance();
 	ShadersLibrary::Load("shaderCT", "res/shaders/v_simple_texture_color.glsl", NULL, "res/shaders/f_simple_texture_color.glsl");
 	ShadersLibrary::Load("shaderD", "res/shaders/v_debug.glsl", NULL, "res/shaders/f_debug.glsl");
