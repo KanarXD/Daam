@@ -11,7 +11,7 @@ private:
 	static glm::mat4 V;
 	static float drawDistance;
 public:
-	static void SetProjection(float aspectRatio);
+	static void SetProjection(const Camera& camera, float aspectRatio);
 
 	static void SetCamera(const Camera& camera);
 

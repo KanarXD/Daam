@@ -8,8 +8,8 @@ private:
 	glm::vec2 lastMousePosition;
 	bool mouseInWindow;
 	bool mouseFirstTime;
-	float pitch;
-	float yaw;
+	float rotX;
+	float rotY;
 	float mouseSensitivity;
 
 public:

@@ -6,14 +6,14 @@ glm::mat4 Renderer::P(1.0f);
 glm::mat4 Renderer::V(1.0f);
 float Renderer::drawDistance = 300.0f;
 
-void Renderer::SetProjection(float aspectRatio)
+void Renderer::SetProjection(const Camera& camera, float aspectRatio)
 {
-	P = glm::perspective(50.0f * consts::PI / 180.0f, aspectRatio, 0.01f, drawDistance);
+	P = glm::perspective(camera.GetFov(), aspectRatio, camera.GetNearClip(), camera.GetFarClip());
 }
 
 void Renderer::SetCamera(const Camera& camera)
 {
-	V = glm::lookAt(camera.GetPosition(), camera.GetLootAtPosition(), glm::vec3(0.0f, 1.0f, 0.0f));
+	V = glm::lookAt(camera.GetTransform().position, camera.GetLootAtPosition(), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 void Renderer::SetDrawDistance(float value)

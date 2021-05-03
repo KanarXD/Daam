@@ -11,6 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\Components\RigidBody.cpp" />
+    <ClCompile Include="src\Game\Components\Transform.cpp" />
+    <ClCompile Include="src\Game\Player.cpp" />
     <ClCompile Include="src\Renderer\DataStructures\CubeMap.cpp" />
     <ClCompile Include="src\Renderer\Camera.cpp" />
     <ClCompile Include="src\Utility\Log.cpp" />
@@ -72,6 +75,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\DataStructures\CubeMap.h" />
+    <ClInclude Include="src\Game\Components\RigidBody.h" />
+    <ClInclude Include="src\Game\Components\Transform.h" />
+    <ClInclude Include="src\Game\Player.h" />
     <ClInclude Include="src\Renderer\Camera.h" />
     <ClInclude Include="src\Renderer\Library\Library.h" />
     <ClInclude Include="src\Utility\Log.h" />

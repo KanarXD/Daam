@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Input.h"
 #include "Window/Window.h"
-#include "Renderer/Camera.h"
+#include "Game/Player.h"
 
 Input* Input::instance = nullptr;
 
@@ -22,8 +22,8 @@ Input::Input(float mouseSensitivity)
 	this->lastMousePosition = glm::vec2(0);
 	this->mouseInWindow = false;
 	this->mouseFirstTime = true;
-	this->pitch = 0;
-	this->yaw = 0;
+	this->rotX = 0;
+	this->rotY = 0;
 	Setup(Window::GetGLFWwindow());
 }
 
@@ -31,6 +31,7 @@ Input::Input(float mouseSensitivity)
 void Input::Setup(GLFWwindow* window)
 {
 	glfwSetKeyCallback(window, KeyCallback);
+	glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	glfwSetCursorEnterCallback(window, CursorEnterCallback);
@@ -41,32 +42,37 @@ void Input::Setup(GLFWwindow* window)
 
 void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	if (action == GLFW_PRESS) {
-		float mSpeed = 10.0f;
-		float rSpeed = 1.0f;
-		switch (key) {
-		case GLFW_KEY_W:		Camera::GetInstance()->SetMovementStepZ(mSpeed);	break;
-		case GLFW_KEY_S:		Camera::GetInstance()->SetMovementStepZ(-mSpeed);	break;
-		case GLFW_KEY_A:		Camera::GetInstance()->SetMovementStepX(mSpeed);	break;
-		case GLFW_KEY_D:		Camera::GetInstance()->SetMovementStepX(-mSpeed);	break;
+	if (mods == GLFW_MOD_SHIFT) Player::SetState(Player::State::Sprint);
+	else if (mods == GLFW_MOD_CONTROL) Player::SetState(Player::State::Crouch);
+	else Player::SetState(Player::State::Walk);
 
-		case GLFW_KEY_LEFT:		Camera::GetInstance()->SetRotationStepY(rSpeed);	break;
-		case GLFW_KEY_RIGHT:	Camera::GetInstance()->SetRotationStepY(-rSpeed);	break;
-		case GLFW_KEY_UP:		Camera::GetInstance()->SetRotationStepX(-rSpeed);	break;
-		case GLFW_KEY_DOWN:		Camera::GetInstance()->SetRotationStepX(rSpeed);	break;
+
+	if (action == GLFW_PRESS) {
+		switch (key) {
+		case GLFW_KEY_W:		Player::SetVelocity(true,  0,  1);	break;
+		case GLFW_KEY_S:		Player::SetVelocity(true,  0, -1);	break;
+		case GLFW_KEY_A:		Player::SetVelocity(true,  1,  0);	break;
+		case GLFW_KEY_D:		Player::SetVelocity(true, -1,  0);	break;
+
+		case GLFW_KEY_LEFT:		Player::SetAngularVelocity(true,  0,  1);	break;
+		case GLFW_KEY_RIGHT:	Player::SetAngularVelocity(true,  0, -1);	break;
+		case GLFW_KEY_UP:		Player::SetAngularVelocity(true, -1,  0);	break;
+		case GLFW_KEY_DOWN:		Player::SetAngularVelocity(true,  1,  0);	break;
+
+		case GLFW_KEY_SPACE:    Player::Jump(); break;
 		}
 	}
 	if (action == GLFW_RELEASE) {
 		switch (key) {
 		case GLFW_KEY_W: 
-		case GLFW_KEY_S:		Camera::GetInstance()->SetMovementStepZ(0); break;
+		case GLFW_KEY_S:		Player::SetVelocity(false, 0, 1); break;
 		case GLFW_KEY_A: 
-		case GLFW_KEY_D:		Camera::GetInstance()->SetMovementStepX(0); break;
+		case GLFW_KEY_D:		Player::SetVelocity(false, 1, 0); break;
 
 		case GLFW_KEY_LEFT:
-		case GLFW_KEY_RIGHT:	Camera::GetInstance()->SetRotationStepY(0); break;
+		case GLFW_KEY_RIGHT:	Player::SetAngularVelocity(false, 0, 1); break;
 		case GLFW_KEY_UP:
-		case GLFW_KEY_DOWN:		Camera::GetInstance()->SetRotationStepX(0); break;
+		case GLFW_KEY_DOWN:		Player::SetAngularVelocity(false, 1, 0); break;
 		}
 	}
 }
@@ -84,22 +90,27 @@ void Input::CursorPos(GLFWwindow* window, double x, double y)
 		lastMousePosition = glm::vec2(x, y);
 		mouseFirstTime = false;
 	}
-
+	
 	float xOffset = (x - lastMousePosition.x) * mouseSensitivity;
 	float yOffset = (lastMousePosition.y - y) * mouseSensitivity;
+
 	lastMousePosition = glm::vec2(x, y);
+	
+	rotY += xOffset;
+	rotX += yOffset;
 
-	yaw += xOffset;
-	pitch += yOffset;
-
-	pitch = glm::clamp(pitch, -89.0f, 89.0f);
+	rotX -= y * mouseSensitivity;
+	rotX = glm::clamp(rotX, -80.0f, 80.0f);
 
 	glm::vec3 direction;
-	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	direction.y = sin(glm::radians(pitch));
-	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	direction.x = cos(glm::radians(rotY)) * cos(glm::radians(rotX));
+	direction.y = sin(glm::radians(rotX));
+	direction.z = sin(glm::radians(rotY)) * cos(glm::radians(rotX));
 
-	Camera::GetInstance()->SetFront(glm::normalize(direction));
+
+	std::cout << rotY << " " << rotX + 45 << std::endl;
+
+	Player::LookAt(glm::normalize(direction));
 }
 
 void Input::MouseButton(GLFWwindow* window, int button, int action, int mods)

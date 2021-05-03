@@ -2,6 +2,7 @@
 
 #include "Window.h"
 #include "Renderer/Renderer.h"
+#include "Game/Player.h"
 
 
 GLFWwindow* Window::window = nullptr;
@@ -68,7 +69,7 @@ void Window::WindowResizeCallback(GLFWwindow* window, int width, int height) {
 
 	if (height == 0) return;
 	aspectRatio = (float)width / (float)height;
-	Renderer::SetProjection(aspectRatio);
+	Renderer::SetProjection(Player::GetInstance()->GetCamera(), aspectRatio);
 	glViewport(0, 0, width, height);
 }
 
