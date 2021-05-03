@@ -7,7 +7,7 @@ Texture::~Texture()
 }
 
 Texture::Texture(const std::string& filePath, unsigned char* image, uint32_t width, uint32_t height)
-	: path(filePath), width(width), height(height)
+	: LibraryElement(filePath), width(width), height(height)
 {
 	glGenTextures(1, &textureId); //Zainicjuj jeden uchwyt
 	glBindTexture(GL_TEXTURE_2D, textureId); //Uaktywnij uchwyt

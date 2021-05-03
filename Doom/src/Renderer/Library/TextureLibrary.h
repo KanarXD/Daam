@@ -1,20 +1,20 @@
 #pragma once
 
 #include "Renderer/DataStructures/Texture.h"
-#include<string>
-#include <list>
+#include <optional>
 
-
-class TextureLibrary
+class TextureLibrary : public Library<Texture>
 {
-private:
-	static std::list<Texture> textureList;
-	static int32_t textureUnits;
 public:
-	static void Init();
+	static std::shared_ptr<TextureLibrary> GetInstance();
 
-	static const Texture* Get(const std::string& name);
+	std::optional<const Texture*> Get(const std::string& texturePath) const override;
 
-	static bool Load(const std::string& texturePath);
+	std::optional<const Texture*> Load(const std::string& texturePath);
+
+private:
+	TextureLibrary() = default;
+	TextureLibrary(TextureLibrary const&) = delete;
+	void operator=(TextureLibrary const&) = delete;
 };
 

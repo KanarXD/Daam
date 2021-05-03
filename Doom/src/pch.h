@@ -15,6 +15,9 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
+#include <optional>
+#include <thread>
+#include <mutex>
 
 //Windows
 #include "windows.h"

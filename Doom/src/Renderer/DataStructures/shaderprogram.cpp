@@ -60,7 +60,7 @@ GLuint ShaderProgram::loadShader(GLenum shaderType,const char* fileName) {
 }
 
 ShaderProgram::ShaderProgram(const std::string& name, const char* vertexShaderFile,const char* geometryShaderFile,const char* fragmentShaderFile) 
-	: name(name)
+	: LibraryElement(name)
 {
 	//Wczytaj vertex shader
 	LOGTRACE("Loading vertex shader...");

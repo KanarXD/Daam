@@ -30,11 +30,9 @@ private:
 public:
 	Mesh(std::vector<Vertex>& vertices, std::vector<uint32_t>& indices);
 
-	virtual ~Mesh() = default;
-
 	uint32_t GetIndicesCount() const { return indexBuffer.GetCount(); }
 
-	virtual void Bind(const ShaderProgram* shaderProgram) const;
+	void Bind(const ShaderProgram* shaderProgram) const;
 
 	void AddTexture(const Texture* texture);
 

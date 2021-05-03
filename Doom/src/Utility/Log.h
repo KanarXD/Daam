@@ -25,44 +25,44 @@ public:
 	static void Error(const M& ...message)
 	{
 		LogType("|ERROR|", Red);
-		LogMessage(message...);
+		LogMessage(std::cerr, message...);
 	}
 
 	template<typename ...M>
 	static void Info(const M& ...message)
 	{
 		LogType("|INFO|", Yellow);
-		LogMessage(message...);
+		LogMessage(std::cout, message...);
 	}
 
 	template<typename ...M>
 	static void Warning(const M& ...message)
 	{
 		LogType("|WARNING|", Magenta);
-		LogMessage(message...);
+		LogMessage(std::cout, message...);
 	}
 
 	template<typename ...M>
 	static void Trace(const M& ...message)
 	{
 		LogType("|TRACE|", Blue);
-		LogMessage(message...);
+		LogMessage(std::cout, message...);
 	}
 
 private:
 	static void LogType(const std::string& logType, const Color& color);
 
 	template<typename M>
-	static void LogMessage(const M& message)
+	static void LogMessage(std::ostream& stream, const M& message)
 	{
-		std::cout << message << std::endl;
+		stream << message << std::endl;
 	}
 
 	template<typename M, typename ...A>
-	static void LogMessage(const M& message, const A& ...args)
+	static void LogMessage(std::ostream& stream, const M& message, const A& ...args)
 	{
-		std::cout << message << ' ';
-		LogMessage(args...);
+		stream << message << ' ';
+		LogMessage(stream, args...);
 	}
 
 };

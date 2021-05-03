@@ -19,7 +19,7 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<uint32_t>& indices)
 	vertexArray.AddBuffer(vertexBuffer, vbl);
 	vertexArray.AddBuffer(indexBuffer);
 
-	LOGTRACE("Mesh vertexes: ", vertices.size(), "indices:", indices.size());
+	//LOGTRACE("Mesh vertexes: ", vertices.size(), "indices:", indices.size());
 }
 
 void Mesh::Bind(const ShaderProgram* shaderProgram) const
@@ -46,7 +46,7 @@ void Mesh::Bind(const ShaderProgram* shaderProgram) const
 
 void Mesh::AddTexture(const Texture* texture)
 {
-	textureVector.push_back(texture);
+	this->textureVector.push_back(texture);
 }
 
 void Mesh::AddColors(const glm::vec4& diffuse, const glm::vec4& specular)
