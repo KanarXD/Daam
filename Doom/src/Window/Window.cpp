@@ -54,7 +54,7 @@ void Window::Create(const std::string& title, uint32_t width, uint32_t height)
 	glfwSetErrorCallback(ErrorCallbackGLFW);
 	glDebugMessageCallback(ErrorCallbackOpenGL, nullptr);
 
-	Renderer::SetProjection(GetAspectRatio());
+	//Renderer::SetProjection(GetAspectRatio());
 }
 
 void Window::Destroy()

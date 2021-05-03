@@ -13,7 +13,6 @@
 int main()
 {
 	Window::Create("DOOM", 800, 600);
-	TextureLibrary::Init();
 	Player::Init();
 	Renderer::SetProjection(Player::GetCamera(), Window::GetAspectRatio());
 	Input::GetInstance();
