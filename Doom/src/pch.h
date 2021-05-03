@@ -10,6 +10,8 @@
 #include <string>
 #include <sstream>
 #include <array>
+#include <bitset>
+#include <set>
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>

@@ -2,6 +2,7 @@
 
 #include "Window/Window.h"
 #include "Renderer/Renderer.h"
+#include "Game/Player.h"
 #include "Window/Input.h"
 
 #include "Renderer/Library/TextureLibrary.h"
@@ -18,7 +19,8 @@ int main()
 {
 	Window::Create("DOOM", 800, 600);
 	TextureLibrary::Init();
-	Camera::GetInstance();
+	Player::Init();
+	Renderer::SetProjection(Player::GetCamera(), Window::GetAspectRatio());
 	Input::GetInstance();
 	ShadersLibrary::Load("shaderCT", "res/shaders/v_simple_texture_color.glsl", NULL, "res/shaders/f_simple_texture_color.glsl");
 	ShadersLibrary::Load("shaderD", "res/shaders/v_debug.glsl", NULL, "res/shaders/f_debug.glsl");
@@ -34,8 +36,6 @@ int main()
 		{ 3, "Texture/Rim.png" },
 		{ 4, "Texture/Rim.png" }
 		});
-	
-
 
 	glfwSetTime(0); //Zeruj timer
 	LOGINFO("drawing...");
@@ -46,10 +46,11 @@ int main()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		Camera::GetInstance()->Update((float)glfwGetTime());
+		Player::Update((float)glfwGetTime());
 		glfwSetTime(0); //Zeruj timer
 
-		Renderer::SetCamera(*Camera::GetInstance());
+		Renderer::SetProjection(Player::GetCamera(), Window::GetAspectRatio());
+		Renderer::SetCamera(Player::GetCamera());
 
 		float size = 0.01f;
 
@@ -67,7 +68,7 @@ int main()
 		glfwPollEvents(); //Wykonaj procedury callback w zaleznoœci od zdarzeñ jakie zasz³y.
 	}
 
-	Camera::Destroy();
+	Player::Destroy();
 	Input::Destroy();
 	Window::Destroy();
 }
