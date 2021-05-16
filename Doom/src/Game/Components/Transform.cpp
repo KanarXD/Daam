@@ -11,8 +11,9 @@ void Transform::Update(const RigidBody& rigidbody, float dt)
 {
 	rotation += rigidbody.angularVelocity * dt;
 	position.y += rigidbody.velocity.y * dt;
-	position += rigidbody.velocity.x * RotatePosition(glm::vec3(0, rotation.y + glm::pi<float>() / 2.0f, 0)) * dt;
+	position += rigidbody.velocity.x * RotatePosition(glm::vec3(0, rotation.y + glm::half_pi<float>(), 0)) * dt;
 	position += rigidbody.velocity.z * RotatePosition(glm::vec3(0, rotation.y, 0)) * dt;
+	
 }
 
 glm::vec3 Transform::RotatePosition(glm::vec3 rotation) const
