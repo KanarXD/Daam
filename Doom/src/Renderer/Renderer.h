@@ -19,7 +19,9 @@ public:
 
 	static void DrawModel(const Model& model, const glm::mat4& M);
 
-	static void Draw(VertexArray& vertexArray, uint32_t indicesCount, ShaderProgram& shaderProgram, const glm::mat4& M);
+	static void DrawMesh(const Mesh& mesh, const glm::mat4& M, const ShaderProgram* shaderProgram);
+
+	static void Draw(VertexArray& vertexArray, uint32_t indicesCount, const ShaderProgram* shaderProgram, const glm::mat4& M);
 
 	static void DrawCubeMap(const CubeMap& cubeMap);
 

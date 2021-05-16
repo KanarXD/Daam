@@ -13,6 +13,12 @@ VertexArray::~VertexArray()
 	glDeleteVertexArrays(1, &arrayId);
 }
 
+VertexArray::VertexArray(VertexArray&& vertexArray) noexcept
+	: arrayId(vertexArray.arrayId)
+{
+	vertexArray.arrayId = 0;
+}
+
 void VertexArray::AddBuffer(const VertexBuffer& vertexBuffer, const VertexBufferLayout& layout)
 {
 	Bind();

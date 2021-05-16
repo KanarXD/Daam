@@ -121,6 +121,17 @@ ShaderProgram::~ShaderProgram()
 	glDeleteProgram(shaderProgram);
 }
 
+ShaderProgram::ShaderProgram(ShaderProgram&& shaderProgram) noexcept
+	: LibraryElement(shaderProgram.GetName()), shaderProgram(shaderProgram.shaderProgram),
+	vertexShader(shaderProgram.vertexShader), geometryShader(shaderProgram.geometryShader),
+	fragmentShader(shaderProgram.fragmentShader)
+{
+	shaderProgram.shaderProgram = 0;
+	shaderProgram.vertexShader = 0;
+	shaderProgram.geometryShader = 0;
+	shaderProgram.fragmentShader = 0;
+}
+
 //Włącz używanie programu cieniującego reprezentowanego przez aktualny obiekt
 void ShaderProgram::use() const {
 	glUseProgram(shaderProgram);

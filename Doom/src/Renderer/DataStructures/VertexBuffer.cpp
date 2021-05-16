@@ -14,6 +14,13 @@ VertexBuffer::~VertexBuffer()
     glDeleteBuffers(1, &bufferId);
 }
 
+VertexBuffer::VertexBuffer(VertexBuffer&& vertexBuffer) noexcept
+    : bufferId(vertexBuffer.bufferId), size(vertexBuffer.size)
+{
+    vertexBuffer.bufferId = 0;
+    vertexBuffer.size = 0;
+}
+
 void VertexBuffer::Bind() const {
     glBindBuffer(GL_ARRAY_BUFFER, bufferId);
 }

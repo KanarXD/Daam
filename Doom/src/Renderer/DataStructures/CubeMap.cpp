@@ -3,7 +3,7 @@
 #include "Renderer/Library/ShadersLibrary.h"
 #include "Utility/stb_image.h"
 
-static float skyboxVertices[] = {
+static const float CubeMapVertices[] = {
     // positions          
     -1.0f,  1.0f, -1.0f,
     -1.0f, -1.0f, -1.0f,
@@ -48,18 +48,9 @@ static float skyboxVertices[] = {
      1.0f, -1.0f,  1.0f
 };
 
-CubeMap::CubeMap(const std::string& directory, std::vector<std::string> facesNames, const std::string& shaderName)
-    : vertexBuffer(skyboxVertices, sizeof(skyboxVertices))
-{
-    auto shaderProgram = ShadersLibrary::GetInstance()->Get(shaderName);
-    if (!shaderProgram.has_value())
-    {
-        LOGERROR("CubeMap Get shader: ", shaderName);
-    }
-    else {
-        this->shaderProgram = shaderProgram.value();
-    }
-    
+CubeMap::CubeMap(const std::string& directory, std::vector<std::string> facesNames, const ShaderProgram* shaderProgram)
+    : vertexBuffer((void*)CubeMapVertices, sizeof(CubeMapVertices)), shaderProgram(shaderProgram)
+{  
     VertexBufferLayout vbl;
     vbl.Push<float>(3);
     vertexArray.AddBuffer(vertexBuffer, vbl);
@@ -77,7 +68,7 @@ CubeMap::CubeMap(const std::string& directory, std::vector<std::string> facesNam
         for (uint32_t i = 0; i < 6; i++) {
             int32_t width, height, bpp;
             unsigned char* data = stbi_load((directory + "/" + facesNames[i]).c_str(),
-                &width, &height, &bpp, 4);\
+                &width, &height, &bpp, 4);
             if (data) {
                 glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
             }

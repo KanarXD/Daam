@@ -57,7 +57,7 @@ std::optional<const Model*> ModelsLibrary::Load(const std::string& modelPath, co
     LoadModel(modelPath, meshVector);
     if (meshVector.size() == 0)
     {
-        LOGERROR("Empty model");
+        LOGERROR("Empty model", modelPath);
         return {};
     }
 
@@ -73,7 +73,7 @@ std::optional<const Model*> ModelsLibrary::Load(const std::string& modelPath, co
             }
             
             std::string path = directory + texturePath.second;
-            std::optional<const Texture*> texture = TextureLibrary::GetInstance()->Load(path);
+            auto texture = TextureLibrary::GetInstance()->Load(path, false);
             if (texture.has_value())
             {
                 LOGTRACE("Model:", modelPath, "Adding texture to mesh");
@@ -195,7 +195,7 @@ void ModelsLibrary::ProcessMesh(aiMesh* mesh, const aiScene* scene, std::vector<
             {
                 std::string path = directory + str.C_Str();
 
-                std::optional<const Texture*> texture = TextureLibrary::GetInstance()->Load(path);
+                std::optional<const Texture*> texture = TextureLibrary::GetInstance()->Load(path, false);
                 if (texture.has_value())
                 {
                     meshVector.back().AddTexture(texture.value());

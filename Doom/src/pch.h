@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <functional>
 #include <string>
+#include <string_view>
 #include <sstream>
 #include <array>
 #include <bitset>

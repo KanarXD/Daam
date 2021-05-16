@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\World\Map\MapLibrary.cpp" />
+    <ClCompile Include="src\Game\World\Map\Map.cpp" />
     <ClCompile Include="src\Game\Components\RigidBody.cpp" />
     <ClCompile Include="src\Game\Components\Transform.cpp" />
     <ClCompile Include="src\Game\Player.cpp" />
@@ -74,6 +76,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\World\Map\MapLibrary.h" />
+    <ClInclude Include="src\Game\World\Map\Map.h" />
     <ClInclude Include="src\Renderer\DataStructures\CubeMap.h" />
     <ClInclude Include="src\Game\Components\RigidBody.h" />
     <ClInclude Include="src\Game\Components\Transform.h" />
@@ -107,6 +111,9 @@
   <ItemGroup>
     <None Include="assimp-vc142-mt.dll" />
     <None Include="lib\assimp-vc142-mt.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\maps\map1.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

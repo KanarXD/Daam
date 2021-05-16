@@ -9,6 +9,8 @@ public:
 	VertexBuffer(void* data, uint32_t size);
 	~VertexBuffer();
 
+	VertexBuffer(VertexBuffer&& vertexBuffer) noexcept;
+
 	void Bind() const;
 	void Unbind() const;
 

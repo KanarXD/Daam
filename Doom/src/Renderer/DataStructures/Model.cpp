@@ -11,7 +11,6 @@ void Model::DrawMeshes() const
 {
 	for (const Mesh& mesh : meshVector)
 	{
-		mesh.Bind(shaderProgram);
-		glDrawElements(GL_TRIANGLES, mesh.GetIndicesCount(), GL_UNSIGNED_INT, nullptr);
+		mesh.Draw(shaderProgram);
 	}
 }

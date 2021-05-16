@@ -5,9 +5,8 @@
 #include "Renderer/Library/TextureLibrary.h"
 
 
-Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<uint32_t>& indices)
-	: vertexBuffer(vertices.data(), uint32_t(vertices.size() * sizeof(Vertex))),
-	indexBuffer(indices.data(), uint32_t(indices.size())),
+Mesh::Mesh(void* vertices, uint32_t verticesSize, uint32_t* indices, uint32_t indicesCount)
+	: vertexBuffer(vertices, verticesSize), indexBuffer(indices, indicesCount),
 	diffuse(1.0f), specular(1.0f), useTextures(false)
 {
 	VertexBufferLayout vbl;
@@ -20,6 +19,11 @@ Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<uint32_t>& indices)
 	vertexArray.AddBuffer(indexBuffer);
 
 	//LOGTRACE("Mesh vertexes: ", vertices.size(), "indices:", indices.size());
+}
+
+Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<uint32_t>& indices)
+	: Mesh((void*)vertices.data(), uint32_t(vertices.size() * sizeof(Vertex)), indices.data(), uint32_t(indices.size()))
+{
 }
 
 void Mesh::Bind(const ShaderProgram* shaderProgram) const
@@ -42,6 +46,12 @@ void Mesh::Bind(const ShaderProgram* shaderProgram) const
 		glUniform4fv(shaderProgram->u("specular"), 1, glm::value_ptr(specular));
 	}
 
+}
+
+void Mesh::Draw(const ShaderProgram* shaderProgram) const
+{
+	Bind(shaderProgram);
+	glDrawElements(GL_TRIANGLES, GetIndicesCount(), GL_UNSIGNED_INT, nullptr);
 }
 
 void Mesh::AddTexture(const Texture* texture)

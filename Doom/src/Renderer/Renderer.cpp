@@ -35,14 +35,27 @@ void Renderer::DrawModel(const Model& model, const glm::mat4& M)
 	model.DrawMeshes();
 }
 
-void Renderer::Draw(VertexArray& vertexArray, uint32_t indicesCount, ShaderProgram& shaderProgram, const glm::mat4& M)
+void Renderer::DrawMesh(const Mesh& mesh, const glm::mat4& M, const ShaderProgram* shaderProgram)
 {
-	shaderProgram.use();
+	shaderProgram->use();
+
+	glUniformMatrix4fv(shaderProgram->u("P"), 1, false, glm::value_ptr(P));
+	glUniformMatrix4fv(shaderProgram->u("V"), 1, false, glm::value_ptr(V));
+	glUniformMatrix4fv(shaderProgram->u("M"), 1, false, glm::value_ptr(M));
+
+	mesh.Draw(shaderProgram);
+}
+
+
+
+void Renderer::Draw(VertexArray& vertexArray, uint32_t indicesCount, const ShaderProgram* shaderProgram, const glm::mat4& M)
+{
+	shaderProgram->use();
 	vertexArray.Bind();
 
-	glUniformMatrix4fv(shaderProgram.u("P"), 1, false, glm::value_ptr(P));
-	glUniformMatrix4fv(shaderProgram.u("V"), 1, false, glm::value_ptr(V));
-	glUniformMatrix4fv(shaderProgram.u("M"), 1, false, glm::value_ptr(M));
+	glUniformMatrix4fv(shaderProgram->u("P"), 1, false, glm::value_ptr(P));
+	glUniformMatrix4fv(shaderProgram->u("V"), 1, false, glm::value_ptr(V));
+	glUniformMatrix4fv(shaderProgram->u("M"), 1, false, glm::value_ptr(M));
 
 	glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, nullptr);
 }

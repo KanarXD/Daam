@@ -81,6 +81,12 @@
     <ClCompile Include="src\Game\Components\RigidBody.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\World\Map\Map.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\World\Map\MapLibrary.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\DataStructures\Model.h">
@@ -155,6 +161,12 @@
     <ClInclude Include="src\Game\Components\RigidBody.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="src\Game\World\Map\Map.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game\World\Map\MapLibrary.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\glew32s.lib" />
@@ -164,5 +176,8 @@
   <ItemGroup>
     <None Include="lib\assimp-vc142-mt.dll" />
     <None Include="assimp-vc142-mt.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\maps\map1.txt" />
   </ItemGroup>
 </Project>

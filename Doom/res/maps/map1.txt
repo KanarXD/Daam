@@ -1,0 +1,49 @@
+skyBox:
+{
+	directory: res/textures/skybox
+	shaderName: shaderSkyBox
+	sides: right.png|left.png|top.png|bottom.png|front.png|back.png
+}
+
+surface:
+{
+	texturePath: res/textures/bricks.png
+	shaderName: shaderT
+	width: 200
+	height: 200
+}
+
+box:
+{
+	texturePath: res/textures/bricks.png
+	shaderName: shaderT
+	size: 10
+}
+
+boxMap:
+{
+	0:  OOOOOOOOOOOOOOOOOOOO
+	1:  O##################O
+	2:  O##################O
+	3:  O######OO##########O
+	4:  O##################O
+	5:  O##################O
+	6:  O##OO##############O
+	7:  O##################O
+	8:  O##################O
+	9:  O##################O
+	10: O##################O
+	11: O##################O
+	12: O##################O
+	13: O####O#############O
+	14: O##################O
+	15: O##################O
+	16: O####O#############O
+	17: O##################O
+	18: O##################O
+	19: OOOOOOOOOOOOOOOOOOOO
+}
+
+
+
+

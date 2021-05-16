@@ -108,7 +108,7 @@ void Input::CursorPos(GLFWwindow* window, double x, double y)
 	direction.z = sin(glm::radians(rotY)) * cos(glm::radians(rotX));
 
 
-	std::cout << rotY << " " << rotX + 45 << std::endl;
+	//std::cout << rotY << " " << rotX + 45 << std::endl;
 
 	Player::LookAt(glm::normalize(direction));
 }

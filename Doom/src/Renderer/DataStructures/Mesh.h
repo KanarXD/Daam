@@ -28,18 +28,21 @@ private:
 	glm::vec4 specular;
 	bool useTextures;
 public:
+	Mesh(void* vertices, uint32_t verticesSize, uint32_t* indices, uint32_t indicesCount);
+
 	Mesh(std::vector<Vertex>& vertices, std::vector<uint32_t>& indices);
 
 	uint32_t GetIndicesCount() const { return indexBuffer.GetCount(); }
 
 	void Bind(const ShaderProgram* shaderProgram) const;
 
+	void Draw(const ShaderProgram* shaderProgram) const;
+
 	void AddTexture(const Texture* texture);
 
 	void AddColors(const glm::vec4& diffuse, const glm::vec4& specular);
 
 	void SetUseTextures(bool value);
-
 };
 
 

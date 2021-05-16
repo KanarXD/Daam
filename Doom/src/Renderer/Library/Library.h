@@ -24,7 +24,7 @@ class Library
 private:
 	std::list<Data> dataList;
 	mutable std::mutex libraryMutex;
-public:
+protected:
 	Library()
 	{
 		static_assert(std::is_base_of<LibraryElement, Data>::value, "Library: Data not derived from LibraryElement");
@@ -32,6 +32,7 @@ public:
 
 	virtual ~Library() = default;
 
+public:
 	virtual inline std::optional<const Data*> Get(const std::string& name) const { return FindElement(name); }
 
 protected:
@@ -51,5 +52,8 @@ protected:
 		if (iterator != dataList.end()) return &(*iterator);
 		return {};
 	}
+private:
+	Library(Library const&) = delete;
+	void operator=(Library const&) = delete;
 };
 

@@ -17,7 +17,7 @@ std::optional<const Texture*> TextureLibrary::Get(const std::string& texturePath
 	return {};
 }
 
-std::optional<const Texture*> TextureLibrary::Load(const std::string& texturePath)
+std::optional<const Texture*> TextureLibrary::Load(const std::string& texturePath, bool repeat)
 {
 	auto texture = FindElement(texturePath);
 	if (texture.has_value())
@@ -33,7 +33,7 @@ std::optional<const Texture*> TextureLibrary::Load(const std::string& texturePat
 		return {};
 	}
 
-	const Texture* tex = InsertData(texturePath, image, width, height);
+	const Texture* tex = InsertData(texturePath, image, width, height, repeat);
 	stbi_image_free(image);
 
 	return tex;
