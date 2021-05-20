@@ -71,6 +71,7 @@ void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 
 		case GLFW_KEY_LEFT:
 		case GLFW_KEY_RIGHT:	Player::SetAngularVelocity(false, 0, 1); break;
+
 		case GLFW_KEY_UP:
 		case GLFW_KEY_DOWN:		Player::SetAngularVelocity(false, 1, 0); break;
 		}

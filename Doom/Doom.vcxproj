@@ -11,6 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\World\Enemies\EnemyManager.cpp" />
+    <ClCompile Include="src\Game\Components\Combat.cpp" />
+    <ClCompile Include="src\Game\World\Enemies\Enemy.cpp" />
     <ClCompile Include="src\Game\World\Map\MapLibrary.cpp" />
     <ClCompile Include="src\Game\World\Map\Map.cpp" />
     <ClCompile Include="src\Game\Components\RigidBody.cpp" />
@@ -76,6 +79,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\World\Enemies\EnemyManager.h" />
+    <ClInclude Include="src\Game\Components\Combat.h" />
+    <ClInclude Include="src\Game\World\Enemies\Enemy.h" />
+    <ClInclude Include="src\Game\World\Enemies\EnemySpecs.h" />
     <ClInclude Include="src\Game\World\Map\MapLibrary.h" />
     <ClInclude Include="src\Game\World\Map\Map.h" />
     <ClInclude Include="src\Renderer\DataStructures\CubeMap.h" />
@@ -109,6 +116,7 @@
     <Library Include="lib\glfw3.lib" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\Blender\Enemies\enemy1.mtl" />
     <None Include="assimp-vc142-mt.dll" />
     <None Include="lib\assimp-vc142-mt.dll" />
   </ItemGroup>
