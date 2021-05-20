@@ -1,5 +1,6 @@
 #pragma once
 #include "Renderer/Camera.h"
+#include "Components/Combat.h"
 #include "Components/Transform.h"
 #include "Components/RigidBody.h"
 
@@ -24,6 +25,7 @@ private:
 
 	static Player* instance;
 
+	static Combat combat;
 	static Transform transform;
 	static RigidBody rigidbody;
 
@@ -47,7 +49,10 @@ public:
 	static void LookAt(glm::vec3 front);
 
 	static const Camera& GetCamera() { return camera; }
-	static const Transform& GetTransform() { return transform; }
+
+	static Combat& GetCombat() { return combat; }
+	static Transform& GetTransform() { return transform; }
+	static RigidBody& GetRigidBody() { return rigidbody; }
 
 private:
 	Player(Transform startingTransform);

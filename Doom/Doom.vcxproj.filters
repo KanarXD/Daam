@@ -87,6 +87,15 @@
     <ClCompile Include="src\Game\World\Map\MapLibrary.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\World\Enemies\Enemy.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\World\Enemies\EnemyManager.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Components\Combat.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\DataStructures\Model.h">
@@ -167,6 +176,18 @@
     <ClInclude Include="src\Game\World\Map\MapLibrary.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="src\Game\World\Enemies\Enemy.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game\World\Enemies\EnemyManager.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game\Components\Combat.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game\World\Enemies\EnemySpecs.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\glew32s.lib" />
@@ -176,6 +197,7 @@
   <ItemGroup>
     <None Include="lib\assimp-vc142-mt.dll" />
     <None Include="assimp-vc142-mt.dll" />
+    <None Include="..\..\..\..\Blender\Enemies\enemy1.mtl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\maps\map1.txt" />
