@@ -1,27 +1,37 @@
 #pragma once
 #include "Enemy.h"
+#include "Enemy_Tank.h"
 
 class EnemyManager
 {
 private:
 	static std::vector<Enemy> enemies;
-	static std::unordered_map<Enemy::Type, EnemySpecs> enemiesSpecs;
-
+	
 public:
 	static std::shared_ptr<EnemyManager> GetInstance();
 
-	static void Init(const std::unordered_map<Enemy::Type, EnemySpecs>& enemiesSpecification);
 	static void Update(float dt);
 	static void Destroy();
 
-	static void Add(Enemy::Type enemyType, const Transform& transform);
+	template <class T> static void Add(const Transform& transform);
 
 	static void DrawEnemies();
-
-	static const EnemySpecs& GetEnemySpecs(Enemy::Type enemyType) { return enemiesSpecs.at(enemyType); }
 
 private:
 	EnemyManager() = default;
 	EnemyManager(EnemyManager const&) = delete;
 	void operator=(EnemyManager const&) = delete;
 };
+
+template<class T>
+inline void EnemyManager::Add(const Transform& transform)
+{
+	if (std::is_base_of<Enemy, T>::value)
+	{
+		enemies.push_back(T(transform));
+	}
+	else
+	{
+		LOGERROR("Wrong enemy type");
+	}
+}

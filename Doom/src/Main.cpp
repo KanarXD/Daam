@@ -24,13 +24,8 @@ int main()
 	
 	ModelsLibrary::GetInstance()->Load("res/models/Enemy1/enemy1.obj", "shaderCT");
 
-	EnemyManager::Init({
-		{ Enemy::Type::ET1, { Combat(), std::string("res/models/Enemy1/enemy1.obj"), 60, 20, 10 } },
-		{ Enemy::Type::ET2, { Combat(), std::string("res/models/Enemy1/enemy1.obj"), 40, 20, 15 } },
-		{ Enemy::Type::ET3, { Combat(), std::string("res/models/Enemy1/enemy1.obj"), 180, 15, 10 } } 
-		});
-	
-	EnemyManager::Add(Enemy::Type::ET1, Transform(glm::vec3(10, 5, 30)));
+	EnemyManager::GetInstance()->Add<Enemy>(Transform(glm::vec3(10, 0, 30)));
+	EnemyManager::GetInstance()->Add<Enemy_Tank>(Transform(glm::vec3(20, 5, 30)));
 
 	auto horseModel = ModelsLibrary::GetInstance()->Load("res/models/Horse/Horse.obj", "shaderCT");
 	auto offRoadModel = ModelsLibrary::GetInstance()->Load("res/models/OffRoad Car/offroad_car.obj", "shaderCT", {
