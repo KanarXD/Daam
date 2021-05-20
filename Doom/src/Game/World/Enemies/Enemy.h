@@ -26,11 +26,13 @@ protected:
 	Transform transform;
 	Specs activeSpecs;
 	
+	float timer;
+
 public:
 	Enemy(const Transform& transform);
+	virtual void Update(float dt);
 
 	bool PlayerInBound() const;
-	virtual void Update(float dt);
 
 	Transform& GetTransform() { return transform; }
 	RigidBody& GetRigidBody() { return rigidbody; }

@@ -5,7 +5,7 @@
 class EnemyManager
 {
 private:
-	static std::vector<Enemy> enemies;
+	static std::vector<std::unique_ptr<Enemy>> enemies;
 	
 public:
 	static std::shared_ptr<EnemyManager> GetInstance();
@@ -28,7 +28,7 @@ inline void EnemyManager::Add(const Transform& transform)
 {
 	if (std::is_base_of<Enemy, T>::value)
 	{
-		enemies.push_back(T(transform));
+		enemies.push_back(std::make_unique<T>(transform));
 	}
 	else
 	{

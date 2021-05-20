@@ -2,7 +2,7 @@
 #include "EnemyManager.h"
 #include "Renderer/Renderer.h"
 
-std::vector<Enemy> EnemyManager::enemies{};
+std::vector<std::unique_ptr<Enemy>> EnemyManager::enemies{};
 
 std::shared_ptr<EnemyManager> EnemyManager::GetInstance()
 {
@@ -15,7 +15,8 @@ void EnemyManager::Update(float dt)
 	std::vector<int> toErase;
 	for (int i{}; i < enemies.size(); i++)
 	{
-		if (enemies[i].GetSpecs().combat.IsDead()) toErase.push_back(i);
+		if (enemies[i]->GetSpecs().combat.IsDead()) toErase.push_back(i);
+		else enemies[i]->Update(dt);
 	}
 
 	for (int i : toErase) enemies.erase(enemies.begin() + i);
@@ -30,12 +31,12 @@ void EnemyManager::DrawEnemies()
 {
 	for (auto& enemy : enemies)
 	{
-		std::optional<const Model*> model = ModelsLibrary::GetInstance()->Get(enemy.GetSpecs().modelPath);
+		std::optional<const Model*> model = ModelsLibrary::GetInstance()->Get(enemy->GetSpecs().modelPath);
 		if (!model.has_value())
 		{
-			LOGERROR("Enemy Get model: ", enemy.GetSpecs().modelPath);
+			LOGERROR("Enemy Get model: ", enemy->GetSpecs().modelPath);
 			continue;
 		}
-		Renderer::DrawModel(*model.value(), glm::mat4(enemy.GetM()));
+		Renderer::DrawModel(*model.value(), glm::mat4(enemy->GetM()));
 	}
 }

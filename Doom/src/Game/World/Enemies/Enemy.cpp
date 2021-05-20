@@ -10,7 +10,12 @@ Enemy::Specs::Specs(Combat combat, const std::string& modelPath, float fov, floa
 
 
 Enemy::Enemy(const Transform& transform)
-	: rigidbody(), transform(transform), activeSpecs(Enemy::defualtSpecs) {}
+	: rigidbody(), transform(transform), activeSpecs(Enemy::defualtSpecs), timer(0.0f) {}
+
+void Enemy::Update(float dt)
+{
+	transform.Update(rigidbody, dt);
+}
 
 bool Enemy::PlayerInBound() const
 {
@@ -23,11 +28,6 @@ bool Enemy::PlayerInBound() const
 	if (fabs(angDeg) > activeSpecs.fov / 2.0f) return false;
 
 	return true;
-}
-
-void Enemy::Update(float dt)
-{
-	transform.Update(rigidbody, dt);
 }
 
 const glm::mat4& Enemy::GetM() const

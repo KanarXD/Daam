@@ -61,6 +61,7 @@ int main()
 		Renderer::DrawModel(*sportsCar.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)), glm::vec3(1.0f)));
 		*/
 
+		EnemyManager::Update((float)glfwGetTime());
 		EnemyManager::DrawEnemies();
 
 		if (map.has_value())
