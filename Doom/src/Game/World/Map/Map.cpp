@@ -26,17 +26,37 @@ void Map::Draw() const
 
 void Map::CheckPlayerColisions() const
 {
-	const Transform& pt = Player::GetTransform();
+	Transform& pt = Player::GetTransform();
 	int id = 0;
 	for (const Box& box : params.boxes.boxVector)
 	{
-		if (pt.position.x < box.position.x * params.boxes.size + params.boxes.size / 2.0f && pt.position.x > box.position.x * params.boxes.size - params.boxes.size / 2.0f &&
-			pt.position.z < box.position.y * params.boxes.size + params.boxes.size / 2.0f && pt.position.z > box.position.y * params.boxes.size - params.boxes.size / 2.0f )
+		if (pt.position.x - pt.scale.x < box.position.x * params.boxes.size + params.boxes.size / 2.0f &&
+			pt.position.x + pt.scale.x > box.position.x * params.boxes.size - params.boxes.size / 2.0f &&
+			pt.position.z - pt.scale.z < box.position.y * params.boxes.size + params.boxes.size / 2.0f &&
+			pt.position.z + pt.scale.z > box.position.y * params.boxes.size - params.boxes.size / 2.0f)
 		{
+			float distX = pt.position.x - box.position.x * params.boxes.size;
+			float distZ = pt.position.z - box.position.y * params.boxes.size;
+
+			if (fabs(distX) > fabs(distZ)) 
+			{
+				if (distX < 0)
+					pt.position = glm::vec3(box.position.x * params.boxes.size - params.boxes.size / 2.0f - pt.scale.x, pt.position.y, pt.position.z);
+				else
+					pt.position = glm::vec3(box.position.x * params.boxes.size + params.boxes.size / 2.0f + pt.scale.x, pt.position.y, pt.position.z);
+			}
+			else
+			{
+				if (distZ < 0)
+					pt.position = glm::vec3(pt.position.x, pt.position.y, box.position.y * params.boxes.size - params.boxes.size / 2.0f - pt.scale.z);
+				else
+					pt.position = glm::vec3(pt.position.x, pt.position.y, box.position.y * params.boxes.size + params.boxes.size / 2.0f + pt.scale.z);
+			}
 
 			LOGTRACE("collision player pos: ", pt.position.x, pt.position.z);
 			LOGTRACE("box id: ", id, "pos: ", box.position.x, box.position.y);
 		}
+
 		id++;
 	}
 }

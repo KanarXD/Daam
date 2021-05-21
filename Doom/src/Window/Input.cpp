@@ -5,9 +5,9 @@
 
 Input* Input::instance = nullptr;
 
-Input* Input::GetInstance(float mouseSensitivity) 
+Input* Input::GetInstance(bool enableMouse, float mouseSensitivity)
 {
-	if (instance == nullptr) instance = new Input(mouseSensitivity);
+	if (instance == nullptr) instance = new Input(enableMouse, mouseSensitivity);
 	return instance;
 }
 
@@ -16,7 +16,7 @@ void Input::Destroy()
 	delete instance;
 }
 
-Input::Input(float mouseSensitivity) 
+Input::Input(bool enableMouse, float mouseSensitivity)
 {
 	this->mouseSensitivity = mouseSensitivity;
 	this->lastMousePosition = glm::vec2(0);
@@ -24,20 +24,22 @@ Input::Input(float mouseSensitivity)
 	this->mouseFirstTime = true;
 	this->rotX = 0;
 	this->rotY = 0;
-	Setup(Window::GetGLFWwindow());
+	Setup(enableMouse, Window::GetGLFWwindow());
 }
 
 
-void Input::Setup(GLFWwindow* window)
+void Input::Setup(bool enableMouse, GLFWwindow* window)
 {
 	glfwSetKeyCallback(window, KeyCallback);
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
-
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-	glfwSetCursorEnterCallback(window, CursorEnterCallback);
-	glfwSetCursorPosCallback(window, CursorPosCallback);
-	glfwSetMouseButtonCallback(window, MouseButtonCallback);
-	glfwSetScrollCallback(window, ScrollCallback);
+	if (enableMouse)
+	{
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		glfwSetCursorEnterCallback(window, CursorEnterCallback);
+		glfwSetCursorPosCallback(window, CursorPosCallback);
+		glfwSetMouseButtonCallback(window, MouseButtonCallback);
+		glfwSetScrollCallback(window, ScrollCallback);
+	}
 }
 
 void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -71,6 +73,7 @@ void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 
 		case GLFW_KEY_LEFT:
 		case GLFW_KEY_RIGHT:	Player::SetAngularVelocity(false, 0, 1); break;
+
 		case GLFW_KEY_UP:
 		case GLFW_KEY_DOWN:		Player::SetAngularVelocity(false, 1, 0); break;
 		}

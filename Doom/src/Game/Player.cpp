@@ -3,14 +3,15 @@
 
 Player* Player::instance = nullptr;
 
-const Player::StateParams Player::walkParams = Player::StateParams(2.0f, 5.0f, 2.0f);
-const Player::StateParams Player::sprintParams = Player::StateParams(2.0f, 20.0f, 2.0f);
-const Player::StateParams Player::crouchParams = Player::StateParams(2.0f, 2.0f, 1.0f);
+const Player::StateParams Player::walkParams{ 2.0f, 10.0f, 2.0f };
+const Player::StateParams Player::sprintParams{ 2.0f, 20.0f, 2.0f };
+const Player::StateParams Player::crouchParams{ 2.0f, 5.0f, 1.0f };
 
 Player::StateParams Player::activeParams = Player::walkParams;
 
-Transform Player::transform = Transform();
-RigidBody Player::rigidbody = RigidBody();
+Combat Player::combat{};
+Transform Player::transform{};
+RigidBody Player::rigidbody{};
 
 Player::State Player::state = Player::State::Walk;
 

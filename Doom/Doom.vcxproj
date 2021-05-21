@@ -11,6 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\Components\Hitbox.cpp" />
+    <ClCompile Include="src\Game\World\Enemies\Enemy_Tank.cpp" />
+    <ClCompile Include="src\Game\World\Enemies\EnemyManager.cpp" />
+    <ClCompile Include="src\Game\Components\Combat.cpp" />
+    <ClCompile Include="src\Game\World\Enemies\Enemy.cpp" />
     <ClCompile Include="src\Game\World\Map\MapLibrary.cpp" />
     <ClCompile Include="src\Game\World\Map\Map.cpp" />
     <ClCompile Include="src\Game\Components\RigidBody.cpp" />
@@ -76,6 +81,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\Components\Hitbox.h" />
+    <ClInclude Include="src\Game\World\Enemies\Enemy_Tank.h" />
+    <ClInclude Include="src\Game\World\Enemies\EnemyManager.h" />
+    <ClInclude Include="src\Game\Components\Combat.h" />
+    <ClInclude Include="src\Game\World\Enemies\Enemy.h" />
+    <ClInclude Include="src\Game\World\Enemies\EnemySpecs.h" />
     <ClInclude Include="src\Game\World\Map\MapLibrary.h" />
     <ClInclude Include="src\Game\World\Map\Map.h" />
     <ClInclude Include="src\Renderer\DataStructures\CubeMap.h" />

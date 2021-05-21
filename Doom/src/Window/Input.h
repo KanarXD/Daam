@@ -13,12 +13,12 @@ private:
 	float mouseSensitivity;
 
 public:
-	static Input* GetInstance(float mouseSensitivity = 0.1f);
+	static Input* GetInstance(bool enableMouse = false, float mouseSensitivity = 0.1f);
 	static void Destroy();
 
 private:
-	Input(float mouseSensitivity);
-	void Setup(GLFWwindow* window);
+	Input(bool enableMouse, float mouseSensitivity);
+	void Setup(bool enableMouse, GLFWwindow* window);
 
 	void Key(GLFWwindow* window, int key, int scancode, int action, int mods);
 	void CursorEnter(GLFWwindow* window, int entered);
