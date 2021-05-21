@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "EnemyManager.h"
+#include "Game/Components/Hitbox.h"
 #include "Renderer/Renderer.h"
 
 std::vector<std::unique_ptr<Enemy>> EnemyManager::enemies{};
@@ -37,6 +38,18 @@ void EnemyManager::DrawEnemies()
 			LOGERROR("Enemy Get model: ", enemy->GetSpecs().modelPath);
 			continue;
 		}
-		Renderer::DrawModel(*model.value(), glm::mat4(enemy->GetM()));
+
+		Renderer::DrawModel(*model.value(), enemy->GetM());
+
+		if (Hitbox::IsShowHitbox())
+		{
+			std::optional<const Model*> hitbox = ModelsLibrary::GetInstance()->Get(Hitbox::GetModelPath());
+			if (!hitbox.has_value())
+			{
+				LOGERROR("Hitbox Get model: ", Hitbox::GetModelPath());
+				continue;
+			}
+			Renderer::DrawModel(*hitbox.value(), enemy->GetSpecs().hitbox.GetM(enemy->GetTransform()));
+		}
 	}
 }

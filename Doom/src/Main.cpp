@@ -10,6 +10,7 @@
 #include "Renderer/Library/ModelsLibrary.h"
 #include "Game/World/Map/MapLibrary.h"
 #include "Game/Components/Transform.h"
+#include "Game/Components/Hitbox.h"
 #include "Game/World/Enemies/EnemyManager.h"
 
 int main()
@@ -23,6 +24,10 @@ int main()
 	ShadersLibrary::GetInstance()->Load("shaderT", "res/shaders/v_simple_texture.glsl", NULL, "res/shaders/f_simple_texture.glsl");
 	
 	ModelsLibrary::GetInstance()->Load("res/models/Enemy1/enemy1.obj", "shaderCT");
+	ModelsLibrary::GetInstance()->Load("res/models/Hitbox/hitbox.obj", "shaderCT");
+
+	Hitbox::SetShowHitbox(true);
+	Hitbox::InitModelPath("res/models/Hitbox/hitbox.obj");
 
 	EnemyManager::GetInstance()->Add<Enemy>(Transform(glm::vec3(10, 0, 30)));
 	EnemyManager::GetInstance()->Add<Enemy_Tank>(Transform(glm::vec3(20, 5, 30)));

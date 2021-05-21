@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\Components\Hitbox.cpp" />
     <ClCompile Include="src\Game\World\Enemies\Enemy_Tank.cpp" />
     <ClCompile Include="src\Game\World\Enemies\EnemyManager.cpp" />
     <ClCompile Include="src\Game\Components\Combat.cpp" />
@@ -80,6 +81,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\Components\Hitbox.h" />
     <ClInclude Include="src\Game\World\Enemies\Enemy_Tank.h" />
     <ClInclude Include="src\Game\World\Enemies\EnemyManager.h" />
     <ClInclude Include="src\Game\Components\Combat.h" />
@@ -118,7 +120,6 @@
     <Library Include="lib\glfw3.lib" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\Blender\Enemies\enemy1.mtl" />
     <None Include="assimp-vc142-mt.dll" />
     <None Include="lib\assimp-vc142-mt.dll" />
   </ItemGroup>

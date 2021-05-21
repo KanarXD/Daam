@@ -99,6 +99,9 @@
     <ClCompile Include="src\Game\World\Enemies\Enemy_Tank.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\Components\Hitbox.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\DataStructures\Model.h">
@@ -194,6 +197,9 @@
     <ClInclude Include="src\Game\World\Enemies\Enemy_Tank.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="src\Game\Components\Hitbox.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\glew32s.lib" />
@@ -203,7 +209,6 @@
   <ItemGroup>
     <None Include="lib\assimp-vc142-mt.dll" />
     <None Include="assimp-vc142-mt.dll" />
-    <None Include="..\..\..\..\Blender\Enemies\enemy1.mtl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\maps\map1.txt" />
