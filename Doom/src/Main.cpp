@@ -50,16 +50,16 @@ int main()
 		float size = 0.01f;
 
 
-		Renderer::DrawModel(*horseModel.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 2.0f, 0)), glm::vec3(size)));
+		Renderer::DrawModel(*horseModel.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(110.0f, 2.0f, 150)), glm::vec3(size)));
 
-		Renderer::DrawModel(*horseModel.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 2.0f, 10.0f)), glm::vec3(size)));
+		Renderer::DrawModel(*horseModel.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(120.0f, 2.0f, 110.0f)), glm::vec3(size)));
 
-		Renderer::DrawModel(*offRoadModel.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(-10.0f, 1.0f, 0)), glm::vec3(size)));
+		Renderer::DrawModel(*offRoadModel.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(50.0f, 50.0f, 0)), glm::vec3(size)));
 
 
-		Renderer::DrawModel(*person.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(-10.0f, 0, -10.0f)), glm::vec3(1.0f)));
+		Renderer::DrawModel(*person.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(100.0f, 0, 100.0f)), glm::vec3(1.0f)));
 		
-		Renderer::DrawModel(*sportsCar.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)), glm::vec3(1.0f)));
+		Renderer::DrawModel(*sportsCar.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(70.0f, 0, 70.0f)), glm::vec3(1.0f)));
 		
 		if (map.has_value())
 		{
