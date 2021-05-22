@@ -1,8 +1,10 @@
 #pragma once
 #include "Renderer/Camera.h"
 #include "Components/Combat.h"
+#include "Components/Hitbox.h"
 #include "Components/Transform.h"
 #include "Components/RigidBody.h"
+#include "GameObject.h"
 
 class Player
 {
@@ -26,6 +28,7 @@ private:
 	static Player* instance;
 
 	static Combat combat;
+	static Hitbox hitbox;
 	static Transform transform;
 	static RigidBody rigidbody;
 
@@ -39,6 +42,8 @@ public:
 	static void Update(float dt);
 	static void Destroy();
 
+	static void Collision(GameObject& collidedObject);
+
 	static void SetState(State newState);
 
 	static void SetAngularVelocity(bool going, int x, int y);
@@ -51,6 +56,7 @@ public:
 	static const Camera& GetCamera() { return camera; }
 
 	static Combat& GetCombat() { return combat; }
+	static Hitbox& GetHitbox() { return hitbox; }
 	static Transform& GetTransform() { return transform; }
 	static RigidBody& GetRigidBody() { return rigidbody; }
 

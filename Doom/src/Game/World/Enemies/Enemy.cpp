@@ -1,20 +1,24 @@
 #include "pch.h"
 #include "Enemy.h"
 #include "Game/Player.h"
-#include "EnemyManager.h"
 
-Enemy::Specs Enemy::defualtSpecs{ Combat(), Hitbox(glm::vec3(0, 3, 0), glm::vec3(1, 3, 1)), "res/models/base/Base Mesh sculpt 2.obj", 60, 20, 10 };
+Enemy::Specs Enemy::defualtSpecs{ Combat(), 60, 20, 10 };
 
-Enemy::Specs::Specs(const Combat& combat, const Hitbox& hitbox, const std::string& modelPath, float fov, float viewDist, float speed)
-	: combat(combat), hitbox(hitbox), modelPath(modelPath), fov(fov), viewDist(viewDist), speed(speed) {}
+Enemy::Specs::Specs(const Combat& combat, float fov, float viewDist, float speed)
+	: combat(combat), fov(fov), viewDist(viewDist), speed(speed) {}
 
 
-Enemy::Enemy(const Transform& transform)
-	: rigidbody(), transform(transform), activeSpecs(Enemy::defualtSpecs), timer(0.0f) {}
+Enemy::Enemy(const Transform& transform, const std::string& type)
+	: GameObject(transform, type),  rigidbody(), activeSpecs(Enemy::defualtSpecs) {}
 
 void Enemy::Update(float dt)
 {
+	GameObject::Update(dt);
 	transform.Update(rigidbody, dt);
+}
+
+void Enemy::Collision(const GameObject& collidedObject)
+{
 }
 
 bool Enemy::PlayerInBound() const
@@ -29,10 +33,3 @@ bool Enemy::PlayerInBound() const
 
 	return true;
 }
-
-glm::mat4 Enemy::GetM() const
-{
-	return glm::scale(glm::translate(glm::mat4(1.0f), transform.position), transform.scale);
-}
-
-

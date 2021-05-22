@@ -11,9 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\GameObjectManager.cpp" />
+    <ClCompile Include="src\Game\GameObject.cpp" />
     <ClCompile Include="src\Game\Components\Hitbox.cpp" />
     <ClCompile Include="src\Game\World\Enemies\Enemy_Tank.cpp" />
-    <ClCompile Include="src\Game\World\Enemies\EnemyManager.cpp" />
     <ClCompile Include="src\Game\Components\Combat.cpp" />
     <ClCompile Include="src\Game\World\Enemies\Enemy.cpp" />
     <ClCompile Include="src\Game\World\Map\MapLibrary.cpp" />
@@ -21,6 +22,8 @@
     <ClCompile Include="src\Game\Components\RigidBody.cpp" />
     <ClCompile Include="src\Game\Components\Transform.cpp" />
     <ClCompile Include="src\Game\Player.cpp" />
+    <ClCompile Include="src\Game\World\Powerups\Healthkit.cpp" />
+    <ClCompile Include="src\Game\World\Powerups\Powerup.cpp" />
     <ClCompile Include="src\Renderer\DataStructures\CubeMap.cpp" />
     <ClCompile Include="src\Renderer\Camera.cpp" />
     <ClCompile Include="src\Utility\Log.cpp" />
@@ -81,14 +84,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\GameObjectManager.h" />
+    <ClInclude Include="src\Game\GameObjectsModels.h" />
+    <ClInclude Include="src\Game\GameObject.h" />
     <ClInclude Include="src\Game\Components\Hitbox.h" />
+    <ClInclude Include="src\Game\World\Enemies\Enemies.h" />
     <ClInclude Include="src\Game\World\Enemies\Enemy_Tank.h" />
-    <ClInclude Include="src\Game\World\Enemies\EnemyManager.h" />
     <ClInclude Include="src\Game\Components\Combat.h" />
     <ClInclude Include="src\Game\World\Enemies\Enemy.h" />
     <ClInclude Include="src\Game\World\Enemies\EnemySpecs.h" />
     <ClInclude Include="src\Game\World\Map\MapLibrary.h" />
     <ClInclude Include="src\Game\World\Map\Map.h" />
+    <ClInclude Include="src\Game\World\Powerups\Healthkit.h" />
+    <ClInclude Include="src\Game\World\Powerups\Powerup.h" />
+    <ClInclude Include="src\Game\World\Powerups\Powerups.h" />
     <ClInclude Include="src\Renderer\DataStructures\CubeMap.h" />
     <ClInclude Include="src\Game\Components\RigidBody.h" />
     <ClInclude Include="src\Game\Components\Transform.h" />

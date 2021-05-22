@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "Player.h"
+#include "GameObjectsModels.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/Library/ModelsLibrary.h"
 
 Player* Player::instance = nullptr;
 
@@ -10,6 +13,7 @@ const Player::StateParams Player::crouchParams{ 2.0f, 5.0f, 1.0f };
 Player::StateParams Player::activeParams = Player::walkParams;
 
 Combat Player::combat{};
+Hitbox Player::hitbox = GOModels.at("player").hitbox;
 Transform Player::transform{};
 RigidBody Player::rigidbody{};
 
@@ -34,11 +38,38 @@ void Player::Update(float dt)
 
 	transform.Update(rigidbody, dt);
 	camera.SetTransform(transform, activeParams.height);
+
 }
 
 void Player::Destroy()
 {
 	delete instance;
+}
+
+void Player::Collision(GameObject& collidedObject)
+{
+	if (collidedObject.GetType() == "box")
+	{
+		glm::vec3 boxPos = collidedObject.GetTransform().position + collidedObject.GetHitbox().offset;
+		glm::vec3 boxSize = collidedObject.GetTransform().scale * collidedObject.GetHitbox().scaleModifier;
+		float distX = transform.position.x + hitbox.offset.x - boxPos.x;
+		float distZ = transform.position.z + hitbox.offset.z - boxPos.z;
+
+		if (fabs(distX) > fabs(distZ))
+		{
+			if (distX < 0)
+				transform.position.x = boxPos.x - boxSize.x - transform.scale.x * hitbox.scaleModifier.x - hitbox.offset.x;
+			else																						 
+				transform.position.x = boxPos.x + boxSize.x + transform.scale.x * hitbox.scaleModifier.x - hitbox.offset.x;
+		}																								 
+		else
+		{
+			if (distZ < 0)
+				transform.position.z = boxPos.z - boxSize.z - transform.scale.z * hitbox.scaleModifier.z - hitbox.offset.z;
+			else
+				transform.position.z = boxPos.z + boxSize.z + transform.scale.z * hitbox.scaleModifier.z - hitbox.offset.z;
+		}
+	}
 }
 
 void Player::SetState(State newState)
