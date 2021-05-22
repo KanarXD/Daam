@@ -31,9 +31,6 @@ int main()
 	ModelsLibrary::GetInstance()->Load(Hitbox::rdModelPath, "shaderCT");
 	ModelsLibrary::GetInstance()->Load(Hitbox::sqModelPath, "shaderCT");
 
-	GameObjectManager::GetInstance()->Add<Enemy>(Transform(glm::vec3(10, 0, 30)));
-	GameObjectManager::GetInstance()->Add<Enemy_Tank>(Transform(glm::vec3(20, 5, 30)));
-
 	/*
 	auto person = ModelsLibrary::GetInstance()->Load("res/models/base/Base Mesh sculpt 2.obj", "shaderCT");
 	auto horseModel = ModelsLibrary::GetInstance()->Load("res/models/Horse/Horse.obj", "shaderCT");

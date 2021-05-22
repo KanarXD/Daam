@@ -10,6 +10,7 @@ protected:
 	Transform transform;
 	std::string modelPath;
 	std::string type;
+	std::set<std::string> collideWith;
 	double timer;
 
 public:
@@ -21,6 +22,7 @@ public:
 
 	Hitbox& GetHitbox() { return hitbox; }
 	Transform& GetTransform() { return transform; }
-	const std::string& GetType() { return type; }
+	const std::string& GetType() const { return type; }
+	const std::set<std::string>& GetCollideWith() const { return collideWith; }
 };
 

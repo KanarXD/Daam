@@ -70,6 +70,10 @@ void Player::Collision(GameObject& collidedObject)
 				transform.position.z = boxPos.z + boxSize.z + transform.scale.z * hitbox.scaleModifier.z - hitbox.offset.z;
 		}
 	}
+	else if (collidedObject.GetType() == "healthkit")
+	{
+		combat.health = combat.maxHealth;
+	}
 }
 
 void Player::SetState(State newState)

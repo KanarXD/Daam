@@ -5,14 +5,14 @@
 class Powerup : public GameObject
 {
 protected:
-	RigidBody rigidbody;
 	bool isShown{ true };
-	float timeBetweenPickups;
+	const float timeBetweenPickups{ 10.0f };
+	float timeFromLastPickup{ 0.0f };
 
 public:
-	Powerup(const RigidBody& rigidbody, const Transform& transform, float timeBetweenPickups);
+	Powerup(const Transform& transform, const std::string& type = "default");
 	virtual void Update(float dt) override;
-	void Draw() override;
+	virtual void Draw() override;
 
 	virtual void Collision(const GameObject& collidedObject) override;
 };

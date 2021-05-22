@@ -10,6 +10,7 @@ GameObject::GameObject(const Transform& transform, const std::string& type)
 	{
 		hitbox = GOModels.at(type).hitbox;
 		modelPath = GOModels.at(type).modelPath;
+		collideWith = GOModels.at(type).collideWith;
 	}
 }
 
@@ -30,7 +31,7 @@ void GameObject::Draw()
 		}
 
 		Renderer::DrawModel(*model.value(), 
-			glm::scale(glm::translate(glm::mat4(1.0f), transform.position), transform.scale));
+			glm::scale(glm::rotate(glm::translate(glm::mat4(1.0f), transform.position), transform.rotation.y, glm::vec3(0,1,0)), transform.scale));
 	}
 
 	if (Hitbox::showHitbox)

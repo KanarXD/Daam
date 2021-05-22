@@ -19,6 +19,8 @@ public:
 	template <class T> static void Add(const Transform& transform);
 	static void Add(const Transform& transform, const std::string& type);
 	
+	static bool Ray(const glm::vec3& from, float rotY, float length, const std::string& type);
+
 	static void Draw();
 
 private:

@@ -3,6 +3,7 @@
 struct Combat
 {
 	float health;
+	float maxHealth;
 	float attackDamege;
 	float attackTime;
 
