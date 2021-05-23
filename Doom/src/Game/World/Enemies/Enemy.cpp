@@ -48,7 +48,7 @@ bool Enemy::PlayerInBound() const
 	if (angDiff > 180) angDiff -= 360;
 	if (fabs(angDiff) > activeSpecs.fov / 2.0f) return false;
 
-	return GameObjectManager::GetInstance()->Ray(transform.position, ang, dist, "box");
+	return !GameObjectManager::GetInstance()->Ray(transform.position, Player::GetInstance()->GetTransform().position, "box");
 	
 	return true;
 }

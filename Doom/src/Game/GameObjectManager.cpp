@@ -70,20 +70,28 @@ void GameObjectManager::Add(const Transform& transform, const std::string& type)
 	gameObjects.push_back(std::make_unique<GameObject>(transform, type));
 }
 
-bool linesIntersect(glm::vec2 s1, glm::vec2 e1, glm::vec2 s2, glm::vec2 e2)
+bool linesIntersect(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
 {
-	float M = ((e2.y - s2.y) * (e1.x - s1.x) - (e2.x - s2.x) * (e1.y - s1.y));
-	float uA = ((e2.x - s2.x) * (s1.y - s2.y) - (e2.y - s2.y) * (s1.x - s2.x)) / M;
-	float uB = ((e1.y - s1.y) * (s1.y - s2.y) - (e1.y - s1.y) * (s1.x - s2.x)) / M;
+	if (std::max(x1, x2) < std::min(x3, x4)) return false;
 
-	return uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1;
+	float a1 = (y1 - y2) / (x1 - x2);
+	float a2 = (y3 - y4) / (x3 - x4);
+
+	if (a1 == a2) return false;
+
+	float b1 = y1 - a1 * x1;
+	float b2 = y3 - a2 * x3;
+
+	float xA = (b2 - b1) / (a1 - a2);
+
+	if (xA < std::max(std::min(x1, x2), std::min(x3, x4)) ||
+		xA > std::min(std::max(x1, x2), std::max(x3, x4))) return false;
+	
+	return true;
 }
 
-bool GameObjectManager::Ray(const glm::vec3& from, float rotY, float length, const std::string& type)
+bool GameObjectManager::Ray(const glm::vec3& from, const glm::vec3& to, const std::string& type)
 {
-	glm::vec2 rayStart{ from.x, from.z };
-	glm::vec2 rayEnd{ length * sin(rotY) + from.x, length * cos(rotY) + from.z };
-
 	for (auto& gameObject : gameObjects)
 	{
 		if (gameObject->GetType() == type)
@@ -91,16 +99,9 @@ bool GameObjectManager::Ray(const glm::vec3& from, float rotY, float length, con
 			glm::vec3 center = gameObject->GetTransform().position + gameObject->GetHitbox().offset;
 			glm::vec3 size = gameObject->GetTransform().scale * gameObject->GetHitbox().scaleModifier;
 
-			glm::vec2 A{ center.x - size.x, center.z - size.z };
-			glm::vec2 B{ center.x + size.x, center.z - size.z };
-			glm::vec2 C{ center.x - size.x, center.z + size.z };
-			glm::vec2 D{ center.x + size.x, center.z + size.z };
-
-			bool t1 = linesIntersect(rayStart, rayEnd, A, B);
-			bool t2 = linesIntersect(rayStart, rayEnd, A, C);
-			bool t3 = linesIntersect(rayStart, rayEnd, D, B);
-			bool t4 = linesIntersect(rayStart, rayEnd, D, C);
-			if (t1 || t2 || t3 || t4) return true;
+			bool t1 = linesIntersect(from.x, from.z, to.x, to.z, center.x - size.x, center.z - size.z, center.x + size.x, center.z + size.z);
+			bool t2 = linesIntersect(from.x, from.z, to.x, to.z, center.x - size.x, center.z + size.z, center.x + size.x, center.z - size.z);
+			if (t1 || t2) return true;
 		}
 	}
 	return false;
