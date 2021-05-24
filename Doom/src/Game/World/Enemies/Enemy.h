@@ -1,45 +1,37 @@
 #pragma once
+#include "../../GameObject.h"
 #include "EnemySpecs.h"
 #include "Game/Components/Combat.h"
-#include "Game/Components/Hitbox.h"
 #include "Game/Components/RigidBody.h"
-#include "Game/Components/Transform.h"
 
-class Enemy
+class Enemy : public GameObject
 {
 public:
 	struct Specs
 	{
 		Combat combat;
-		Hitbox hitbox;
-		std::string modelPath;
 		float fov;
 		float viewDist;
 		float speed;
 		
-		Specs(const Combat& combat, const Hitbox& hitbox, const std::string& modelPath, float fov, float viewDist, float speed);
-
+		Specs(const Combat& combat, float fov, float viewDist, float speed);
 	};
 
 protected:
 	static Specs defualtSpecs;
 
 	RigidBody rigidbody;
-	Transform transform;
 	Specs activeSpecs;
 	
-	float timer;
-
 public:
-	Enemy(const Transform& transform);
-	virtual void Update(float dt);
+	Enemy(const Transform& transform, const std::string& type = "enemy");
+	virtual void Update(float dt) override;
+
+	virtual void Collision(const GameObject& collidedObject) override;
 
 	bool PlayerInBound() const;
 
-	Transform& GetTransform() { return transform; }
 	RigidBody& GetRigidBody() { return rigidbody; }
 	Specs& GetSpecs() { return activeSpecs; }
-
-	glm::mat4 GetM() const;
 };
 

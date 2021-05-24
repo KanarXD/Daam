@@ -1,10 +1,7 @@
-# Blender MTL File: 'hitbox.blend'
-# Material Count: 1
-
-newmtl Hitbox
+newmtl Default
 Ns 323.999994
 Ka 1.000000 1.000000 1.000000
-Kd 0.024199 0.800000 0.192665
+Kd 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000

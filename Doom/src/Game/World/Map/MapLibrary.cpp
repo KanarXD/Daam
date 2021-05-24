@@ -2,6 +2,7 @@
 #include "MapLibrary.h"
 #include "Renderer/Library/ShadersLibrary.h"
 #include "Renderer/Library/TextureLibrary.h"
+#include "Game/GameObjectManager.h"
 
 std::shared_ptr<MapLibrary> MapLibrary::GetInstance()
 {
@@ -77,9 +78,18 @@ std::optional<const Map*> MapLibrary::Load(const std::string& mapPath)
         j = 0;
         for (char& x : params["boxMap:"][key])
         {
-            if (x == 'O') {
-                boxVector.push_back({ float(i), float(j) });
+            switch (x)
+            {
+                // obstacles
+            case 'O': boxVector.push_back({ float(i), float(j) }); break;
+                // healthkit
+            case 'H': GameObjectManager::GetInstance()->Add<Healthkit>(Transform(glm::vec3(i * boxSize, 1.5f, j * boxSize))); break;
+                // enemy
+            case 'N': GameObjectManager::GetInstance()->Add<Enemy>(Transform(glm::vec3(i * boxSize, 0, j * boxSize))); break;
+                // enemy tank
+            case 'T': GameObjectManager::GetInstance()->Add<Enemy_Tank>(Transform(glm::vec3(i * boxSize, 5, j * boxSize))); break;
             }
+
             j++;
         }
         key = std::to_string(++i) + ":";

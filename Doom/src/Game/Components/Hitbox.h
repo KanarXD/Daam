@@ -2,22 +2,18 @@
 #include "pch.h"
 #include "Transform.h"
 
-class Hitbox
-{
-private:
+struct Hitbox
+{ 
 	static bool showHitbox;
-	static std::string modelPath;
+	static std::string rdModelPath;
+	static std::string sqModelPath;
 
 	glm::vec3 offset;
 	glm::vec3 scaleModifier;
+	bool useRound;
 
-public:
-	Hitbox(const glm::vec3& offset, const glm::vec3& scaleModifier);
-	glm::mat4 GetM(const Transform& objTransform) const;
+	Hitbox(const glm::vec3& offset = glm::vec3(0), const glm::vec3& scaleModifier = glm::vec3(1), bool useRound = true);
 
-	static bool IsShowHitbox() { return showHitbox; }
-	static void SetShowHitbox(bool showHitbox) { Hitbox::showHitbox = showHitbox; }
-	static void InitModelPath(const std::string& modelPath) { Hitbox::modelPath = modelPath; }
-	static const std::string& GetModelPath() { return modelPath; };
+	static bool CollisionDetection(const Transform& tA, const Hitbox& hA, const Transform& tB, const Hitbox& hB);
 };
 

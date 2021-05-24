@@ -3,12 +3,16 @@
 
 #include "Renderer/Renderer.h"
 #include "Game/Player.h"
-
+#include "Game/GameObjectManager.h"
 
 
 Map::Map(const std::string& name, Params& mapParams)
 	: LibraryElement(name), params(std::move(mapParams))
 {
+	for (const auto& box : params.boxes.boxVector)
+	{
+		GameObjectManager::Add(Transform(glm::vec3(box.position.x * params.boxes.size, 0, box.position.y * params.boxes.size)), "box");
+	}
 }
 
 void Map::Draw() const
@@ -38,7 +42,7 @@ void Map::CheckPlayerColisions() const
 			float distX = pt.position.x - box.position.x * params.boxes.size;
 			float distZ = pt.position.z - box.position.y * params.boxes.size;
 
-			if (fabs(distX) > fabs(distZ)) 
+			if (fabs(distX) > fabs(distZ))
 			{
 				if (distX < 0)
 					pt.position = glm::vec3(box.position.x * params.boxes.size - params.boxes.size / 2.0f - pt.scale.x, pt.position.y, pt.position.z);
@@ -53,8 +57,8 @@ void Map::CheckPlayerColisions() const
 					pt.position = glm::vec3(pt.position.x, pt.position.y, box.position.y * params.boxes.size + params.boxes.size / 2.0f + pt.scale.z);
 			}
 
-			LOGTRACE("collision player pos: ", pt.position.x, pt.position.z);
-			LOGTRACE("box id: ", id, "pos: ", box.position.x, box.position.y);
+			// LOGTRACE("collision player pos: ", pt.position.x, pt.position.z);
+			// LOGTRACE("box id: ", id, "pos: ", box.position.x, box.position.y);
 		}
 
 		id++;

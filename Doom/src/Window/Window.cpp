@@ -47,6 +47,8 @@ void Window::Create(const std::string& title, uint32_t width, uint32_t height)
 
 	glClearColor(0, 0, 0, 1);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	LOGINFO("OPENGL VERSION:", glGetString(GL_VERSION));
 
