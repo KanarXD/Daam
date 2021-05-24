@@ -12,5 +12,4 @@ Enemy_Tank::Enemy_Tank(const Transform& transform, const std::string& type)
 void Enemy_Tank::Update(float dt)
 {
 	Enemy::Update(dt);
-	transform.position.y += sin(timer * 2) / 30;
 }

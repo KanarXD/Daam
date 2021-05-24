@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\World\Enemies\Enemy_Boss.cpp" />
+    <ClCompile Include="src\Game\World\Enemies\Enemy_Fast.cpp" />
     <ClCompile Include="src\Game\GameObjectManager.cpp" />
     <ClCompile Include="src\Game\GameObject.cpp" />
     <ClCompile Include="src\Game\Components\Hitbox.cpp" />
@@ -84,6 +86,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\World\Enemies\Enemy_Boss.h" />
+    <ClInclude Include="src\Game\World\Enemies\Enemy_Fast.h" />
     <ClInclude Include="src\Game\GameObjectManager.h" />
     <ClInclude Include="src\Game\GameObjectsModels.h" />
     <ClInclude Include="src\Game\GameObject.h" />

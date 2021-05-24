@@ -12,7 +12,7 @@ Enemy::Specs::Specs(const Combat& combat, float fov, float viewDist, float speed
 Enemy::Enemy(const Transform& transform, const std::string& type)
 	: GameObject(transform, type),  rigidbody(), activeSpecs(Enemy::defualtSpecs) 
 {
-	this->transform.rotation.y = float(rand() % 100) / 24;
+	// this->transform.rotation.y = float(rand() % 100) / 24;
 }
 
 void Enemy::Update(float dt)
@@ -22,11 +22,12 @@ void Enemy::Update(float dt)
 	{
 		glm::vec3 playerPos = Player::GetTransform().position;
 		transform.rotation.y = atan2(playerPos.x - transform.position.x, playerPos.z - transform.position.z);
-		rigidbody.velocity.z = activeSpecs.speed;
+		// rigidbody.velocity.z = activeSpecs.speed;
 	}
 	else
 		rigidbody.velocity.z = 0;
 	transform.Update(rigidbody, dt);
+	transform.position.y += sin(timer * 2) / 50;
 }
 
 void Enemy::Collision(const GameObject& collidedObject)
