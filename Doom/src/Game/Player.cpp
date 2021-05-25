@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "Player.h"
-#include "GameObjectsModels.h"
+#include "GameObjectManager.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Library/ModelsLibrary.h"
+#include "Arsenal/Bullet.h"
 
 Player* Player::instance = nullptr;
 
@@ -12,7 +13,7 @@ const Player::StateParams Player::crouchParams{ 2.0f, 15.0f, 2.0f };
 
 Player::StateParams Player::activeParams = Player::walkParams;
 
-Combat Player::combat{ 1000, 30, 0.5f };
+Combat Player::combat{ 1000, 30, 0.1f };
 Hitbox Player::hitbox = GOModels.at("player").hitbox;
 Transform Player::transform{};
 RigidBody Player::rigidbody{};
@@ -21,6 +22,9 @@ Player::State Player::state = Player::State::Walk;
 
 Camera Player::camera = Camera(Transform(), 50.0f);
 
+float Player::timer{};
+float Player::lastShootTime{};
+
 void Player::Init(Transform startingTransform)
 {
 	if (instance == nullptr) instance = new Player(startingTransform);
@@ -28,6 +32,7 @@ void Player::Init(Transform startingTransform)
 
 void Player::Update(float dt)
 {
+	timer += dt;
 	if (transform.position.y > 0)
 		rigidbody.velocity.y -= 2 * Consts::G * dt;
 	else if (transform.position.y < 0)
@@ -109,11 +114,19 @@ void Player::Jump()
 	rigidbody.velocity.y = 10.0f;
 }
 
+void Player::Shoot()
+{
+	if (timer - lastShootTime > combat.attackTime)
+	{
+		lastShootTime = timer;
+		GameObjectManager::GetInstance()->Add<Bullet>(
+			Transform(transform.position + glm::vec3(0, activeParams.height - 0.5f, 0), transform.rotation, glm::vec3(5)));
+	}
+}
+
 void Player::LookAt(glm::vec3 front)
 {
-	// transform.rotation.x = atan2(front.z, front.y);
 	transform.rotation.y = atan2(front.x, front.z);
-	// transform.rotation.z = atan2(front.y, front.x);
 }
 
 Player::Player(Transform startingTransform)

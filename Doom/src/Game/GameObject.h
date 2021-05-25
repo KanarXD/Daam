@@ -19,6 +19,7 @@ public:
 	virtual void Draw();
 
 	virtual void Collision(const GameObject& collidedObject) {};
+	virtual void Collision(const std::string& collidedObjectType) {};
 
 	Hitbox& GetHitbox() { return hitbox; }
 	Transform& GetTransform() { return transform; }

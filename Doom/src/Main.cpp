@@ -13,6 +13,7 @@
 #include "Game/Components/Hitbox.h"
 #include "Game/GameObjectManager.h"
 #include "Game/World/Enemies/Spawner.h"
+#include "Game/Arsenal/Bullet.h"
 
 int main()
 {
@@ -48,12 +49,7 @@ int main()
 	*/
 	auto map = MapLibrary::GetInstance()->Load("res/maps/map1.txt");
 
-	/*
-	for (int i{}; i < 10; i++)
-		for (int j{}; j < 10; j++)
-			GameObjectManager::GetInstance()->Add<Enemy_Boss>(Transform(glm::vec3(i * 4 + 10, 10, j * 4 + 10)));
-			*/
-
+	
 	LOGINFO("drawing...");
 	glfwSetTime(0);
 	float dt = 0;

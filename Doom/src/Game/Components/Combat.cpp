@@ -4,11 +4,6 @@
 Combat::Combat(float health, float attackDamege, float attackTime)
 	: health(health), maxHealth(health), attackDamege(attackDamege), attackTime(attackTime) {}
 
-void Combat::TakeDamage(float damage)
-{
-	health -= damage;
-}
-
 float Combat::DealDamage() const
 {
 	return attackDamege;

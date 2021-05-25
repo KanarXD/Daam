@@ -30,7 +30,7 @@ public:
 	virtual void Update(float dt) override;
 	void Draw() override;
 
-	virtual void Collision(const GameObject& collidedObject) override;
+	virtual void Collision(const std::string& collidedObjectType) override;
 
 	bool PlayerInBound(const glm::vec3& playerPos, float angToPlayer) const;
 

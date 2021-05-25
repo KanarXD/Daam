@@ -2,6 +2,7 @@
 #include "GameObjectManager.h"
 #include "Renderer/Renderer.h"
 #include "World/Enemies/Types/Enemy.h"
+#include "Arsenal/Bullet.h"
 #include "World/Enemies/Spawner.h"
 
 std::vector<std::unique_ptr<GameObject>> GameObjectManager::gameObjects{};
@@ -20,40 +21,52 @@ std::shared_ptr<GameObjectManager> GameObjectManager::GetInstance()
 
 void GameObjectManager::Update(float dt)
 {
-	std::vector<int> toErase;
 	std::vector<std::string> enemiesTypes{ "enemy", "enemy_fast", "enemy_tank", "enemy_boss" };
-	for (int i{}; i < gameObjects.size(); i++)
+
+	for (auto it = gameObjects.begin(); it != gameObjects.end(); it++)
 	{
-		if (std::find(enemiesTypes.begin(), enemiesTypes.end(), gameObjects[i]->GetType()) != enemiesTypes.end())
+		if (std::find(enemiesTypes.begin(), enemiesTypes.end(),  (*it).get()->GetType()) != enemiesTypes.end())
 		{
-			if (dynamic_cast<Enemy*>(gameObjects[i].get())->GetSpecs().combat.IsDead())
+			if (dynamic_cast<Enemy*>((*it).get())->GetSpecs().combat.IsDead())
 			{
-				toErase.push_back(i);
+				gameObjects.erase(it--);
 				Spawner::GetInstance()->EnemyKilled();
 			}
-			else gameObjects[i]->Update(dt);
+			else (*it).get()->Update(dt);
+		}
+		else if ((*it).get()->GetType() == "bullet")
+		{
+			if (dynamic_cast<Bullet*>((*it).get())->IsHit())
+			{
+				gameObjects.erase(it--);
+			}
+			else (*it).get()->Update(dt);
 		}
 		else
 		{
-			gameObjects[i]->Update(dt);
+			(*it).get()->Update(dt);
 		}
 	}
-
-	for (int i : toErase) gameObjects.erase(gameObjects.begin() + i);
 
 	// Collisions
 	for (int i{}; i < gameObjects.size(); i++)
 	{
+		if (gameObjects[i]->GetType() == "bullet")
+			if (dynamic_cast<Bullet*>(gameObjects[i].get())->IsHit()) continue;
+
 		for (int j = i + 1; j < gameObjects.size(); j++)
 		{
+			if (gameObjects[j]->GetType() == "bullet")
+				if (dynamic_cast<Bullet*>(gameObjects[j].get())->IsHit()) continue;
+
 			if (gameObjects[i]->GetCollideWith().find(gameObjects[j]->GetType()) != gameObjects[i]->GetCollideWith().end())
 			{
 				if (Hitbox::CollisionDetection(
 					gameObjects[i]->GetTransform(), gameObjects[i]->GetHitbox(),
 					gameObjects[j]->GetTransform(), gameObjects[j]->GetHitbox()))
 				{
-					gameObjects[i]->Collision(*gameObjects[j]);
-					gameObjects[j]->Collision(*gameObjects[i]);
+					gameObjects[i]->Collision(gameObjects[j]->GetType());
+					gameObjects[j]->Collision(gameObjects[i]->GetType());
 				}
 			}
 		}
@@ -62,6 +75,7 @@ void GameObjectManager::Update(float dt)
 	// Collisions with player
 	for (int i{}; i < gameObjects.size(); i++)
 	{
+		if (gameObjects[i]->GetCollideWith().find("player") != gameObjects[i]->GetCollideWith().end())
 		if (Hitbox::CollisionDetection(gameObjects[i]->GetTransform(), gameObjects[i]->GetHitbox(), Player::GetTransform(), Player::GetHitbox()))
 		{
 			gameObjects[i]->Collision(GameObject(Player::GetTransform(), "player"));

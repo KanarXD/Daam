@@ -36,6 +36,9 @@ private:
 	
 	static Camera camera;
 
+	static float timer;
+	static float lastShootTime;
+
 public:
 	static void Init(Transform startingTransform = Transform());
 	static Player* GetInstance() { return instance; }
@@ -50,6 +53,8 @@ public:
 	static void SetVelocity(bool going, int x, int z);
 
 	static void Jump();
+
+	static void Shoot();
 
 	static void LookAt(glm::vec3 front);
 

@@ -17,9 +17,9 @@ void Powerup::Draw()
 	if (isShown) GameObject::Draw();
 }
 
-void Powerup::Collision(const GameObject& collidedObject)
+void Powerup::Collision(const std::string& collidedObjectType)
 {
-	if (collidedObject.GetType() == "player") 
+	if (collidedObjectType == "player")
 	{
 		timeFromLastPickup = timer;
 		isShown = false;

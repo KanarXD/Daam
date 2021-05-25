@@ -39,7 +39,7 @@ void Enemy::Update(float dt)
 		rigidbody.velocity.z = 0;
 		healthbar.draw = false;
 	}
-	activeSpecs.combat.health -= 5;
+	// activeSpecs.combat.health -= 5;
 	transform.Update(rigidbody, dt);
 	healthbar.scaleX = activeSpecs.combat.health / activeSpecs.combat.maxHealth;
 	transform.position.y += sin(timer * 2) / 50;
@@ -63,8 +63,12 @@ void Enemy::Draw()
 	}
 }
 
-void Enemy::Collision(const GameObject& collidedObject)
+void Enemy::Collision(const std::string& collidedObjectType)
 {
+	if (collidedObjectType == "bullet")
+	{
+		activeSpecs.combat.health -= Player::GetInstance()->GetCombat().DealDamage();
+	}
 }
 
 bool Enemy::PlayerInBound(const glm::vec3& playerPos, float angToPlayer) const

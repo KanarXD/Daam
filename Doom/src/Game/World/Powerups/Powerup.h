@@ -14,6 +14,6 @@ public:
 	virtual void Update(float dt) override;
 	virtual void Draw() override;
 
-	virtual void Collision(const GameObject& collidedObject) override;
+	virtual void Collision(const std::string& collidedObjectType) override;
 };
 
