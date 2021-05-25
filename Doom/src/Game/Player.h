@@ -26,8 +26,6 @@ private:
 	const Player::StateParams crouchParams{ 2.0f, 5.0f, 1.0f };
 	StateParams activeParams = walkParams;
 
-	Player* instance;
-
 	Combat combat;
 	Hitbox hitbox = GOModels.at("player").hitbox;
 	Transform transform;

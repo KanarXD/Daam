@@ -21,8 +21,9 @@ int main()
 	auto gameObjectManager = GameObjectManager::GetInstance();
 
 	window->Create("DOOM", 800, 600);
-	player->SetTransform(Transform(glm::vec3(10, 0, 15), glm::vec3(0), glm::vec3(1)));
+	player->SetTransform(Transform(glm::vec3(400.0f, 0, 400.0f), glm::vec3(0), glm::vec3(1)));
 	Input::GetInstance();
+
 
 	ShadersLibrary::GetInstance()->Load("shaderCT", "res/shaders/v_simple_texture_color.glsl", NULL, "res/shaders/f_simple_texture_color.glsl");
 	ShadersLibrary::GetInstance()->Load("shaderD", "res/shaders/v_debug.glsl", NULL, "res/shaders/f_debug.glsl");
@@ -54,7 +55,7 @@ int main()
 	auto map = MapLibrary::GetInstance()->Load("res/maps/map1.txt");
 
 	Renderer::AddLightSource({ 300.0f, 200.0f, 300.0f });
-	Renderer::LightSource* ls = Renderer::AddLightSource({100.0f, 100.0f, 100.0f });
+	//Renderer::LightSource* ls = Renderer::AddLightSource({100.0f, 100.0f, 100.0f });
 
 	LOGINFO("drawing...");
 	glfwSetTime(0);
@@ -66,25 +67,15 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		player->Update(dt);
-		ls->position = { player->GetTransform().position.x, player->GetTransform().position.y + 20.0f, player->GetTransform().position.z };
+		//ls->position = { player->GetTransform().position.x, player->GetTransform().position.y + 20.0f, player->GetTransform().position.z };
 
 		Renderer::SetProjection(player->GetCamera(), window->GetAspectRatio());
 		Renderer::SetCamera(player->GetCamera());
 
-		/*
-		Renderer::DrawModel(*horseModel.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 2.0f, 0)), glm::vec3(size)));
-		Renderer::DrawModel(*horseModel.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 2.0f, 10.0f)), glm::vec3(size)));
-		Renderer::DrawModel(*offRoadModel.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(-10.0f, 1.0f, 0)), glm::vec3(size)));
-		Renderer::DrawModel(*sportsCar.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)), glm::vec3(1.0f)));
-		*/
-		if (person.has_value())	Renderer::DrawModel(*person.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(50.0f, 0, 50.0f)), glm::vec3(10.0f)));
 
-
-		//gameObjectManager->Update(dt);
+		gameObjectManager->Update(dt);
 		gameObjectManager->Draw();
-		GameObjectManager::GetInstance()->Update(dt);
 		Spawner::GetInstance()->Update(dt);
-		GameObjectManager::GetInstance()->Draw();
 		Spawner::GetInstance()->Draw();
 
 		if (map.has_value()) map.value()->Draw();

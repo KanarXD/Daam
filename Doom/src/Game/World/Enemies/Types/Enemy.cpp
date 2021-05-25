@@ -20,7 +20,7 @@ Enemy::Enemy(const Transform& transform, const std::string& type)
 void Enemy::Update(float dt)
 {
 	GameObject::Update(dt);
-	glm::vec3 playerPos = Player::GetTransform().position;
+	glm::vec3 playerPos = Player::GetInstance()->GetTransform().position;
 	float inRange = glm::distance(transform.position, playerPos) < activeSpecs.viewDist;
 	float angToPlayer = atan2(playerPos.x - transform.position.x, playerPos.z - transform.position.z);
 	if (inRange)

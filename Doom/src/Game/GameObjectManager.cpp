@@ -4,8 +4,6 @@
 #include "World/Enemies/Types/Enemy.h"
 #include "World/Enemies/Spawner.h"
 
-std::vector<std::unique_ptr<GameObject>> GameObjectManager::gameObjects{};
-
 template<typename Base, typename T>
 inline bool instanceof(const T*)
 {
