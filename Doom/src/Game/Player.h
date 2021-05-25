@@ -35,6 +35,10 @@ private:
 	
 	Camera camera = Camera(Transform(), 50.0f);;
 
+	static State state;
+	
+	static Camera camera;
+
 public:
 	static std::shared_ptr<Player> GetInstance();
 
@@ -50,6 +54,9 @@ public:
 	void Jump();
 
 	void LookAt(glm::vec3 front);
+	static void Shoot();
+
+	static void LookAt(glm::vec3 front);
 
 	const Camera& GetCamera() { return camera; }
 

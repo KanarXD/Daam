@@ -90,6 +90,8 @@ void Spawner::SpawnEnemy()
 	while (glm::distance(glm::vec3(portals[spawnLocation].basePos.x, 2, portals[spawnLocation].basePos.z), Player::GetInstance()->GetTransform().position) < 10)
 		spawnLocation = loc(rng);
 
+	currentWave.enemyToSpawn[enemyType]--;
+
 	switch (enemyType)
 	{
 	case 0: GameObjectManager::GetInstance()->Add<Enemy>(Transform(glm::vec3(portals[spawnLocation].basePos.x, 2, portals[spawnLocation].basePos.z))); break;

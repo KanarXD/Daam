@@ -43,7 +43,41 @@ void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 	else if (mods == GLFW_MOD_CONTROL) player->SetState(Player::State::Crouch);
 	else player->SetState(Player::State::Walk);
 
+	if (action == GLFW_PRESS) {
+		switch (key) {
+		case GLFW_KEY_W:		Player::SetVelocity(true, 0, 1);	break;
+		case GLFW_KEY_S:		Player::SetVelocity(true, 0, -1);	break;
+		case GLFW_KEY_A:		Player::SetVelocity(true, 1, 0);	break;
+		case GLFW_KEY_D:		Player::SetVelocity(true, -1, 0);	break;
 
+		case GLFW_KEY_LEFT:		Player::SetAngularVelocity(true, 0, 1);	break;
+		case GLFW_KEY_RIGHT:	Player::SetAngularVelocity(true, 0, -1);	break;
+		case GLFW_KEY_UP:		Player::Jump();	break;
+
+		case GLFW_KEY_SPACE:    Player::Shoot(); break;
+		}
+	}
+
+	if (action == GLFW_REPEAT)
+	{
+		switch (key) {
+		case GLFW_KEY_SPACE:    Player::Shoot(); break;
+		}
+	}
+
+
+	if (action == GLFW_RELEASE) {
+		switch (key) {
+		case GLFW_KEY_W:
+		case GLFW_KEY_S:		Player::SetVelocity(false, 0, 1); break;
+		case GLFW_KEY_A:
+		case GLFW_KEY_D:		Player::SetVelocity(false, 1, 0); break;
+
+		case GLFW_KEY_LEFT:
+		case GLFW_KEY_RIGHT:	Player::SetAngularVelocity(false, 0, 1); break;
+		}
+	}
+	/*
 	if (action == GLFW_PRESS) {
 		switch (key) {
 		case GLFW_KEY_W:		player->SetVelocity(true,  0,  1);	break;
@@ -73,6 +107,7 @@ void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 		case GLFW_KEY_DOWN:		player->SetAngularVelocity(false, 1, 0); break;
 		}
 	}
+	*/
 }
 
 void Input::CursorEnter(GLFWwindow* window, int entered)

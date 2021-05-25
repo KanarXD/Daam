@@ -12,36 +12,40 @@ struct ModelSpec
 };
 
 const static std::unordered_map<std::string, ModelSpec> GOModels{
-	{ "default", { 
-		{ glm::vec3(0, 1, 0), glm::vec3(1, 2, 1) },	
-		{  }, 
+	{ "default", {
+		{ glm::vec3(0, 1, 0), glm::vec3(1, 2, 1) },
+		{  },
 		"res/models/_default/_default.obj" , "shaderCT" } },
-	{ "player",	{ 
+	{ "player",	{
 		{ glm::vec3(0, 2, 0), glm::vec3(1, 2, 1) },
-		{ "box", "healthkit", "enemy", "enemy_tank" },
+		{ "box", "healthkit", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },
 		"", "" } },
-	{ "enemy", { 
+	{ "enemy", {
 		{ glm::vec3(0, 0, 0), glm::vec3(1.5f) },
-		{ "box", "player", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },		
+		{ "box", "bullet", "player", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },
 		"res/models/Enemies/enemy.obj", "shaderCT" } },
 	{ "enemy_fast", {
 		{ glm::vec3(0, 0, 0), glm::vec3(1.5f) },
-		{ "box", "player", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },
+		{ "box", "bullet", "player", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },
 		"res/models/Enemies/enemy_fast.obj", "shaderCT" } },
-	{ "enemy_tank",	{ 
-		{ glm::vec3(0, 0, 0), glm::vec3(2) }, 
-		{ "box", "player", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },
+	{ "enemy_tank",	{
+		{ glm::vec3(0, 0, 0), glm::vec3(2) },
+		{ "box", "bullet", "player", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },
 		"res/models/Enemies/enemy_tank.obj", "shaderCT" } },
 	{ "enemy_boss",	{
 		{ glm::vec3(0, 0, 0), glm::vec3(2.5f) },
-		{ "box", "player", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },
+		{ "box", "bullet", "player", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },
 		"res/models/Enemies/enemy_boss.obj", "shaderCT" } },
-	{ "healthkit", { 
-		{ glm::vec3(0), glm::vec3(0.4f, 0.2f, 0.4f) },	
+	{ "healthkit", {
+		{ glm::vec3(0), glm::vec3(0.4f, 0.2f, 0.4f) },
 		{ "player" },
 		"res/models/Powerups/healthkit.obj", "shaderCT" } },
+	{ "bullet", {
+		{ glm::vec3(0), glm::vec3(0.05f), false },
+		{ "box", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },
+		"res/models/Bullet/bullet.obj", "shaderCT" } },
 	{ "box", { 
 		{ glm::vec3(0, 5, 0), glm::vec3(5.0f), false },
-		{ "player", "enemy", "enemy_tank" }, 
+		{ "player", "bullet", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },
 		"", "" } }
 };

@@ -13,6 +13,7 @@
 #include "Game/Components/Hitbox.h"
 #include "Game/GameObjectManager.h"
 #include "Game/World/Enemies/Spawner.h"
+#include "Game/Arsenal/Bullet.h"
 
 int main()
 {
@@ -41,8 +42,9 @@ int main()
 	ModelsLibrary::GetInstance()->Load(Healthbar::modelPath, "shaderCT");
 	ModelsLibrary::GetInstance()->Load(Spawner::modelPath, "shaderCT");
 
-	auto person = ModelsLibrary::GetInstance()->Load("res/models/base/Base Mesh sculpt 2.obj", "shaderCTL");
-	/*auto horseModel = ModelsLibrary::GetInstance()->Load("res/models/Horse/Horse.obj", "shaderCT");
+	/*
+	auto person = ModelsLibrary::GetInstance()->Load("res/models/base/Base Mesh sculpt 2.obj", "shaderCT");
+	auto horseModel = ModelsLibrary::GetInstance()->Load("res/models/Horse/Horse.obj", "shaderCT");
 	auto offRoadModel = ModelsLibrary::GetInstance()->Load("res/models/OffRoad Car/offroad_car.obj", "shaderCT", {
 		{ 0, "Texture/Body.png" },
 		{ 1, "Texture/Rim.png" },

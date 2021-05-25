@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "Player.h"
-#include "GameObjectsModels.h"
+#include "GameObjectManager.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Library/ModelsLibrary.h"
+#include "Arsenal/Bullet.h"
 
 
 std::shared_ptr<Player> Player::GetInstance()
@@ -18,6 +19,7 @@ void Player::SetTransform(Transform startingTransform)
 
 void Player::Update(float dt)
 {
+	timer += dt;
 	if (transform.position.y > 0)
 		rigidbody.velocity.y -= 2 * Consts::G * dt;
 	else if (transform.position.y < 0)
@@ -94,11 +96,19 @@ void Player::Jump()
 	rigidbody.velocity.y = 10.0f;
 }
 
+void Player::Shoot()
+{
+	if (timer - lastShootTime > combat.attackTime)
+	{
+		lastShootTime = timer;
+		GameObjectManager::GetInstance()->Add<Bullet>(
+			Transform(transform.position + glm::vec3(0, activeParams.height - 0.5f, 0), transform.rotation, glm::vec3(5)));
+	}
+}
+
 void Player::LookAt(glm::vec3 front)
 {
-	// transform.rotation.x = atan2(front.z, front.y);
 	transform.rotation.y = atan2(front.x, front.z);
-	// transform.rotation.z = atan2(front.y, front.x);
 }
 
 void Player::UpdateVelocity()
