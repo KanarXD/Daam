@@ -3,25 +3,23 @@
 class Window
 {
 private:
-	static GLFWwindow* window;
-	static std::string title;
-	static uint32_t width;
-	static uint32_t height;
-	static float aspectRatio;
+	GLFWwindow* window = nullptr;
+	std::string title = "";
+	uint32_t width = 0;
+	uint32_t height = 0;
+	float aspectRatio = 1.0f;
 public:
-	static void Create(const std::string& title, uint32_t width, uint32_t height);
+	static std::shared_ptr<Window> GetInstance();
 
-	static void Destroy();
+	~Window();
 
-	static inline GLFWwindow* GetGLFWwindow() { return window; }
+	void Create(const std::string& title, uint32_t width, uint32_t height);
 
-	static const std::string& GetTitle() { return title; }
-
-	static inline uint32_t GetWidth() { return width; }
-
-	static inline uint32_t GetHeight() { return height; }
-
-	static inline float GetAspectRatio() { return aspectRatio; }
+	inline GLFWwindow* GetGLFWwindow() const { return window; }
+	inline const std::string& GetTitle() const { return title; }
+	inline uint32_t GetWidth() const { return width; }
+	inline uint32_t GetHeight() const { return height; }
+	inline float GetAspectRatio() const { return aspectRatio; }
 
 private:
 	static void WindowResizeCallback(GLFWwindow* window, int width, int height);

@@ -5,15 +5,10 @@
 
 Input* Input::instance = nullptr;
 
-Input* Input::GetInstance(bool enableMouse, float mouseSensitivity)
+std::shared_ptr<Input> Input::GetInstance(bool enableMouse, float mouseSensitivity)
 {
-	if (instance == nullptr) instance = new Input(enableMouse, mouseSensitivity);
-	return instance;
-}
-
-void Input::Destroy() 
-{
-	delete instance;
+	static std::shared_ptr<Input> InputInstance(new Input(enableMouse, mouseSensitivity));
+	return InputInstance;
 }
 
 Input::Input(bool enableMouse, float mouseSensitivity)
@@ -24,9 +19,8 @@ Input::Input(bool enableMouse, float mouseSensitivity)
 	this->mouseFirstTime = true;
 	this->rotX = 0;
 	this->rotY = 0;
-	Setup(enableMouse, Window::GetGLFWwindow());
+	Setup(enableMouse, Window::GetInstance()->GetGLFWwindow());
 }
-
 
 void Input::Setup(bool enableMouse, GLFWwindow* window)
 {
@@ -44,38 +38,39 @@ void Input::Setup(bool enableMouse, GLFWwindow* window)
 
 void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	if (mods == GLFW_MOD_SHIFT) Player::SetState(Player::State::Sprint);
-	else if (mods == GLFW_MOD_CONTROL) Player::SetState(Player::State::Crouch);
-	else Player::SetState(Player::State::Walk);
+	auto player = Player::GetInstance();
+	if (mods == GLFW_MOD_SHIFT) player->SetState(Player::State::Sprint);
+	else if (mods == GLFW_MOD_CONTROL) player->SetState(Player::State::Crouch);
+	else player->SetState(Player::State::Walk);
 
 
 	if (action == GLFW_PRESS) {
 		switch (key) {
-		case GLFW_KEY_W:		Player::SetVelocity(true,  0,  1);	break;
-		case GLFW_KEY_S:		Player::SetVelocity(true,  0, -1);	break;
-		case GLFW_KEY_A:		Player::SetVelocity(true,  1,  0);	break;
-		case GLFW_KEY_D:		Player::SetVelocity(true, -1,  0);	break;
+		case GLFW_KEY_W:		player->SetVelocity(true,  0,  1);	break;
+		case GLFW_KEY_S:		player->SetVelocity(true,  0, -1);	break;
+		case GLFW_KEY_A:		player->SetVelocity(true,  1,  0);	break;
+		case GLFW_KEY_D:		player->SetVelocity(true, -1,  0);	break;
 
-		case GLFW_KEY_LEFT:		Player::SetAngularVelocity(true,  0,  1);	break;
-		case GLFW_KEY_RIGHT:	Player::SetAngularVelocity(true,  0, -1);	break;
-		case GLFW_KEY_UP:		Player::SetAngularVelocity(true, -1,  0);	break;
-		case GLFW_KEY_DOWN:		Player::SetAngularVelocity(true,  1,  0);	break;
+		case GLFW_KEY_LEFT:		player->SetAngularVelocity(true,  0,  1);	break;
+		case GLFW_KEY_RIGHT:	player->SetAngularVelocity(true,  0, -1);	break;
+		case GLFW_KEY_UP:		player->SetAngularVelocity(true, -1,  0);	break;
+		case GLFW_KEY_DOWN:		player->SetAngularVelocity(true,  1,  0);	break;
 
-		case GLFW_KEY_SPACE:    Player::Jump(); break;
+		case GLFW_KEY_SPACE:    player->Jump(); break;
 		}
 	}
 	if (action == GLFW_RELEASE) {
 		switch (key) {
 		case GLFW_KEY_W: 
-		case GLFW_KEY_S:		Player::SetVelocity(false, 0, 1); break;
+		case GLFW_KEY_S:		player->SetVelocity(false, 0, 1); break;
 		case GLFW_KEY_A: 
-		case GLFW_KEY_D:		Player::SetVelocity(false, 1, 0); break;
+		case GLFW_KEY_D:		player->SetVelocity(false, 1, 0); break;
 
 		case GLFW_KEY_LEFT:
-		case GLFW_KEY_RIGHT:	Player::SetAngularVelocity(false, 0, 1); break;
+		case GLFW_KEY_RIGHT:	player->SetAngularVelocity(false, 0, 1); break;
 
 		case GLFW_KEY_UP:
-		case GLFW_KEY_DOWN:		Player::SetAngularVelocity(false, 1, 0); break;
+		case GLFW_KEY_DOWN:		player->SetAngularVelocity(false, 1, 0); break;
 		}
 	}
 }
@@ -111,7 +106,7 @@ void Input::CursorPos(GLFWwindow* window, double x, double y)
 
 	//std::cout << rotY << " " << rotX + 45 << std::endl;
 
-	Player::LookAt(glm::normalize(direction));
+	Player::GetInstance()->LookAt(glm::normalize(direction));
 }
 
 void Input::MouseButton(GLFWwindow* window, int button, int action, int mods)

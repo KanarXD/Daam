@@ -8,20 +8,19 @@
 class GameObjectManager
 {
 private:
-	static std::vector<std::unique_ptr<GameObject>> gameObjects;
-
+	std::vector<std::unique_ptr<GameObject>> gameObjects;
 public:
 	static std::shared_ptr<GameObjectManager> GetInstance();
 
-	static void Update(float dt);
-	static void Destroy();
+	void Update(float dt);
+	void Destroy();
 
-	template <class T> static void Add(const Transform& transform);
-	static void Add(const Transform& transform, const std::string& type);
+	template <class T> void Add(const Transform& transform);
+	void Add(const Transform& transform, const std::string& type);
 	
-	static bool Ray(const glm::vec3& from, const glm::vec3& to, const std::string& type);
+	bool Ray(const glm::vec3& from, const glm::vec3& to, const std::string& type);
 
-	static void Draw();
+	void Draw();
 
 private:
 	GameObjectManager() = default;
@@ -30,7 +29,7 @@ private:
 };
 
 template<class T>
-inline void GameObjectManager::Add(const Transform& transform)
+void GameObjectManager::Add(const Transform& transform)
 {
 	if (std::is_base_of<GameObject, T>::value)
 	{

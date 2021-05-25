@@ -4,26 +4,16 @@
 #include "Renderer/Renderer.h"
 #include "Renderer/Library/ModelsLibrary.h"
 
-Player* Player::instance = nullptr;
 
-const Player::StateParams Player::walkParams{ 2.0f, 10.0f, 2.0f };
-const Player::StateParams Player::sprintParams{ 2.0f, 20.0f, 2.0f };
-const Player::StateParams Player::crouchParams{ 2.0f, 5.0f, 1.0f };
-
-Player::StateParams Player::activeParams = Player::walkParams;
-
-Combat Player::combat{};
-Hitbox Player::hitbox = GOModels.at("player").hitbox;
-Transform Player::transform{};
-RigidBody Player::rigidbody{};
-
-Player::State Player::state = Player::State::Walk;
-
-Camera Player::camera = Camera(Transform(), 50.0f);
-
-void Player::Init(Transform startingTransform)
+std::shared_ptr<Player> Player::GetInstance()
 {
-	if (instance == nullptr) instance = new Player(startingTransform);
+	static std::shared_ptr<Player> playerInstance(new Player());
+	return playerInstance;
+}
+
+void Player::SetTransform(Transform transform)
+{
+	this->transform = transform;
 }
 
 void Player::Update(float dt)
@@ -39,11 +29,6 @@ void Player::Update(float dt)
 	transform.Update(rigidbody, dt);
 	camera.SetTransform(transform, activeParams.height);
 
-}
-
-void Player::Destroy()
-{
-	delete instance;
 }
 
 void Player::Collision(GameObject& collidedObject)
@@ -113,12 +98,6 @@ void Player::LookAt(glm::vec3 front)
 	// transform.rotation.x = atan2(front.z, front.y);
 	transform.rotation.y = atan2(front.x, front.z);
 	// transform.rotation.z = atan2(front.y, front.x);
-}
-
-Player::Player(Transform startingTransform)
-{
-	camera = Camera(startingTransform, 50.0f);
-	transform = startingTransform;
 }
 
 void Player::UpdateVelocity()

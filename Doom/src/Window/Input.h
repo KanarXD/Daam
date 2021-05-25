@@ -13,8 +13,7 @@ private:
 	float mouseSensitivity;
 
 public:
-	static Input* GetInstance(bool enableMouse = false, float mouseSensitivity = 0.1f);
-	static void Destroy();
+	static std::shared_ptr<Input> GetInstance(bool enableMouse = false, float mouseSensitivity = 0.1f);
 
 private:
 	Input(bool enableMouse, float mouseSensitivity);

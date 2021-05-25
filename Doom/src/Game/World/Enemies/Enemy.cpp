@@ -20,7 +20,7 @@ void Enemy::Update(float dt)
 	GameObject::Update(dt);
 	if (PlayerInBound())
 	{
-		glm::vec3 playerPos = Player::GetTransform().position;
+		glm::vec3 playerPos = Player::GetInstance()->GetTransform().position;
 		transform.rotation.y = atan2(playerPos.x - transform.position.x, playerPos.z - transform.position.z);
 		rigidbody.velocity.z = activeSpecs.speed;
 	}
@@ -35,7 +35,7 @@ void Enemy::Collision(const GameObject& collidedObject)
 
 bool Enemy::PlayerInBound() const
 {
-	const Transform pt = Player::GetTransform();
+	const Transform pt = Player::GetInstance()->GetTransform();
 	float dist = glm::distance(transform.position, pt.position);
 	if (dist > activeSpecs.viewDist) return false;
 	

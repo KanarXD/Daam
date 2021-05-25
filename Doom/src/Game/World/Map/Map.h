@@ -25,7 +25,6 @@ public:
 		Mesh mesh;
 		const ShaderProgram* shader;
 		std::vector<Box> boxVector;
-		const glm::mat4 matrix;
 	};
 	struct Params
 	{
@@ -35,18 +34,17 @@ public:
 	};
 private:
 	Params params;
+	const glm::mat4 surfaceMatrix;
 public:
 	Map(const std::string& name, Params& mapParams);
 
 	void Draw() const;
 
-	void CheckPlayerColisions() const;
-
 private:
 	static std::vector<Vertex>& GetPlaneVertexes(float width, float height, float size);
 	static std::vector<uint32_t>& GetPlaneIndices();
 
-	static std::vector<Vertex>& GetCubeVertexes();
+	static std::vector<Vertex>& GetCubeVertexes(float size);
 	static std::vector<uint32_t>& GetCubeIndices();
 };
 

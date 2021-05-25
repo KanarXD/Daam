@@ -73,6 +73,7 @@ std::optional<const Map*> MapLibrary::Load(const std::string& mapPath)
     std::vector<Map::Box> boxVector;
     std::string key = "0:";
     int i = 0, j;
+    auto gameObjectManager = GameObjectManager::GetInstance();
     while (params["boxMap:"].find(key) != params["boxMap:"].end())
     {
         j = 0;
@@ -83,11 +84,11 @@ std::optional<const Map*> MapLibrary::Load(const std::string& mapPath)
                 // obstacles
             case 'O': boxVector.push_back({ float(i), float(j) }); break;
                 // healthkit
-            case 'H': GameObjectManager::GetInstance()->Add<Healthkit>(Transform(glm::vec3(i * boxSize, 1.5f, j * boxSize))); break;
+            case 'H': gameObjectManager->Add<Healthkit>(Transform(glm::vec3(i * boxSize, 1.5f, j * boxSize))); break;
                 // enemy
-            case 'N': GameObjectManager::GetInstance()->Add<Enemy>(Transform(glm::vec3(i * boxSize, 0, j * boxSize))); break;
+            case 'N': gameObjectManager->Add<Enemy>(Transform(glm::vec3(i * boxSize, 0, j * boxSize))); break;
                 // enemy tank
-            case 'T': GameObjectManager::GetInstance()->Add<Enemy_Tank>(Transform(glm::vec3(i * boxSize, 5, j * boxSize))); break;
+            case 'T': gameObjectManager->Add<Enemy_Tank>(Transform(glm::vec3(i * boxSize, 5, j * boxSize))); break;
             }
 
             j++;
@@ -99,13 +100,13 @@ std::optional<const Map*> MapLibrary::Load(const std::string& mapPath)
     surfaceMesh.AddTexture(surfaceTexture.value());
     surfaceMesh.SetUseTextures(true);
 
-    Mesh boxMesh(Map::GetCubeVertexes(), Map::GetCubeIndices());
+    Mesh boxMesh(Map::GetCubeVertexes(boxSize), Map::GetCubeIndices());
     boxMesh.AddTexture(boxTexture.value());
     boxMesh.SetUseTextures(true);
 
     Map::Params mapParams = {
         { width, height, std::move(surfaceMesh) , mapSurfaceShader.value() },
-        { boxSize, std::move(boxMesh), boxShader.value(), std::move(boxVector), glm::scale(glm::mat4(1.0f), glm::vec3(boxSize)) },
+        { boxSize, std::move(boxMesh), boxShader.value(), std::move(boxVector) },
         { skyBoxDirectory, skyBoxSidesTextureNamesVector, skyBoxShader.value() }
     };
 

@@ -5,43 +5,42 @@
 #include "Game/Player.h"
 
 
-GLFWwindow* Window::window = nullptr;
-std::string Window::title = "";
-uint32_t Window::width = 0;
-uint32_t Window::height = 0;
-float Window::aspectRatio = 1.0f;
-
+std::shared_ptr<Window> Window::GetInstance()
+{
+	static std::shared_ptr<Window> WindowInstance(new Window());
+	return WindowInstance;
+}
 
 void Window::Create(const std::string& title, uint32_t width, uint32_t height)
 {
-	if (Window::window != nullptr)
+	if (this->window != nullptr)
 	{
 		LOGWARNING("Window already created");
 		return;
 	}
-	Window::title = title;
-	Window::width = width;
-	Window::height = height;
+	this->title = title;
+	this->width = width;
+	this->height = height;
 
 	if (!glfwInit()) { //Zainicjuj bibliotekê GLFW
-		fprintf(stderr, "Nie mo¿na zainicjowaæ GLFW.\n");
+		LOGERROR("Nie mo¿na zainicjowaæ GLFW.");
 		exit(EXIT_FAILURE);
 	}
 
-	Window::window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);  //Utwórz okno 500x500 o tytule "OpenGL" i kontekst OpenGL.
+	this->window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);  //Utwórz okno 500x500 o tytule "OpenGL" i kontekst OpenGL.
 
-	if (!Window::window) //Je¿eli okna nie uda³o siê utworzyæ, to zamknij program
+	if (!this->window) //Je¿eli okna nie uda³o siê utworzyæ, to zamknij program
 	{
-		fprintf(stderr, "Nie mo¿na utworzyæ okna.\n");
+		LOGERROR("Nie mo¿na utworzyæ okna.");
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
 
-	glfwMakeContextCurrent(window); //Od tego momentu kontekst okna staje siê aktywny i polecenia OpenGL bêd¹ dotyczyæ w³aœnie jego.
+	glfwMakeContextCurrent(this->window); //Od tego momentu kontekst okna staje siê aktywny i polecenia OpenGL bêd¹ dotyczyæ w³aœnie jego.
 	glfwSwapInterval(1); //Czekaj na 1 powrót plamki przed pokazaniem ukrytego bufora
 
 	if (glewInit() != GLEW_OK) { //Zainicjuj bibliotekê GLEW
-		fprintf(stderr, "Nie mo¿na zainicjowaæ GLEW.\n");
+		LOGERROR("Nie mo¿na zainicjowaæ GLEW.");
 		exit(EXIT_FAILURE);
 	}
 
@@ -52,16 +51,14 @@ void Window::Create(const std::string& title, uint32_t width, uint32_t height)
 
 	LOGINFO("OPENGL VERSION:", glGetString(GL_VERSION));
 
-	glfwSetWindowSizeCallback(window, WindowResizeCallback);
+	glfwSetWindowSizeCallback(this->window, WindowResizeCallback);
 	glfwSetErrorCallback(ErrorCallbackGLFW);
 	glDebugMessageCallback(ErrorCallbackOpenGL, nullptr);
-
-	//Renderer::SetProjection(GetAspectRatio());
 }
 
-void Window::Destroy()
+Window::~Window()
 {
-	glfwDestroyWindow(window); //Usuñ kontekst OpenGL i okno
+	glfwDestroyWindow(this->window); //Usuñ kontekst OpenGL i okno
 	glfwTerminate(); //Zwolnij zasoby zajête przez GLFW
 	exit(EXIT_SUCCESS);
 }
@@ -70,17 +67,18 @@ void Window::WindowResizeCallback(GLFWwindow* window, int width, int height) {
 	LOGINFO("WindowResizeCallback", width, height);
 
 	if (height == 0) return;
-	aspectRatio = (float)width / (float)height;
-	Renderer::SetProjection(Player::GetInstance()->GetCamera(), aspectRatio);
+
+	Window::GetInstance()->aspectRatio = (float)width / (float)height;
+	Renderer::SetProjection(Player::GetInstance()->GetCamera(), Window::GetInstance()->aspectRatio);
 	glViewport(0, 0, width, height);
 }
 
 void Window::ErrorCallbackGLFW(int error, const char* description)
 {
-	Log::Error("GLWF", error, description);
+	LOGERROR("GLWF", error, description);
 }
 
 void Window::ErrorCallbackOpenGL(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
 {
-	Log::Error("OpenGL", source, type, id, severity, length, message);
+	LOGERROR("OpenGL", source, type, id, severity, length, message);
 }

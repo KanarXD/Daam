@@ -3,8 +3,6 @@
 #include "Renderer/Renderer.h"
 #include "World/Enemies/Enemy.h"
 
-std::vector<std::unique_ptr<GameObject>> GameObjectManager::gameObjects{};
-
 std::shared_ptr<GameObjectManager> GameObjectManager::GetInstance()
 {
 	static std::shared_ptr<GameObjectManager> instance(new GameObjectManager());
@@ -49,13 +47,14 @@ void GameObjectManager::Update(float dt)
 		}
 	}
 
+	auto player = Player::GetInstance();
 	// Collisions with player
 	for (int i{}; i < gameObjects.size(); i++)
 	{
-		if (Hitbox::CollisionDetection(gameObjects[i]->GetTransform(), gameObjects[i]->GetHitbox(), Player::GetTransform(), Player::GetHitbox()))
+		if (Hitbox::CollisionDetection(gameObjects[i]->GetTransform(), gameObjects[i]->GetHitbox(), player->GetTransform(), player->GetHitbox()))
 		{
-			gameObjects[i]->Collision(GameObject(Player::GetTransform(), "player"));
-			Player::Collision(*gameObjects[i]);
+			gameObjects[i]->Collision(GameObject(player->GetTransform(), "player"));
+			player->Collision(*gameObjects[i]);
 		}
 	}
 }

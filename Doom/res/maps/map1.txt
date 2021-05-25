@@ -8,7 +8,7 @@ skyBox:
 surface:
 {
 	texturePath: res/textures/bricks.png
-	shaderName: shaderT
+	shaderName: shaderCTL
 	width: 200
 	height: 200
 }
@@ -16,7 +16,7 @@ surface:
 box:
 {
 	texturePath: res/textures/bricks.png
-	shaderName: shaderT
+	shaderName: shaderCTL
 	size: 10
 }
 

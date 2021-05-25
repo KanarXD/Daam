@@ -6,7 +6,7 @@
 #define LOGWARNING(...)		Log::Warning(__VA_ARGS__)
 #define LOGTRACE(...)		Log::Trace(__VA_ARGS__)
 #else	
-#define LOGERROR(...) 
+#define LOGERROR(...)		Log::Error(__VA_ARGS__)
 #define LOGINFO(...) 
 #define LOGWARNING(...) 
 #define LOGTRACE(...) 

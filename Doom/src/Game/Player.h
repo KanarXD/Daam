@@ -21,47 +21,45 @@ public:
 	};
 
 private:
+	const Player::StateParams walkParams{ 2.0f, 10.0f, 2.0f };
+	const Player::StateParams sprintParams{ 2.0f, 20.0f, 2.0f };
+	const Player::StateParams crouchParams{ 2.0f, 5.0f, 1.0f };
+	StateParams activeParams = walkParams;
 
-	static const StateParams walkParams, sprintParams, crouchParams;
-	static StateParams activeParams;
+	Player* instance;
 
-	static Player* instance;
+	Combat combat;
+	Hitbox hitbox = GOModels.at("player").hitbox;
+	Transform transform;
+	RigidBody rigidbody;
 
-	static Combat combat;
-	static Hitbox hitbox;
-	static Transform transform;
-	static RigidBody rigidbody;
-
-	static State state;
+	State state = State::Walk;
 	
-	static Camera camera;
+	Camera camera = Camera(Transform(), 50.0f);;
 
 public:
-	static void Init(Transform startingTransform = Transform());
-	static Player* GetInstance() { return instance; }
-	static void Update(float dt);
-	static void Destroy();
+	static std::shared_ptr<Player> GetInstance();
 
-	static void Collision(GameObject& collidedObject);
+	void Update(float dt);
 
-	static void SetState(State newState);
+	void Collision(GameObject& collidedObject);
 
-	static void SetAngularVelocity(bool going, int x, int y);
-	static void SetVelocity(bool going, int x, int z);
+	void SetState(State newState);
+	void SetTransform(Transform transform = Transform());
+	void SetAngularVelocity(bool going, int x, int y);
+	void SetVelocity(bool going, int x, int z);
 
-	static void Jump();
+	void Jump();
 
-	static void LookAt(glm::vec3 front);
+	void LookAt(glm::vec3 front);
 
-	static const Camera& GetCamera() { return camera; }
+	const Camera& GetCamera() { return camera; }
 
-	static Combat& GetCombat() { return combat; }
-	static Hitbox& GetHitbox() { return hitbox; }
-	static Transform& GetTransform() { return transform; }
-	static RigidBody& GetRigidBody() { return rigidbody; }
+	Combat& GetCombat() { return combat; }
+	Hitbox& GetHitbox() { return hitbox; }
+	Transform& GetTransform() { return transform; }
+	RigidBody& GetRigidBody() { return rigidbody; }
 
 private:
-	Player(Transform startingTransform);
-
-	static void UpdateVelocity();
+	void UpdateVelocity();
 };
