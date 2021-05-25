@@ -3,6 +3,7 @@
 #include "Renderer/Library/ShadersLibrary.h"
 #include "Renderer/Library/TextureLibrary.h"
 #include "Game/GameObjectManager.h"
+#include "Game/World/Enemies/Spawner.h"
 
 std::shared_ptr<MapLibrary> MapLibrary::GetInstance()
 {
@@ -84,11 +85,9 @@ std::optional<const Map*> MapLibrary::Load(const std::string& mapPath)
                 // obstacles
             case 'O': boxVector.push_back({ float(i), float(j) }); break;
                 // healthkit
-            case 'H': gameObjectManager->Add<Healthkit>(Transform(glm::vec3(i * boxSize, 1.5f, j * boxSize))); break;
+            case 'H': GameObjectManager::GetInstance()->Add<Healthkit>(Transform(glm::vec3(i * boxSize, 2, j * boxSize))); break;
                 // enemy
-            case 'N': gameObjectManager->Add<Enemy>(Transform(glm::vec3(i * boxSize, 0, j * boxSize))); break;
-                // enemy tank
-            case 'T': gameObjectManager->Add<Enemy_Tank>(Transform(glm::vec3(i * boxSize, 5, j * boxSize))); break;
+            case 'S': Spawner::GetInstance()->AddSpawnLocation(glm::vec2(i * boxSize, j * boxSize)); break;
             }
 
             j++;

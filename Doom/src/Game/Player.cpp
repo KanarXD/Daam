@@ -11,7 +11,18 @@ std::shared_ptr<Player> Player::GetInstance()
 	return playerInstance;
 }
 
-void Player::SetTransform(Transform transform)
+Player::StateParams Player::activeParams = Player::walkParams;
+
+Combat Player::combat{ 1000, 30, 0.5f };
+Hitbox Player::hitbox = GOModels.at("player").hitbox;
+Transform Player::transform{};
+RigidBody Player::rigidbody{};
+
+Player::State Player::state = Player::State::Walk;
+
+Camera Player::camera = Camera(Transform(), 50.0f);
+
+void Player::Init(Transform startingTransform)
 {
 	this->transform = transform;
 }
@@ -57,7 +68,8 @@ void Player::Collision(GameObject& collidedObject)
 	}
 	else if (collidedObject.GetType() == "healthkit")
 	{
-		combat.health = combat.maxHealth;
+		combat.health += 100;
+		if (combat.health > combat.maxHealth) combat.health = combat.maxHealth;
 	}
 }
 

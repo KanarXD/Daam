@@ -1,0 +1,16 @@
+# Blender v2.90.1 OBJ File: 'healthbar.blend'
+# www.blender.org
+mtllib healthbar.mtl
+o Healthbar_Plane
+v 1.000000 0.100000 -0.000027
+v 1.000000 -0.100000 0.000027
+v -1.000000 0.100000 -0.000027
+v -1.000000 -0.100000 0.000027
+vt 0.000000 0.000000
+vt 1.000000 0.000000
+vt 1.000000 1.000000
+vt 0.000000 1.000000
+vn -0.0000 -0.0003 -1.0000
+usemtl Healthbar
+s off
+f 1/1/1 2/2/1 4/3/1 3/4/1

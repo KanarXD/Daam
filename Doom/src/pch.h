@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <memory>
+#include <numeric>
 #include <utility>
 #include <algorithm>
 #include <functional>
@@ -19,6 +20,7 @@
 #include <optional>
 #include <thread>
 #include <mutex>
+#include <random>
 
 //Windows
 #include "windows.h"
@@ -36,3 +38,4 @@
 //Custom
 #include "Utility/Constants.h"
 #include "Utility/Log.h"
+#include "Utility/Collisions.h"
