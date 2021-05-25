@@ -6,13 +6,13 @@
 
 Player* Player::instance = nullptr;
 
-const Player::StateParams Player::walkParams{ 2.0f, 10.0f, 3.0f };
-const Player::StateParams Player::sprintParams{ 2.0f, 20.0f, 3.0f };
-const Player::StateParams Player::crouchParams{ 2.0f, 5.0f, 2.0f };
+const Player::StateParams Player::walkParams{ 2.0f, 30.0f, 3.0f };
+const Player::StateParams Player::sprintParams{ 2.0f, 50.0f, 3.0f };
+const Player::StateParams Player::crouchParams{ 2.0f, 15.0f, 2.0f };
 
 Player::StateParams Player::activeParams = Player::walkParams;
 
-Combat Player::combat{};
+Combat Player::combat{ 1000, 30, 0.5f };
 Hitbox Player::hitbox = GOModels.at("player").hitbox;
 Transform Player::transform{};
 RigidBody Player::rigidbody{};
@@ -72,7 +72,8 @@ void Player::Collision(GameObject& collidedObject)
 	}
 	else if (collidedObject.GetType() == "healthkit")
 	{
-		combat.health = combat.maxHealth;
+		combat.health += 100;
+		if (combat.health > combat.maxHealth) combat.health = combat.maxHealth;
 	}
 }
 

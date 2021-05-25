@@ -39,7 +39,7 @@ const static std::unordered_map<std::string, ModelSpec> GOModels{
 	{ "healthkit", { 
 		{ glm::vec3(0), glm::vec3(0.4f, 0.2f, 0.4f) },	
 		{ "player" },
-		"res/models/Healthkit/healthkit.obj", "shaderCT" } },
+		"res/models/Powerups/healthkit.obj", "shaderCT" } },
 	{ "box", { 
 		{ glm::vec3(0, 5, 0), glm::vec3(5.0f), false },
 		{ "player", "enemy", "enemy_tank" }, 

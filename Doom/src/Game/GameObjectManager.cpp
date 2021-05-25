@@ -1,9 +1,16 @@
 #include "pch.h"
 #include "GameObjectManager.h"
 #include "Renderer/Renderer.h"
-#include "World/Enemies/Enemy.h"
+#include "World/Enemies/Types/Enemy.h"
+#include "World/Enemies/Spawner.h"
 
 std::vector<std::unique_ptr<GameObject>> GameObjectManager::gameObjects{};
+
+template<typename Base, typename T>
+inline bool instanceof(const T*)
+{
+	return std::is_base_of<Base, T>::value;
+}
 
 std::shared_ptr<GameObjectManager> GameObjectManager::GetInstance()
 {
@@ -14,13 +21,16 @@ std::shared_ptr<GameObjectManager> GameObjectManager::GetInstance()
 void GameObjectManager::Update(float dt)
 {
 	std::vector<int> toErase;
+	std::vector<std::string> enemiesTypes{ "enemy", "enemy_fast", "enemy_tank", "enemy_boss" };
 	for (int i{}; i < gameObjects.size(); i++)
 	{
-		// Erasing enemies which are dead (TODO: Kill count)
-		if (std::is_base_of<Enemy, decltype(gameObjects[i])>::value)
+		if (std::find(enemiesTypes.begin(), enemiesTypes.end(), gameObjects[i]->GetType()) != enemiesTypes.end())
 		{
-			std::cout << "is enemy\n";
-			if (dynamic_cast<Enemy*>(gameObjects[i].get())->GetSpecs().combat.IsDead()) toErase.push_back(i);
+			if (dynamic_cast<Enemy*>(gameObjects[i].get())->GetSpecs().combat.IsDead())
+			{
+				toErase.push_back(i);
+				Spawner::GetInstance()->EnemyKilled();
+			}
 			else gameObjects[i]->Update(dt);
 		}
 		else
@@ -70,38 +80,19 @@ void GameObjectManager::Add(const Transform& transform, const std::string& type)
 	gameObjects.push_back(std::make_unique<GameObject>(transform, type));
 }
 
-bool linesIntersect(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
+bool GameObjectManager::Raycast(const glm::vec3& from, const glm::vec3& to, const std::string& type)
 {
-	if (std::max(x1, x2) < std::min(x3, x4)) return false;
-
-	float a1 = (y1 - y2) / (x1 - x2);
-	float a2 = (y3 - y4) / (x3 - x4);
-
-	if (a1 == a2) return false;
-
-	float b1 = y1 - a1 * x1;
-	float b2 = y3 - a2 * x3;
-
-	float xA = (b2 - b1) / (a1 - a2);
-
-	if (xA < std::max(std::min(x1, x2), std::min(x3, x4)) ||
-		xA > std::min(std::max(x1, x2), std::max(x3, x4))) return false;
-	
-	return true;
-}
-
-bool GameObjectManager::Ray(const glm::vec3& from, const glm::vec3& to, const std::string& type)
-{
+	bool useRound = GOModels.at(type).hitbox.useRound;
 	for (auto& gameObject : gameObjects)
 	{
 		if (gameObject->GetType() == type)
 		{
 			glm::vec3 center = gameObject->GetTransform().position + gameObject->GetHitbox().offset;
 			glm::vec3 size = gameObject->GetTransform().scale * gameObject->GetHitbox().scaleModifier;
-
-			bool t1 = linesIntersect(from.x, from.z, to.x, to.z, center.x - size.x, center.z - size.z, center.x + size.x, center.z + size.z);
-			bool t2 = linesIntersect(from.x, from.z, to.x, to.z, center.x - size.x, center.z + size.z, center.x + size.x, center.z - size.z);
-			if (t1 || t2) return true;
+			bool hit = false;
+			if (useRound) hit = Collisions::RayCastCylinder(from, to, center, size.x);
+			else hit = Collisions::RayCastBox(from, to, center, size);
+			if (hit) return hit;
 		}
 	}
 	return false;

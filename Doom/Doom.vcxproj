@@ -11,14 +11,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Game\World\Enemies\Enemy_Boss.cpp" />
-    <ClCompile Include="src\Game\World\Enemies\Enemy_Fast.cpp" />
+    <ClCompile Include="src\Game\Components\Healthbar.cpp" />
+    <ClCompile Include="src\Game\World\Enemies\Spawner.cpp" />
+    <ClCompile Include="src\Game\World\Enemies\Types\Enemy_Boss.cpp" />
+    <ClCompile Include="src\Game\World\Enemies\Types\Enemy_Fast.cpp" />
     <ClCompile Include="src\Game\GameObjectManager.cpp" />
     <ClCompile Include="src\Game\GameObject.cpp" />
     <ClCompile Include="src\Game\Components\Hitbox.cpp" />
-    <ClCompile Include="src\Game\World\Enemies\Enemy_Tank.cpp" />
+    <ClCompile Include="src\Game\World\Enemies\Types\Enemy_Tank.cpp" />
     <ClCompile Include="src\Game\Components\Combat.cpp" />
-    <ClCompile Include="src\Game\World\Enemies\Enemy.cpp" />
+    <ClCompile Include="src\Game\World\Enemies\Types\Enemy.cpp" />
     <ClCompile Include="src\Game\World\Map\MapLibrary.cpp" />
     <ClCompile Include="src\Game\World\Map\Map.cpp" />
     <ClCompile Include="src\Game\Components\RigidBody.cpp" />
@@ -28,6 +30,7 @@
     <ClCompile Include="src\Game\World\Powerups\Powerup.cpp" />
     <ClCompile Include="src\Renderer\DataStructures\CubeMap.cpp" />
     <ClCompile Include="src\Renderer\Camera.cpp" />
+    <ClCompile Include="src\Utility\Collisions.cpp" />
     <ClCompile Include="src\Utility\Log.cpp" />
     <ClCompile Include="src\Utility\stb_image.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -86,17 +89,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Game\World\Enemies\Enemy_Boss.h" />
-    <ClInclude Include="src\Game\World\Enemies\Enemy_Fast.h" />
+    <ClInclude Include="src\Game\Components\Healthbar.h" />
+    <ClInclude Include="src\Game\World\Enemies\Spawner.h" />
+    <ClInclude Include="src\Game\World\Enemies\Types\Enemy_Boss.h" />
+    <ClInclude Include="src\Game\World\Enemies\Types\Enemy_Fast.h" />
     <ClInclude Include="src\Game\GameObjectManager.h" />
     <ClInclude Include="src\Game\GameObjectsModels.h" />
     <ClInclude Include="src\Game\GameObject.h" />
     <ClInclude Include="src\Game\Components\Hitbox.h" />
     <ClInclude Include="src\Game\World\Enemies\Enemies.h" />
-    <ClInclude Include="src\Game\World\Enemies\Enemy_Tank.h" />
+    <ClInclude Include="src\Game\World\Enemies\Types\Enemy_Tank.h" />
     <ClInclude Include="src\Game\Components\Combat.h" />
-    <ClInclude Include="src\Game\World\Enemies\Enemy.h" />
+    <ClInclude Include="src\Game\World\Enemies\Types\Enemy.h" />
     <ClInclude Include="src\Game\World\Enemies\EnemySpecs.h" />
+    <ClInclude Include="src\Game\World\Enemies\Wave.h" />
     <ClInclude Include="src\Game\World\Map\MapLibrary.h" />
     <ClInclude Include="src\Game\World\Map\Map.h" />
     <ClInclude Include="src\Game\World\Powerups\Healthkit.h" />
@@ -108,6 +114,7 @@
     <ClInclude Include="src\Game\Player.h" />
     <ClInclude Include="src\Renderer\Camera.h" />
     <ClInclude Include="src\Renderer\Library\Library.h" />
+    <ClInclude Include="src\Utility\Collisions.h" />
     <ClInclude Include="src\Utility\Log.h" />
     <ClInclude Include="src\Utility\stb_image.h" />
     <ClInclude Include="src\Renderer\DataStructures\IndexBuffer.h" />

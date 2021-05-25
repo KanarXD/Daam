@@ -19,7 +19,7 @@ public:
 	template <class T> static void Add(const Transform& transform);
 	static void Add(const Transform& transform, const std::string& type);
 	
-	static bool Ray(const glm::vec3& from, const glm::vec3& to, const std::string& type);
+	static bool Raycast(const glm::vec3& from, const glm::vec3& to, const std::string& type);
 
 	static void Draw();
 

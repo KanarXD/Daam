@@ -12,6 +12,7 @@
 #include "Game/Components/Transform.h"
 #include "Game/Components/Hitbox.h"
 #include "Game/GameObjectManager.h"
+#include "Game/World/Enemies/Spawner.h"
 
 int main()
 {
@@ -30,6 +31,8 @@ int main()
 	Hitbox::showHitbox = false;
 	ModelsLibrary::GetInstance()->Load(Hitbox::rdModelPath, "shaderCT");
 	ModelsLibrary::GetInstance()->Load(Hitbox::sqModelPath, "shaderCT");
+	ModelsLibrary::GetInstance()->Load(Healthbar::modelPath, "shaderCT");
+	ModelsLibrary::GetInstance()->Load(Spawner::modelPath, "shaderCT");
 
 	/*
 	auto person = ModelsLibrary::GetInstance()->Load("res/models/base/Base Mesh sculpt 2.obj", "shaderCT");
@@ -45,6 +48,12 @@ int main()
 	*/
 	auto map = MapLibrary::GetInstance()->Load("res/maps/map1.txt");
 
+	/*
+	for (int i{}; i < 10; i++)
+		for (int j{}; j < 10; j++)
+			GameObjectManager::GetInstance()->Add<Enemy_Boss>(Transform(glm::vec3(i * 4 + 10, 10, j * 4 + 10)));
+			*/
+
 	LOGINFO("drawing...");
 	glfwSetTime(0);
 	float dt = 0;
@@ -54,7 +63,7 @@ int main()
 		glfwSetTime(0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		Player::Update(dt);
+		Player::GetInstance()->Update(dt);
 		Renderer::SetProjection(Player::GetCamera(), Window::GetAspectRatio());
 		Renderer::SetCamera(Player::GetCamera());
 
@@ -66,21 +75,21 @@ int main()
 		Renderer::DrawModel(*sportsCar.value(), glm::scale(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0)), glm::vec3(1.0f)));
 		*/
 
-		GameObjectManager::Update(dt);
-		GameObjectManager::Draw();
+		GameObjectManager::GetInstance()->Update(dt);
+		Spawner::GetInstance()->Update(dt);
+		GameObjectManager::GetInstance()->Draw();
+		Spawner::GetInstance()->Draw();
 
 		if (map.has_value())
-		{
-			// map.value()->CheckPlayerColisions();
 			map.value()->Draw();
-		}
 
 		glfwSwapBuffers(Window::GetGLFWwindow());
 		glfwPollEvents();
 	}
 
-	GameObjectManager::Destroy();
-	Player::Destroy();
-	Input::Destroy();
+	Spawner::GetInstance()->Destroy();
+	GameObjectManager::GetInstance()->Destroy();
+	Player::GetInstance()->Destroy();
+	Input::GetInstance()->Destroy();
 	Window::Destroy();
 }

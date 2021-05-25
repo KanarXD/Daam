@@ -3,6 +3,7 @@
 #include "Renderer/Library/ShadersLibrary.h"
 #include "Renderer/Library/TextureLibrary.h"
 #include "Game/GameObjectManager.h"
+#include "Game/World/Enemies/Spawner.h"
 
 std::shared_ptr<MapLibrary> MapLibrary::GetInstance()
 {
@@ -83,15 +84,9 @@ std::optional<const Map*> MapLibrary::Load(const std::string& mapPath)
                 // obstacles
             case 'O': boxVector.push_back({ float(i), float(j) }); break;
                 // healthkit
-            case 'H': GameObjectManager::GetInstance()->Add<Healthkit>(Transform(glm::vec3(i * boxSize, 1.5f, j * boxSize))); break;
+            case 'H': GameObjectManager::GetInstance()->Add<Healthkit>(Transform(glm::vec3(i * boxSize, 2, j * boxSize))); break;
                 // enemy
-            case 'N': GameObjectManager::GetInstance()->Add<Enemy>(Transform(glm::vec3(i * boxSize, 2, j * boxSize))); break;
-                // enemy fast
-            case 'F': GameObjectManager::GetInstance()->Add<Enemy_Fast>(Transform(glm::vec3(i * boxSize, 2, j * boxSize))); break;
-                // enemy tank
-            case 'T': GameObjectManager::GetInstance()->Add<Enemy_Tank>(Transform(glm::vec3(i * boxSize, 2.5f, j * boxSize))); break;
-                // enemy boss
-            case 'B': GameObjectManager::GetInstance()->Add<Enemy_Boss>(Transform(glm::vec3(i * boxSize, 4, j * boxSize))); break;
+            case 'S': Spawner::GetInstance()->AddSpawnLocation(glm::vec2(i * boxSize, j * boxSize)); break;
             }
 
             j++;
