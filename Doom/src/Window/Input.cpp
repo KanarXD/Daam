@@ -3,15 +3,13 @@
 #include "Window/Window.h"
 #include "Game/Player.h"
 
-Input* Input::instance = nullptr;
-
-std::shared_ptr<Input> Input::GetInstance(bool enableMouse, float mouseSensitivity)
+std::shared_ptr<Input> Input::GetInstance()
 {
-	static std::shared_ptr<Input> InputInstance(new Input(enableMouse, mouseSensitivity));
+	static std::shared_ptr<Input> InputInstance(new Input());
 	return InputInstance;
 }
 
-Input::Input(bool enableMouse, float mouseSensitivity)
+void Input::Init(bool enableMouse, float mouseSensitivity)
 {
 	this->mouseSensitivity = mouseSensitivity;
 	this->lastMousePosition = glm::vec2(0);
@@ -45,23 +43,23 @@ void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 
 	if (action == GLFW_PRESS) {
 		switch (key) {
-		case GLFW_KEY_W:		Player::SetVelocity(true, 0, 1);	break;
-		case GLFW_KEY_S:		Player::SetVelocity(true, 0, -1);	break;
-		case GLFW_KEY_A:		Player::SetVelocity(true, 1, 0);	break;
-		case GLFW_KEY_D:		Player::SetVelocity(true, -1, 0);	break;
+		case GLFW_KEY_W:		player->SetVelocity(true, 0, 1);	break;
+		case GLFW_KEY_S:		player->SetVelocity(true, 0, -1);	break;
+		case GLFW_KEY_A:		player->SetVelocity(true, 1, 0);	break;
+		case GLFW_KEY_D:		player->SetVelocity(true, -1, 0);	break;
 
-		case GLFW_KEY_LEFT:		Player::SetAngularVelocity(true, 0, 1);	break;
-		case GLFW_KEY_RIGHT:	Player::SetAngularVelocity(true, 0, -1);	break;
-		case GLFW_KEY_UP:		Player::Jump();	break;
+		case GLFW_KEY_LEFT:		player->SetAngularVelocity(true, 0, 1);	break;
+		case GLFW_KEY_RIGHT:	player->SetAngularVelocity(true, 0, -1);	break;
 
-		case GLFW_KEY_SPACE:    Player::Shoot(); break;
+		case GLFW_KEY_UP:		player->Jump();	break;
+		case GLFW_KEY_SPACE:    player->Shoot(); break;
 		}
 	}
 
 	if (action == GLFW_REPEAT)
 	{
 		switch (key) {
-		case GLFW_KEY_SPACE:    Player::Shoot(); break;
+		case GLFW_KEY_SPACE:    player->Shoot(); break;
 		}
 	}
 
@@ -69,45 +67,14 @@ void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 	if (action == GLFW_RELEASE) {
 		switch (key) {
 		case GLFW_KEY_W:
-		case GLFW_KEY_S:		Player::SetVelocity(false, 0, 1); break;
-		case GLFW_KEY_A:
-		case GLFW_KEY_D:		Player::SetVelocity(false, 1, 0); break;
-
-		case GLFW_KEY_LEFT:
-		case GLFW_KEY_RIGHT:	Player::SetAngularVelocity(false, 0, 1); break;
-		}
-	}
-	/*
-	if (action == GLFW_PRESS) {
-		switch (key) {
-		case GLFW_KEY_W:		player->SetVelocity(true,  0,  1);	break;
-		case GLFW_KEY_S:		player->SetVelocity(true,  0, -1);	break;
-		case GLFW_KEY_A:		player->SetVelocity(true,  1,  0);	break;
-		case GLFW_KEY_D:		player->SetVelocity(true, -1,  0);	break;
-
-		case GLFW_KEY_LEFT:		player->SetAngularVelocity(true,  0,  1);	break;
-		case GLFW_KEY_RIGHT:	player->SetAngularVelocity(true,  0, -1);	break;
-		case GLFW_KEY_UP:		player->SetAngularVelocity(true, -1,  0);	break;
-		case GLFW_KEY_DOWN:		player->SetAngularVelocity(true,  1,  0);	break;
-
-		case GLFW_KEY_SPACE:    player->Jump(); break;
-		}
-	}
-	if (action == GLFW_RELEASE) {
-		switch (key) {
-		case GLFW_KEY_W: 
 		case GLFW_KEY_S:		player->SetVelocity(false, 0, 1); break;
-		case GLFW_KEY_A: 
+		case GLFW_KEY_A:
 		case GLFW_KEY_D:		player->SetVelocity(false, 1, 0); break;
 
 		case GLFW_KEY_LEFT:
 		case GLFW_KEY_RIGHT:	player->SetAngularVelocity(false, 0, 1); break;
-
-		case GLFW_KEY_UP:
-		case GLFW_KEY_DOWN:		player->SetAngularVelocity(false, 1, 0); break;
 		}
 	}
-	*/
 }
 
 void Input::CursorEnter(GLFWwindow* window, int entered)

@@ -75,7 +75,7 @@ void GameObjectManager::Update(float dt)
 	for (int i{}; i < gameObjects.size(); i++)
 	{
 		if (gameObjects[i]->GetCollideWith().find("player") != gameObjects[i]->GetCollideWith().end())
-		if (Hitbox::CollisionDetection(gameObjects[i]->GetTransform(), gameObjects[i]->GetHitbox(), Player::GetTransform(), Player::GetHitbox()))
+		if (Hitbox::CollisionDetection(gameObjects[i]->GetTransform(), gameObjects[i]->GetHitbox(), player->GetTransform(), player->GetHitbox()))
 		{
 			gameObjects[i]->Collision(GameObject(player->GetTransform(), "player"));
 			player->Collision(*gameObjects[i]);

@@ -26,19 +26,16 @@ private:
 	const Player::StateParams crouchParams{ 2.0f, 5.0f, 1.0f };
 	StateParams activeParams = walkParams;
 
-	Combat combat;
+	Combat combat = { 1000, 30, 0.1f };
 	Hitbox hitbox = GOModels.at("player").hitbox;
 	Transform transform;
 	RigidBody rigidbody;
 
 	State state = State::Walk;
-	
-	Camera camera = Camera(Transform(), 50.0f);;
+	Camera camera = Camera(Transform(), 50.0f);
 
-	static State state;
-	
-	static Camera camera;
-
+	float timer = 0;
+	float lastShootTime = 0;
 public:
 	static std::shared_ptr<Player> GetInstance();
 
@@ -54,9 +51,7 @@ public:
 	void Jump();
 
 	void LookAt(glm::vec3 front);
-	static void Shoot();
-
-	static void LookAt(glm::vec3 front);
+	void Shoot();
 
 	const Camera& GetCamera() { return camera; }
 
