@@ -84,7 +84,7 @@ void Input::CursorPos(GLFWwindow* window, double x, double y)
 	double centerY = myWindow->GetHeight() / 2.0;
 
 	float xOffset = (x - centerX) * mouseSensitivity;
-	float yOffset = (y - centerY) * mouseSensitivity;
+	float yOffset = -(y - centerY) * mouseSensitivity;
 
 	glfwSetCursorPos(window, centerX, centerY);
 
