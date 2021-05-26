@@ -52,14 +52,7 @@ void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 		case GLFW_KEY_RIGHT:	player->SetAngularVelocity(true, 0, -1);	break;
 
 		case GLFW_KEY_UP:		player->Jump();	break;
-		case GLFW_KEY_SPACE:    player->Shoot(); break;
-		}
-	}
-
-	if (action == GLFW_REPEAT)
-	{
-		switch (key) {
-		case GLFW_KEY_SPACE:    player->Shoot(); break;
+		case GLFW_KEY_SPACE:    player->ShootOn(); break;
 		}
 	}
 
@@ -73,6 +66,8 @@ void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 
 		case GLFW_KEY_LEFT:
 		case GLFW_KEY_RIGHT:	player->SetAngularVelocity(false, 0, 1); break;
+		
+		case GLFW_KEY_SPACE:    player->ShootOff(); break;
 		}
 	}
 }

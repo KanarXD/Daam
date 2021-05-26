@@ -14,7 +14,7 @@ std::shared_ptr<Player> Player::GetInstance()
 
 void Player::SetTransform(Transform startingTransform)
 {
-	this->transform = transform;
+	this->transform = startingTransform;
 }
 
 void Player::Update(float dt)
@@ -30,7 +30,7 @@ void Player::Update(float dt)
 
 	transform.Update(rigidbody, dt);
 	camera.SetTransform(transform, activeParams.height);
-
+	if (isShoot) Shoot();
 }
 
 void Player::Collision(GameObject& collidedObject)

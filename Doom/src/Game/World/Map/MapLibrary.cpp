@@ -88,6 +88,7 @@ std::optional<const Map*> MapLibrary::Load(const std::string& mapPath)
             case 'H': GameObjectManager::GetInstance()->Add<Healthkit>(Transform(glm::vec3(i * boxSize, 2, j * boxSize))); break;
                 // enemy
             case 'S': Spawner::GetInstance()->AddSpawnLocation(glm::vec2(i * boxSize, j * boxSize)); break;
+            case 'P': Player::GetInstance()->SetTransform(Transform(glm::vec3(i * boxSize, 5, j * boxSize), glm::vec3(0,glm::half_pi<float>(),0)));
             }
 
             j++;

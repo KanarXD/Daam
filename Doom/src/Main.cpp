@@ -22,7 +22,7 @@ int main()
 	auto gameObjectManager = GameObjectManager::GetInstance();
 
 	window->Create("DOOM", 800, 600);
-	player->SetTransform(Transform(glm::vec3(20.0f, 0, 20.0f), glm::vec3(0), glm::vec3(1)));
+	player->SetTransform(Transform(glm::vec3(100.0f, 0, 100.0f), glm::vec3(0), glm::vec3(1)));
 	Input::GetInstance()->Init();
 
 	ShadersLibrary::GetInstance()->Load("shaderCT", "res/shaders/v_simple_texture_color.glsl", NULL, "res/shaders/f_simple_texture_color.glsl");
@@ -39,7 +39,7 @@ int main()
 	ModelsLibrary::GetInstance()->Load(Hitbox::rdModelPath, "shaderCT");
 	ModelsLibrary::GetInstance()->Load(Hitbox::sqModelPath, "shaderCT");
 	ModelsLibrary::GetInstance()->Load(Healthbar::modelPath, "shaderCT");
-	ModelsLibrary::GetInstance()->Load(Spawner::modelPath, "shaderCT");
+	ModelsLibrary::GetInstance()->Load(Spawner::modelPath, "shaderCTL");
 
 	/*
 	auto person = ModelsLibrary::GetInstance()->Load("res/models/base/Base Mesh sculpt 2.obj", "shaderCT");

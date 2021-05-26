@@ -52,7 +52,6 @@ void Spawner::Update(float dt)
 	}
 	else if (!currentWave.EnemyToSpawnCount())
 	{
-		LOGINFO("Wave", currentWaveIter, "ended");
 		NewWave();
 	}
 }
@@ -106,7 +105,9 @@ void Spawner::SpawnEnemy()
 bool Spawner::NewWave()
 {
 	if (currentWaveIter + 1 >= waves.size()) return false;
-	if (killedEnemies != 0) return false;
+	if (killedEnemies != spawnedEnemies) return false;
+	LOGINFO("Wave", currentWaveIter, "ended");
+	LOGINFO("Wave", currentWaveIter - 1, "started");
 	currentWaveIter++;
 	currentWave = waves[currentWaveIter];
 

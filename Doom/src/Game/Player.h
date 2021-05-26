@@ -21,9 +21,9 @@ public:
 	};
 
 private:
-	const Player::StateParams walkParams{ 2.0f, 10.0f, 2.0f };
-	const Player::StateParams sprintParams{ 2.0f, 20.0f, 2.0f };
-	const Player::StateParams crouchParams{ 2.0f, 5.0f, 1.0f };
+	const StateParams walkParams{ 2.0f, 10.0f, 2.0f };
+	const StateParams sprintParams{ 2.0f, 20.0f, 2.0f };
+	const StateParams crouchParams{ 2.0f, 5.0f, 1.0f };
 	StateParams activeParams = walkParams;
 
 	Combat combat = { 1000, 30, 0.1f };
@@ -34,8 +34,10 @@ private:
 	State state = State::Walk;
 	Camera camera = Camera(Transform(), 50.0f);
 
-	float timer = 0;
-	float lastShootTime = 0;
+	float timer{ 0 };
+	float lastShootTime{ 0 };
+	bool isShoot{ false };
+
 public:
 	static std::shared_ptr<Player> GetInstance();
 
@@ -52,6 +54,8 @@ public:
 
 	void LookAt(glm::vec3 front);
 	void Shoot();
+	void ShootOn() { isShoot = true; }
+	void ShootOff() { isShoot = false; }
 
 	const Camera& GetCamera() { return camera; }
 
