@@ -108,6 +108,7 @@ void Player::Shoot()
 
 void Player::LookAt(glm::vec3 front)
 {
+	camera.SetFront(front);
 	transform.rotation.y = atan2(front.x, front.z);
 }
 

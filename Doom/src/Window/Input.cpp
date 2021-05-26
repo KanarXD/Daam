@@ -12,9 +12,6 @@ std::shared_ptr<Input> Input::GetInstance()
 void Input::Init(bool enableMouse, float mouseSensitivity)
 {
 	this->mouseSensitivity = mouseSensitivity;
-	this->mouseInWindow = false;
-	this->rotX = 0;
-	this->rotY = 0;
 	Setup(enableMouse, Window::GetInstance()->GetGLFWwindow());
 }
 

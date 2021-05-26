@@ -5,11 +5,11 @@ class Camera
 {
 private:
 	Transform transform;
+	glm::vec3 front{};
 
-	float fov = 50.0f;
-	float nearClip = 0.01f;
-	float farClip = 300.0f;
-
+	float fov{ 50.0f };
+	float nearClip{ 0.01f };
+	float farClip{ 300.0f };
 
 public:
 	Camera(Transform transform, float fov);
@@ -17,6 +17,8 @@ public:
 	void SetTransform(const Transform& newTransform, float height);
 	const Transform& GetTransform() const { return transform; }
 	
+	void SetFront(const glm::vec3& newFront) { front = newFront; }
+
 	void SetFov(float newFov) { fov = newFov; }
 	float GetFov() const { return fov * Consts::PI / 180.0f; }
 

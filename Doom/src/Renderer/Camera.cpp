@@ -11,5 +11,5 @@ void Camera::SetTransform(const Transform& newTransform, float height)
 
 glm::vec3 Camera::GetLootAtPosition() const
 {
-	return transform.position + transform.RotatePosition(transform.rotation);
+	return transform.position + front; //transform.RotatePosition(transform.rotation);
 }
