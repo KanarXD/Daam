@@ -83,4 +83,19 @@ int main()
 
 		window->SwapBuffers();
 	}
+	glfwDestroyWindow(window->GetGLFWwindow());
+
+	switch (player->gameState)
+	{
+	case Player::GameState::Closed: 
+		std::cout << "~~~~~ Window Closed ~~~~~\n";
+		break;
+	case Player::GameState::GameOver: 
+		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~\n        Game Over        \n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		break;
+	case Player::GameState::Win: 
+		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~\n         You Won         \n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		break;
+	}
+
 }

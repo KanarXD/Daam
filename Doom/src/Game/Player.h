@@ -20,6 +20,10 @@ public:
 			: angularVelocity(angularVelocity), velocity(velocity), height(height) {}
 	};
 
+	enum class GameState: int { Playing, GameOver, Win, Closed };
+
+	GameState gameState{ GameState::Playing };
+
 private:
 	const StateParams walkParams{ 2.0f, 10.0f, 2.0f };
 	const StateParams sprintParams{ 2.0f, 20.0f, 2.0f };
