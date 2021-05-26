@@ -18,6 +18,7 @@ public:
 	const Transform& GetTransform() const { return transform; }
 	
 	void SetFront(const glm::vec3& newFront) { front = newFront; }
+	const glm::vec3& GetFront() const { return front; }
 
 	void SetFov(float newFov) { fov = newFov; }
 	float GetFov() const { return fov * Consts::PI / 180.0f; }

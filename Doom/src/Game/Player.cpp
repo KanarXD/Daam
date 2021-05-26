@@ -21,7 +21,6 @@ void Player::SetTransform(Transform startingTransform)
 void Player::Update(float dt)
 {
 	timer += dt;
-
 	if (combat.IsDead())
 	{
 		gameState = GameState::GameOver;
@@ -38,6 +37,27 @@ void Player::Update(float dt)
 	transform.Update(rigidbody, dt);
 	camera.SetTransform(transform, activeParams.height);
 	if (isShoot) Shoot();
+}
+
+void Player::Draw()
+{
+	std::optional<const Model*> model = ModelsLibrary::GetInstance()->Get(Healthbar::modelPath);
+	if (!model.has_value())
+	{
+		LOGERROR("Enemy - ModelsLibrary::Get(...) - ", Healthbar::modelPath);
+		return;
+	}
+
+	glm::mat4 M = glm::mat4(1.0f);
+	
+	M = glm::translate(M, transform.position + (activeParams.height + healthbar.offsetY) * glm::vec3(0, 1, 0));
+	M = glm::rotate(M, transform.rotation.y - glm::half_pi<float>(), glm::vec3(0, 1, 0));
+	// M = glm::rotate(M, transform.rotation.z, glm::vec3(0, 0, 1));
+	M = glm::translate(M, glm::vec3(1, 0, 0));
+	M = glm::rotate(M, glm::half_pi<float>(), glm::vec3(0, 1, 0));
+	M = glm::scale(M, glm::vec3(healthbar.scaleX * combat.health / combat.maxHealth, 1, 1));
+
+	Renderer::DrawModel(*model.value(), M);
 }
 
 void Player::Collision(GameObject& collidedObject)
@@ -119,7 +139,9 @@ void Player::Shoot()
 
 void Player::LookAt(glm::vec3 front)
 {
+	front.y = 0;
 	camera.SetFront(front);
+	transform.rotation.z = asin(front.y / sqrt(front.y * front.y + front.x * front.x));
 	transform.rotation.y = atan2(front.x, front.z);
 }
 

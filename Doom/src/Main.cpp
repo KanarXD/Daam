@@ -72,13 +72,14 @@ int main()
 
 		Renderer::SetProjection(player->GetCamera(), window->GetAspectRatio());
 		Renderer::SetCamera(player->GetCamera());
-
+		player->Draw();
 
 		gameObjectManager->Update(dt);
 		gameObjectManager->Draw();
+		
 		Spawner::GetInstance()->Update(dt);
 		Spawner::GetInstance()->Draw();
-
+		
 		if (map.has_value()) map.value()->Draw();
 
 		window->SwapBuffers();

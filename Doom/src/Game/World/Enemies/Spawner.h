@@ -21,7 +21,7 @@ private:
 	};
 
 	const static std::vector<Wave> waves;
-	int currentWaveIter{3};
+	int currentWaveIter{};
 	Wave currentWave{ waves[currentWaveIter] };
 	
 	std::vector<Portal> portals{};

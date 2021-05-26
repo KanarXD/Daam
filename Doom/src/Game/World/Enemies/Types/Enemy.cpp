@@ -81,7 +81,7 @@ void Enemy::Draw()
 		std::optional<const Model*> model = ModelsLibrary::GetInstance()->Get(Healthbar::modelPath);
 		if (!model.has_value())
 		{
-			LOGERROR("Enemy - ModelsLibrary::Get(...) - ", modelPath);
+			LOGERROR("Enemy - ModelsLibrary::Get(...) - ", Healthbar::modelPath);
 			return;
 		}
 

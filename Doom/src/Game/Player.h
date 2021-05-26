@@ -1,6 +1,7 @@
 #pragma once
 #include "Renderer/Camera.h"
 #include "Components/Combat.h"
+#include "Components/Healthbar.h"
 #include "Components/Hitbox.h"
 #include "Components/Transform.h"
 #include "Components/RigidBody.h"
@@ -30,7 +31,8 @@ private:
 	const StateParams crouchParams{ 2.0f, 5.0f, 1.0f };
 	StateParams activeParams = walkParams;
 
-	Combat combat = { 1000, 30, 0.1f };
+	Combat combat = { 1000, 100, 0.1f };
+	Healthbar healthbar{ .465f, 0.55f }; //2.55f
 	Hitbox hitbox = GOModels.at("player").hitbox;
 	Transform transform;
 	RigidBody rigidbody;
@@ -45,6 +47,7 @@ public:
 	static std::shared_ptr<Player> GetInstance();
 
 	void Update(float dt);
+	void Draw();
 
 	void Collision(GameObject& collidedObject);
 
