@@ -83,7 +83,6 @@ int main()
 
 		window->SwapBuffers();
 	}
-	glfwDestroyWindow(window->GetGLFWwindow());
 
 	switch (player->gameState)
 	{
