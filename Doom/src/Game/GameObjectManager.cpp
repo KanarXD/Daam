@@ -4,6 +4,7 @@
 #include "World/Enemies/Types/Enemy.h"
 #include "Arsenal/Bullet.h"
 #include "World/Enemies/Spawner.h"
+#include "Utility/Collisions.h"
 
 template<typename Base, typename T>
 inline bool instanceof(const T*)

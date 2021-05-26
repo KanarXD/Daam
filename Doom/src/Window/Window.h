@@ -21,7 +21,14 @@ public:
 	inline uint32_t GetHeight() const { return height; }
 	inline float GetAspectRatio() const { return aspectRatio; }
 
+	bool WindowShouldClose() const;
+	void SetWindowShouldClose();
+	void SwapBuffers() const;
+
 private:
+	void SetWidth(uint32_t width) { this->width = width; }
+	void SetHeight(uint32_t height) { this->height = height; }
+
 	static void WindowResizeCallback(GLFWwindow* window, int width, int height);
 	static void ErrorCallbackGLFW(int error, const char* description);
 	static void ErrorCallbackOpenGL(GLenum source, GLenum type,GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam);

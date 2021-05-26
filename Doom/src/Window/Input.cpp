@@ -12,9 +12,7 @@ std::shared_ptr<Input> Input::GetInstance()
 void Input::Init(bool enableMouse, float mouseSensitivity)
 {
 	this->mouseSensitivity = mouseSensitivity;
-	this->lastMousePosition = glm::vec2(0);
 	this->mouseInWindow = false;
-	this->mouseFirstTime = true;
 	this->rotX = 0;
 	this->rotY = 0;
 	Setup(enableMouse, Window::GetInstance()->GetGLFWwindow());
@@ -26,7 +24,7 @@ void Input::Setup(bool enableMouse, GLFWwindow* window)
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 	if (enableMouse)
 	{
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 		glfwSetCursorEnterCallback(window, CursorEnterCallback);
 		glfwSetCursorPosCallback(window, CursorPosCallback);
 		glfwSetMouseButtonCallback(window, MouseButtonCallback);
@@ -53,6 +51,8 @@ void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 
 		case GLFW_KEY_UP:		player->Jump();	break;
 		case GLFW_KEY_SPACE:    player->ShootOn(); break;
+
+		case GLFW_KEY_ESCAPE:   Window::GetInstance()->SetWindowShouldClose(); break;
 		}
 	}
 
@@ -81,15 +81,16 @@ void Input::CursorPos(GLFWwindow* window, double x, double y)
 {
 	if (!mouseInWindow) return;
 
-	if (mouseFirstTime) {
-		lastMousePosition = glm::vec2(x, y);
-		mouseFirstTime = false;
-	}
+	auto myWindow = Window::GetInstance();
 
-	float xOffset = (x - lastMousePosition.x) * mouseSensitivity;
-	float yOffset = (lastMousePosition.y - y) * mouseSensitivity;
-	lastMousePosition = glm::vec2(x, y);
-	
+	double centerX = myWindow->GetWidth() / 2.0;
+	double centerY = myWindow->GetHeight() / 2.0;
+
+	float xOffset = (x - centerX) * mouseSensitivity;
+	float yOffset = (y - centerY) * mouseSensitivity;
+
+	glfwSetCursorPos(window, centerX, centerY);
+
 	rotY += xOffset;
 	rotX += yOffset;
 
@@ -99,9 +100,6 @@ void Input::CursorPos(GLFWwindow* window, double x, double y)
 	direction.x = cos(glm::radians(rotY)) * cos(glm::radians(rotX));
 	direction.y = sin(glm::radians(rotX));
 	direction.z = sin(glm::radians(rotY)) * cos(glm::radians(rotX));
-
-
-	//std::cout << rotY << " " << rotX + 45 << std::endl;
 
 	Player::GetInstance()->LookAt(glm::normalize(direction));
 }

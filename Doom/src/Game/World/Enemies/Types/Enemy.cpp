@@ -4,7 +4,7 @@
 #include "Game/GameObjectManager.h"
 #include "Renderer/Renderer.h"
 
-Enemy::Specs Enemy::defualtSpecs{ Combat(), 120, 100, 35 };
+Enemy::Specs Enemy::defualtSpecs{ Combat(), 120, 100, 10 };
 
 Enemy::Specs::Specs(const Combat& combat, float fov, float viewDist, float speed)
 	: combat(combat), fov(fov), viewDist(viewDist), speed(speed) {}
@@ -32,7 +32,7 @@ void Enemy::Update(float dt)
 	if (inRange && PlayerInBound(playerPos, angToPlayer))
 	{
 		transform.rotation.y = angToPlayer;
-		// rigidbody.velocity.z = activeSpecs.speed;
+		rigidbody.velocity.z = activeSpecs.speed;
 	}
 	else
 	{

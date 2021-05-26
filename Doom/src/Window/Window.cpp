@@ -63,12 +63,29 @@ Window::~Window()
 	exit(EXIT_SUCCESS);
 }
 
+bool Window::WindowShouldClose() const {
+	return glfwWindowShouldClose(window);
+}
+
+void Window::SetWindowShouldClose() {
+	glfwSetWindowShouldClose(window, true);
+}
+
+void Window::SwapBuffers() const {
+	glfwSwapBuffers(window);
+	glfwPollEvents();
+}
+
 void Window::WindowResizeCallback(GLFWwindow* window, int width, int height) {
 	LOGINFO("WindowResizeCallback", width, height);
 
 	if (height == 0) return;
 
-	Window::GetInstance()->aspectRatio = (float)width / (float)height;
+	auto myWindow = Window::GetInstance();
+	myWindow->aspectRatio = (float)width / (float)height;
+	myWindow->SetWidth(width);
+	myWindow->SetHeight(height);
+
 	Renderer::SetProjection(Player::GetInstance()->GetCamera(), Window::GetInstance()->aspectRatio);
 	glViewport(0, 0, width, height);
 }

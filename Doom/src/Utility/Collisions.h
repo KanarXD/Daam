@@ -1,5 +1,7 @@
 #pragma once
 
+#include "pch.h"
+
 namespace Collisions
 {
 	bool CylindersIntersect(const glm::vec3& aPos, float aSize, const glm::vec3& bPos, float bSize);

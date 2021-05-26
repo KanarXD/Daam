@@ -4,9 +4,7 @@
 class Input
 {
 private:
-	glm::vec2 lastMousePosition;
 	bool mouseInWindow;
-	bool mouseFirstTime;
 	float rotX;
 	float rotY;
 	float mouseSensitivity;
