@@ -48,6 +48,8 @@ void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 
 		case GLFW_KEY_UP:		player->Jump();	break;
 		case GLFW_KEY_SPACE:    player->ShootOn(); break;
+
+		case GLFW_KEY_ESCAPE:	player->gameState = Player::GameState::Closed;
 		}
 	}
 

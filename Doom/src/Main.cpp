@@ -61,7 +61,7 @@ int main()
 	LOGINFO("drawing...");
 	glfwSetTime(0);
 	float dt = 0;
-	while (!glfwWindowShouldClose(window->GetGLFWwindow()))
+	while (!glfwWindowShouldClose(window->GetGLFWwindow()) && player->gameState == Player::GameState::Playing)
 	{
 		dt = (float)glfwGetTime();
 		glfwSetTime(0);
@@ -84,4 +84,19 @@ int main()
 		glfwSwapBuffers(window->GetGLFWwindow());
 		glfwPollEvents();
 	}
+	glfwDestroyWindow(window->GetGLFWwindow());
+
+	switch (player->gameState)
+	{
+	case Player::GameState::Closed: 
+		std::cout << "~~~~~ Window Closed ~~~~~\n";
+		break;
+	case Player::GameState::GameOver: 
+		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~\n        Game Over        \n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		break;
+	case Player::GameState::Win: 
+		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~\n         You Won         \n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		break;
+	}
+
 }
