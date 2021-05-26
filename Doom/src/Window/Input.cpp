@@ -46,8 +46,8 @@ void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 		case GLFW_KEY_LEFT:		player->SetAngularVelocity(true, 0, 1);	break;
 		case GLFW_KEY_RIGHT:	player->SetAngularVelocity(true, 0, -1);	break;
 
-		case GLFW_KEY_UP:		player->Jump();	break;
-		case GLFW_KEY_SPACE:    player->ShootOn(); break;
+		case GLFW_KEY_SPACE:    player->Jump();	break;
+
 
 		case GLFW_KEY_ESCAPE:	player->gameState = Player::GameState::Closed; Window::GetInstance()->SetWindowShouldClose();
 		}
@@ -64,7 +64,6 @@ void Input::Key(GLFWwindow* window, int key, int scancode, int action, int mods)
 		case GLFW_KEY_LEFT:
 		case GLFW_KEY_RIGHT:	player->SetAngularVelocity(false, 0, 1); break;
 		
-		case GLFW_KEY_SPACE:    player->ShootOff(); break;
 		}
 	}
 }
@@ -103,11 +102,17 @@ void Input::CursorPos(GLFWwindow* window, double x, double y)
 
 void Input::MouseButton(GLFWwindow* window, int button, int action, int mods)
 {
+	auto player = Player::GetInstance();
 	if (action == GLFW_PRESS) {
-		switch (button) {}
+		switch (button) {
+			case GLFW_MOUSE_BUTTON_1: player->ShootOn(); break;
+
+		}
 	}
 	if (action == GLFW_RELEASE) {
-		switch (button) {}
+		switch (button) {
+			case GLFW_MOUSE_BUTTON_1:    player->ShootOff(); break;
+		}
 	}
 }
 
