@@ -25,12 +25,14 @@ protected:
 	RigidBody rigidbody;
 	Specs activeSpecs;
 	
+	int attackingStage{ 0 };
+
 public:
 	Enemy(const Transform& transform, const std::string& type = "enemy");
 	virtual void Update(float dt) override;
 	void Draw() override;
 
-	virtual void Collision(const std::string& collidedObjectType) override;
+	virtual void Collision(const GameObject& collidedObject) override;
 
 	bool PlayerInBound(const glm::vec3& playerPos, float angToPlayer) const;
 

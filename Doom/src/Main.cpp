@@ -87,13 +87,13 @@ int main()
 	switch (player->gameState)
 	{
 	case Player::GameState::Closed: 
-		std::cout << "~~~~~ Window Closed ~~~~~\n";
+		std::cout << "\n~~~~~ Window Closed ~~~~~\n";
 		break;
 	case Player::GameState::GameOver: 
-		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~\n        Game Over        \n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~\n        Game Over        \n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
 		break;
 	case Player::GameState::Win: 
-		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~\n         You Won         \n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~\n         You Won         \n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
 		break;
 	}
 

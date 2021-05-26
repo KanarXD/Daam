@@ -21,30 +21,30 @@ private:
 	};
 
 	const static std::vector<Wave> waves;
-	static int currentWaveIter;
-	static Wave currentWave;
+	int currentWaveIter{3};
+	Wave currentWave{ waves[currentWaveIter] };
 	
-	static std::vector<Portal> portals;
+	std::vector<Portal> portals{};
 
 
-	static int spawnedEnemies;
-	static int killedEnemies;
+	int spawnedEnemies{};
+	int killedEnemies{};
 	
-	static double timer;
-	static double lastSpawnTime;
+	double timer{};
+	double lastSpawnTime{};
 
 public:
 	static std::shared_ptr<Spawner> GetInstance();
-	static void Update(float dt);
-	static void Draw();
-	static void Destroy();
+	void Update(float dt);
+	void Draw();
+	void Destroy();
 
-	static void SpawnEnemy();
-	static void EnemyKilled() { killedEnemies++; }
-	static bool NewWave();
+	void SpawnEnemy();
+	void EnemyKilled() { killedEnemies++; }
+	bool NewWave();
 
-	static void AddSpawnLocation(const glm::vec2& spawnLocation) { portals.push_back(Portal(glm::vec3(spawnLocation.x, 10, spawnLocation.y))); }
-	static void ClearLocations() { portals.clear(); }
+	void AddSpawnLocation(const glm::vec2& spawnLocation) { portals.push_back(Portal(glm::vec3(spawnLocation.x, 10, spawnLocation.y))); }
+	void ClearLocations() { portals.clear(); }
 
 private:
 	Spawner() = default;

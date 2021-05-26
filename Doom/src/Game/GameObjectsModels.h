@@ -29,11 +29,11 @@ const static std::unordered_map<std::string, ModelSpec> GOModels{
 		{ "box", "bullet", "player", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },
 		"res/models/Enemies/enemy_fast.obj", "shaderCTL" } },
 	{ "enemy_tank",	{
-		{ glm::vec3(0, 0, 0), glm::vec3(2) },
+		{ glm::vec3(0, 0, 0), glm::vec3(2.25f) },
 		{ "box", "bullet", "player", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },
 		"res/models/Enemies/enemy_tank.obj", "shaderCTL" } },
 	{ "enemy_boss",	{
-		{ glm::vec3(0, 0, 0), glm::vec3(2.5f) },
+		{ glm::vec3(0, 0, 0), glm::vec3(3.25f) },
 		{ "box", "bullet", "player", "enemy" , "enemy_fast", "enemy_tank", "enemy_boss" },
 		"res/models/Enemies/enemy_boss.obj", "shaderCTL" } },
 	{ "healthkit", {

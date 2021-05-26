@@ -11,7 +11,7 @@ void Bullet::Update(float dt)
 }
 
 
-void Bullet::Collision(const std::string& collidedObjectType)
+void Bullet::Collision(const GameObject& collidedObject)
 {
 	isHit = true;
 }

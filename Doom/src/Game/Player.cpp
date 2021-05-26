@@ -4,6 +4,7 @@
 #include "Renderer/Renderer.h"
 #include "Renderer/Library/ModelsLibrary.h"
 #include "Arsenal/Bullet.h"
+#include "Window/Window.h"
 
 
 std::shared_ptr<Player> Player::GetInstance()
@@ -20,6 +21,12 @@ void Player::SetTransform(Transform startingTransform)
 void Player::Update(float dt)
 {
 	timer += dt;
+
+	if (combat.IsDead())
+	{
+		gameState = GameState::GameOver;
+		Window::GetInstance()->SetWindowShouldClose();
+	}
 	if (transform.position.y > 0)
 		rigidbody.velocity.y -= 2 * Consts::G * dt;
 	else if (transform.position.y < 0)
@@ -62,6 +69,10 @@ void Player::Collision(GameObject& collidedObject)
 		combat.health += 100;
 		if (combat.health > combat.maxHealth) combat.health = combat.maxHealth;
 	}
+	else
+	{
+		combat.health -= dynamic_cast<Enemy*>(&collidedObject)->GetSpecs().combat.DealDamage();
+	}
 }
 
 void Player::SetState(State newState)
@@ -98,9 +109,9 @@ void Player::Jump()
 
 void Player::Shoot()
 {
-	if (timer - lastShootTime > combat.attackTime)
+	if (timer - combat.lastAttackTime > combat.timeBetweenAttack)
 	{
-		lastShootTime = timer;
+		combat.lastAttackTime = timer;
 		GameObjectManager::GetInstance()->Add<Bullet>(
 			Transform(transform.position + glm::vec3(0, activeParams.height - 0.5f, 0), transform.rotation, glm::vec3(5)));
 	}

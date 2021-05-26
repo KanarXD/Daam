@@ -39,7 +39,6 @@ private:
 	Camera camera = Camera(Transform(), 50.0f);
 
 	float timer{ 0 };
-	float lastShootTime{ 0 };
 	bool isShoot{ false };
 
 public:
