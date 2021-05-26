@@ -32,7 +32,7 @@ void Enemy::Update(float dt)
 	if (inRange && PlayerInBound(playerPos, angToPlayer))
 	{
 		transform.rotation.y = angToPlayer;
-		// rigidbody.velocity.z = activeSpecs.speed;
+		rigidbody.velocity.z = activeSpecs.speed;
 	}
 	else
 	{

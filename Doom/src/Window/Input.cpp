@@ -12,11 +12,6 @@ std::shared_ptr<Input> Input::GetInstance()
 void Input::Init(bool enableMouse, float mouseSensitivity)
 {
 	this->mouseSensitivity = mouseSensitivity;
-	this->lastMousePosition = glm::vec2(0);
-	this->mouseInWindow = false;
-	this->mouseFirstTime = true;
-	this->rotX = 0;
-	this->rotY = 0;
 	Setup(enableMouse, Window::GetInstance()->GetGLFWwindow());
 }
 
@@ -26,7 +21,7 @@ void Input::Setup(bool enableMouse, GLFWwindow* window)
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GLFW_TRUE);
 	if (enableMouse)
 	{
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 		glfwSetCursorEnterCallback(window, CursorEnterCallback);
 		glfwSetCursorPosCallback(window, CursorPosCallback);
 		glfwSetMouseButtonCallback(window, MouseButtonCallback);
@@ -81,27 +76,15 @@ void Input::CursorPos(GLFWwindow* window, double x, double y)
 {
 	if (!mouseInWindow) return;
 
-	if (mouseFirstTime) {
-		lastMousePosition = glm::vec2(x, y);
-		mouseFirstTime = false;
-	}
-
-	float xOffset = (x - lastMousePosition.x) * mouseSensitivity;
-	float yOffset = (lastMousePosition.y - y) * mouseSensitivity;
-	lastMousePosition = glm::vec2(x, y);
+	rotY += mouseSensitivity * float(x - Window::GetInstance()->GetWidth() / 2);
 	
-	rotY += xOffset;
-	rotX += yOffset;
-
+	glfwSetCursorPos(window, Window::GetInstance()->GetWidth() / 2, Window::GetInstance()->GetHeight() /2 );
 	rotX = glm::clamp(rotX, -80.0f, 80.0f);
 
 	glm::vec3 direction;
 	direction.x = cos(glm::radians(rotY)) * cos(glm::radians(rotX));
 	direction.y = sin(glm::radians(rotX));
 	direction.z = sin(glm::radians(rotY)) * cos(glm::radians(rotX));
-
-
-	//std::cout << rotY << " " << rotX + 45 << std::endl;
 
 	Player::GetInstance()->LookAt(glm::normalize(direction));
 }

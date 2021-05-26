@@ -4,15 +4,14 @@
 class Input
 {
 private:
-	glm::vec2 lastMousePosition;
-	bool mouseInWindow;
-	bool mouseFirstTime;
-	float rotX;
-	float rotY;
+	bool mouseInWindow{ false };
+	bool mouseFirstTime{ true };
+	float rotX{};
+	float rotY{};
 	float mouseSensitivity;
 public:
 	static std::shared_ptr<Input> GetInstance();
-	void Init(bool enableMouse = false, float mouseSensitivity = 0.1f);
+	void Init(bool enableMouse = false, float mouseSensitivity = 0.05f);
 
 private:
 	void Setup(bool enableMouse, GLFWwindow* window);
