@@ -13,7 +13,6 @@ Enemy::Specs::Specs(const Combat& combat, float fov, float viewDist, float speed
 Enemy::Enemy(const Transform& transform, const std::string& type)
 	: GameObject(transform, type),  rigidbody(), activeSpecs(Enemy::defualtSpecs) 
 {
-	// this->transform.rotation.y = float(rand() % 100) / 24;
 	healthbar.offsetY = transform.scale.y * hitbox.scaleModifier.y + 1;
 }
 
@@ -67,7 +66,6 @@ void Enemy::Update(float dt)
 		rigidbody.velocity.z = activeSpecs.speed;
 		healthbar.draw = false;
 	}
-	// activeSpecs.combat.health -= 5;
 	transform.Update(rigidbody, dt);
 	healthbar.scaleX = activeSpecs.combat.health / activeSpecs.combat.maxHealth;
 	transform.position.y += sin(timer * 2) / 100;

@@ -13,9 +13,9 @@ std::shared_ptr<Player> Player::GetInstance()
 	return playerInstance;
 }
 
-void Player::SetTransform(Transform startingTransform)
+void Player::SetTransform(Transform transform)
 {
-	this->transform = startingTransform;
+	this->transform = transform;
 }
 
 void Player::Update(float dt)
@@ -101,9 +101,9 @@ void Player::SetState(State newState)
 
 	switch (state)
 	{
-	case Player::State::Walk:  activeParams = walkParams;	break;
-	case Player::State::Sprint:   activeParams = sprintParams;	break;
-	case Player::State::Crouch: activeParams = crouchParams;	break;
+	case Player::State::Walk:	activeParams = walkParams;	 break;
+	case Player::State::Sprint:	activeParams = sprintParams; break;
+	case Player::State::Crouch:	activeParams = crouchParams; break;
 	}
 
 	UpdateVelocity();
