@@ -64,8 +64,8 @@ void GameObjectManager::Update(float dt)
 					gameObjects[i]->GetTransform(), gameObjects[i]->GetHitbox(),
 					gameObjects[j]->GetTransform(), gameObjects[j]->GetHitbox()))
 				{
-					gameObjects[i]->Collision(gameObjects[j]->GetType());
-					gameObjects[j]->Collision(gameObjects[i]->GetType());
+					gameObjects[i]->Collision(*gameObjects[j]);
+					gameObjects[j]->Collision(*gameObjects[i]);
 				}
 			}
 		}
@@ -75,10 +75,10 @@ void GameObjectManager::Update(float dt)
 	// Collisions with player
 	for (int i{}; i < gameObjects.size(); i++)
 	{
-		if (gameObjects[i]->GetCollideWith().find("player") != gameObjects[i]->GetCollideWith().end())
-		if (Hitbox::CollisionDetection(gameObjects[i]->GetTransform(), gameObjects[i]->GetHitbox(), player->GetTransform(), player->GetHitbox()))
+		if (gameObjects[i]->GetCollideWith().find("player") != gameObjects[i]->GetCollideWith().end() &&
+			Hitbox::CollisionDetection(gameObjects[i]->GetTransform(), gameObjects[i]->GetHitbox(), player->GetTransform(), player->GetHitbox()))
 		{
-			gameObjects[i]->Collision(GameObject(player->GetTransform(), "player"));
+			gameObjects[i]->Collision(GameObject(Player::GetInstance()->GetTransform(), "player"));
 			player->Collision(*gameObjects[i]);
 		}
 	}

@@ -58,12 +58,14 @@ int main()
 
 		Renderer::SetProjection(player->GetCamera(), window->GetAspectRatio());
 		Renderer::SetCamera(player->GetCamera());
+		player->Draw();
 
 		gameObjectManager->Update(dt);
 		gameObjectManager->Draw();
+		
 		Spawner::GetInstance()->Update(dt);
 		Spawner::GetInstance()->Draw();
-
+		
 		if (map.has_value()) map.value()->Draw();
 
 		window->SwapBuffers();
@@ -72,13 +74,13 @@ int main()
 	switch (player->gameState)
 	{
 	case Player::GameState::Closed: 
-		std::cout << "~~~~~ Window Closed ~~~~~\n";
+		std::cout << "\n~~~~~ Window Closed ~~~~~\n";
 		break;
 	case Player::GameState::GameOver: 
-		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~\n        Game Over        \n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~\n        Game Over        \n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
 		break;
 	case Player::GameState::Win: 
-		std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~\n         You Won         \n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~~~~~~\n         You Won         \n~~~~~~~~~~~~~~~~~~~~~~~~~\n";
 		break;
 	}
 

@@ -13,6 +13,6 @@ public:
 	
 	bool IsHit() const { return isHit; }
 
-	virtual void Collision(const std::string& collidedObjectType) override;
+	virtual void Collision(const GameObject& collidedObject) override;
 };
 

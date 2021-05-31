@@ -13,7 +13,6 @@ Enemy::Specs::Specs(const Combat& combat, float fov, float viewDist, float speed
 Enemy::Enemy(const Transform& transform, const std::string& type)
 	: GameObject(transform, type),  rigidbody(), activeSpecs(Enemy::defualtSpecs) 
 {
-	// this->transform.rotation.y = float(rand() % 100) / 24;
 	healthbar.offsetY = transform.scale.y * hitbox.scaleModifier.y + 1;
 }
 
@@ -27,22 +26,49 @@ void Enemy::Update(float dt)
 	{
 		healthbar.draw = true;
 		healthbar.rotY = angToPlayer;
-	}
-
-	if (inRange && PlayerInBound(playerPos, angToPlayer))
-	{
-		transform.rotation.y = angToPlayer;
-		rigidbody.velocity.z = activeSpecs.speed;
+		if (PlayerInBound(playerPos, angToPlayer))
+		{
+			transform.rotation.y = angToPlayer;
+			if (glm::distance(transform.position, playerPos) <= 10)
+			{
+				switch (attackingStage)
+				{
+				case -1:
+					rigidbody.velocity.z = -50;
+					break;
+				case 0:
+					if (timer - activeSpecs.combat.lastAttackTime > activeSpecs.combat.timeBetweenAttack)
+					{
+						activeSpecs.combat.lastAttackTime = timer;
+						attackingStage = 1;
+					}
+					rigidbody.velocity.z = 0;
+					break;
+				case 1:
+					rigidbody.velocity.z = 50;
+					break;
+				}
+			}
+			else
+			{
+				if (!attackingStage)
+					rigidbody.velocity.z = activeSpecs.speed;
+				else
+					attackingStage = 0;
+			}
+		}
+		else
+			transform.rotation.y += (rand() % 20 - 10) / 200.0f;
 	}
 	else
 	{
-		rigidbody.velocity.z = 0;
+		transform.rotation.y += (rand() % 20 - 10) / 200.0f;
+		rigidbody.velocity.z = activeSpecs.speed;
 		healthbar.draw = false;
 	}
-	// activeSpecs.combat.health -= 5;
 	transform.Update(rigidbody, dt);
 	healthbar.scaleX = activeSpecs.combat.health / activeSpecs.combat.maxHealth;
-	transform.position.y += sin(timer * 2) / 50;
+	transform.position.y += sin(timer * 2) / 100;
 }
 
 void Enemy::Draw()
@@ -53,7 +79,7 @@ void Enemy::Draw()
 		std::optional<const Model*> model = ModelsLibrary::GetInstance()->Get(Healthbar::modelPath);
 		if (!model.has_value())
 		{
-			LOGERROR("Enemy - ModelsLibrary::Get(...) - ", modelPath);
+			LOGERROR("Enemy - ModelsLibrary::Get(...) - ", Healthbar::modelPath);
 			return;
 		}
 
@@ -63,11 +89,37 @@ void Enemy::Draw()
 	}
 }
 
-void Enemy::Collision(const std::string& collidedObjectType)
+void Enemy::Collision(const GameObject& collidedObject)
 {
-	if (collidedObjectType == "bullet")
+	if (collidedObject.GetType() == "bullet")
 	{
 		activeSpecs.combat.health -= Player::GetInstance()->GetCombat().DealDamage();
+	}
+	else if (collidedObject.GetType() == "player")
+	{
+		attackingStage = -1;
+	}
+	else if (collidedObject.GetType() == "box")
+	{
+		glm::vec3 boxPos = collidedObject.GetTransformC().position + collidedObject.GetHitboxC().offset;
+		glm::vec3 boxSize = collidedObject.GetTransformC().scale * collidedObject.GetHitboxC().scaleModifier;
+		float distX = transform.position.x + hitbox.offset.x - boxPos.x;
+		float distZ = transform.position.z + hitbox.offset.z - boxPos.z;
+
+		if (fabs(distX) > fabs(distZ))
+		{
+			if (distX < 0)
+				transform.position.x = boxPos.x - boxSize.x - transform.scale.x * hitbox.scaleModifier.x - hitbox.offset.x;
+			else
+				transform.position.x = boxPos.x + boxSize.x + transform.scale.x * hitbox.scaleModifier.x - hitbox.offset.x;
+		}
+		else
+		{
+			if (distZ < 0)
+				transform.position.z = boxPos.z - boxSize.z - transform.scale.z * hitbox.scaleModifier.z - hitbox.offset.z;
+			else
+				transform.position.z = boxPos.z + boxSize.z + transform.scale.z * hitbox.scaleModifier.z - hitbox.offset.z;
+		}
 	}
 }
 

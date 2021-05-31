@@ -4,6 +4,7 @@
 #include "Enemies.h"
 #include "Game/GameObjectManager.h"
 #include "Renderer/Renderer.h"
+#include "Window/Window.h"
 
 std::random_device dev;
 std::mt19937 rng(dev());
@@ -15,21 +16,11 @@ const Transform Spawner::Portal::inner{ glm::vec3(), glm::vec3(0), glm::vec3(1) 
 const Transform Spawner::Portal::outer{ glm::vec3(0,-0.5f,0), glm::vec3(0), glm::vec3(1.5f) };
 
 const std::vector<Wave> Spawner::waves{
-	{ { 10, 3, 1, 0 },		4 },
-	{ { 20, 10, 5, 0 },		3 },
-	{ { 25, 15, 10, 1 },	2 },
-	{ { 30, 20, 15, 5 },	1 }
+	{ { 10, 5, 1, 0 },		5 },
+	{ { 10, 10, 5, 0 },		4 },
+	{ { 10, 10, 10, 1 },	3 },
+	{ { 10, 10, 10, 5 },	2 }
 };
-
-int Spawner::currentWaveIter{};
-Wave Spawner::currentWave{ waves[Spawner::currentWaveIter] };
-
-std::vector<Spawner::Portal> Spawner::portals{};
-int Spawner::spawnedEnemies{};
-int Spawner::killedEnemies{};
-double Spawner::timer{};
-double Spawner::lastSpawnTime{};
-
 
 std::shared_ptr<Spawner> Spawner::GetInstance()
 {
@@ -104,10 +95,18 @@ void Spawner::SpawnEnemy()
 
 bool Spawner::NewWave()
 {
-	if (currentWaveIter + 1 >= waves.size()) return false;
+	if (currentWaveIter + 1 >= waves.size())
+	{
+		if (killedEnemies == spawnedEnemies)
+		{
+			Player::GetInstance()->gameState = Player::GameState::Win;
+			Window::GetInstance()->SetWindowShouldClose();
+		}
+		return false;
+	}
 	if (killedEnemies != spawnedEnemies) return false;
 	LOGINFO("Wave", currentWaveIter, "ended");
-	LOGINFO("Wave", currentWaveIter - 1, "started");
+	LOGINFO("Wave", currentWaveIter + 1, "started");
 	currentWaveIter++;
 	currentWave = waves[currentWaveIter];
 
