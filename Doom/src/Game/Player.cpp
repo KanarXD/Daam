@@ -58,6 +58,9 @@ void Player::Draw()
 	M = glm::scale(M, glm::vec3(healthbar.scaleX * combat.health / combat.maxHealth, 1, 1));
 
 	Renderer::DrawModel(*model.value(), M);
+
+	Renderer::DrawModel(*rifleModel, glm::rotate(glm::scale(glm::translate(glm::mat4(1.0f), GetTransform().position + glm::vec3(0, 0.6f, 0)), glm::vec3(0.01f)),
+			GetTransform().rotation.y + glm::half_pi<float>(), glm::vec3(0, 1, 0)));
 }
 
 void Player::Collision(GameObject& collidedObject)
@@ -113,6 +116,11 @@ void Player::SetAngularVelocity(bool going, int x, int y)
 {
 	rigidbody.angularVelocity.x = (x) ? x * activeParams.angularVelocity * going : rigidbody.angularVelocity.x;
 	rigidbody.angularVelocity.y = (y) ? y * activeParams.angularVelocity * going : rigidbody.angularVelocity.y;
+}
+
+Player::Player() : rifleModel(ModelsLibrary::GetInstance()->Load("res/models/Ak_47/Ak-47.obj", "shaderT", { {0, "ak-47.jpg"} }).value())
+{
+
 }
 
 void Player::SetVelocity(bool going, int x, int z)

@@ -7,6 +7,8 @@
 #include "Components/RigidBody.h"
 #include "GameObject.h"
 
+#include "Renderer/DataStructures/Model.h"
+
 class Player
 {
 public:
@@ -43,8 +45,12 @@ private:
 	float timer{ 0 };
 	bool isShoot{ false };
 
+
+	const Model* rifleModel;
 public:
 	static std::shared_ptr<Player> GetInstance();
+
+	Player();
 
 	void Update(float dt);
 	void Draw();

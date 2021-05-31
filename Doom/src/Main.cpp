@@ -8,6 +8,7 @@
 #include "Renderer/Library/TextureLibrary.h"
 #include "Renderer/Library/ShadersLibrary.h"
 #include "Renderer/Library/ModelsLibrary.h"
+
 #include "Game/World/Map/MapLibrary.h"
 #include "Game/Components/Transform.h"
 #include "Game/Components/Hitbox.h"
@@ -18,18 +19,20 @@
 int main()
 {
 	auto window = Window::GetInstance();
-	auto player = Player::GetInstance();
-	auto gameObjectManager = GameObjectManager::GetInstance();
-
 	window->Create("DOOM", 800, 600);
-	player->SetTransform(Transform(glm::vec3(100.0f, 0, 100.0f), glm::vec3(0), glm::vec3(1)));
-	Input::GetInstance()->Init(true);
 
 	ShadersLibrary::GetInstance()->Load("shaderCT", "res/shaders/v_simple_texture_color.glsl", NULL, "res/shaders/f_simple_texture_color.glsl");
 	ShadersLibrary::GetInstance()->Load("shaderD", "res/shaders/v_debug.glsl", NULL, "res/shaders/f_debug.glsl");
 	ShadersLibrary::GetInstance()->Load("shaderSkyBox", "res/shaders/v_cube_map.glsl", NULL, "res/shaders/f_cube_map.glsl");
 	ShadersLibrary::GetInstance()->Load("shaderT", "res/shaders/v_simple_texture.glsl", NULL, "res/shaders/f_simple_texture.glsl");
 	ShadersLibrary::GetInstance()->Load("shaderCTL", "res/shaders/v_simple_texture_color_light.glsl", NULL, "res/shaders/f_simple_texture_color_light.glsl");
+	auto player = Player::GetInstance();
+	auto gameObjectManager = GameObjectManager::GetInstance();
+
+	player->SetTransform(Transform(glm::vec3(100.0f, 0, 100.0f), glm::vec3(0), glm::vec3(1)));
+	Input::GetInstance()->Init(true);
+
+	
 
 	for (const auto& goModel : GOModels)
 		if (goModel.second.modelPath != "")
@@ -65,7 +68,7 @@ int main()
 		
 		Spawner::GetInstance()->Update(dt);
 		Spawner::GetInstance()->Draw();
-		
+
 		if (map.has_value()) map.value()->Draw();
 
 		window->SwapBuffers();
@@ -84,4 +87,5 @@ int main()
 		break;
 	}
 
+	exit(EXIT_SUCCESS);
 }

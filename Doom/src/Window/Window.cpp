@@ -60,7 +60,6 @@ Window::~Window()
 {
 	glfwDestroyWindow(this->window); //Usuñ kontekst OpenGL i okno
 	glfwTerminate(); //Zwolnij zasoby zajête przez GLFW
-	exit(EXIT_SUCCESS);
 }
 
 bool Window::WindowShouldClose() const {
