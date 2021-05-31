@@ -12,6 +12,7 @@ public:
 
 private:
 	static bool ReadFile(const std::string& mapPath, std::unordered_map<std::string, std::unordered_map<std::string, std::string>>& params);
+
 private:
 	MapLibrary() = default;
 	MapLibrary(MapLibrary const&) = delete;

@@ -24,7 +24,7 @@ void main(void) {
 
 	vec4 mn = normalize(n);
 
-	float mul = 0.1f;
+	float mul = 0.2f;
 
 	for(int i = 0; i < LightSourcesCount; i++) {
 		vec4 ml = normalize(l[i]);
@@ -35,6 +35,5 @@ void main(void) {
 	
 	
 	pixelColor = vec4(color.rgb * clamp(mul, 0, 1), 1);
-	//pixelColor = vec4(color.rgb * clamp(mul, 0, 1), 0);
 }
 

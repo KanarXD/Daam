@@ -41,22 +41,9 @@ int main()
 	ModelsLibrary::GetInstance()->Load(Healthbar::modelPath, "shaderCT");
 	ModelsLibrary::GetInstance()->Load(Spawner::modelPath, "shaderCTL");
 
-	/*
-	auto person = ModelsLibrary::GetInstance()->Load("res/models/base/Base Mesh sculpt 2.obj", "shaderCT");
-	auto horseModel = ModelsLibrary::GetInstance()->Load("res/models/Horse/Horse.obj", "shaderCT");
-	auto offRoadModel = ModelsLibrary::GetInstance()->Load("res/models/OffRoad Car/offroad_car.obj", "shaderCT", {
-		{ 0, "Texture/Body.png" },
-		{ 1, "Texture/Rim.png" },
-		{ 2, "Texture/Rim.png" },
-		{ 3, "Texture/Rim.png" },
-		{ 4, "Texture/Rim.png" }
-	});
-	auto sportsCar = ModelsLibrary::GetInstance()->Load("res/models/Car/Car.obj/car.obj", "shaderCT");
-	*/
 	auto map = MapLibrary::GetInstance()->Load("res/maps/map1.txt");
 
-	Renderer::AddLightSource({ 300.0f, 200.0f, 300.0f });
-	//Renderer::LightSource* ls = Renderer::AddLightSource({100.0f, 100.0f, 100.0f });
+	Renderer::AddLightSource({ 250.0f, 200.0f, 300.0f });
 
 	LOGINFO("drawing...");
 	glfwSetTime(0);
@@ -68,11 +55,9 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		player->Update(dt);
-		//ls->position = { player->GetTransform().position.x, player->GetTransform().position.y + 20.0f, player->GetTransform().position.z };
 
 		Renderer::SetProjection(player->GetCamera(), window->GetAspectRatio());
 		Renderer::SetCamera(player->GetCamera());
-
 
 		gameObjectManager->Update(dt);
 		gameObjectManager->Draw();
