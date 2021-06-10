@@ -32,8 +32,6 @@ int main()
 	player->SetTransform(Transform(glm::vec3(100.0f, 0, 100.0f), glm::vec3(0), glm::vec3(1)));
 	Input::GetInstance()->Init(true);
 
-	
-
 	for (const auto& goModel : GOModels)
 		if (goModel.second.modelPath != "")
 			ModelsLibrary::GetInstance()->Load(goModel.second.modelPath, goModel.second.shader);
@@ -46,7 +44,7 @@ int main()
 
 	auto map = MapLibrary::GetInstance()->Load("res/maps/map1.txt");
 
-	Renderer::AddLightSource({ 250.0f, 200.0f, 300.0f });
+	// Renderer::AddLightSource({ 250.0f, 200.0f, 300.0f });
 
 	LOGINFO("drawing...");
 	glfwSetTime(0);
