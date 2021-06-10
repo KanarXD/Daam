@@ -181,16 +181,16 @@ void ModelsLibrary::ProcessMesh(aiMesh* mesh, const aiScene* scene, std::vector<
     meshVector.emplace_back(vertices, indices);
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-    static aiTextureType TextureTypes[] = { aiTextureType_DIFFUSE,  aiTextureType_NORMALS };
+    static std::vector<aiTextureType> TextureTypes = { aiTextureType_DIFFUSE,  aiTextureType_NORMALS };
 
     if (mesh->mMaterialIndex >= 0) {
 
         std::vector<std::string> textureNames;
 
-        for (size_t i = 0; i < 2; i++)
+        for (aiTextureType textureType : TextureTypes)
         {
             aiString str;
-            material->GetTexture(TextureTypes[i], 0, &str);
+            material->GetTexture(textureType, 0, &str);
             if (strlen(str.C_Str()) > 0)
             {
                 std::string path = directory + str.C_Str();
@@ -202,16 +202,14 @@ void ModelsLibrary::ProcessMesh(aiMesh* mesh, const aiScene* scene, std::vector<
                     meshVector.back().SetUseTextures(true);
                 }
             }
-
-            aiColor4D diff(1.0f);
-            aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &diff);
-
-            aiColor4D spec(1.0f);
-            aiGetMaterialColor(material, AI_MATKEY_COLOR_SPECULAR, &spec);
-
-            meshVector.back().AddColors({ diff.r, diff.g, diff.b, diff.a }, { spec.r, spec.g, spec.b, spec.a });
-
         }
+        aiColor4D diff(1.0f);
+        aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &diff);
+
+        aiColor4D spec(1.0f);
+        aiGetMaterialColor(material, AI_MATKEY_COLOR_SPECULAR, &spec);
+
+        meshVector.back().AddColors({ diff.r, diff.g, diff.b, diff.a }, { spec.r, spec.g, spec.b, spec.a });
     }
 }
 
