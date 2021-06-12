@@ -26,6 +26,7 @@ protected:
 	Specs activeSpecs;
 	
 	int attackingStage{ 0 };
+	bool playerInBound{ false };
 
 public:
 	Enemy(const Transform& transform, const std::string& type = "enemy");

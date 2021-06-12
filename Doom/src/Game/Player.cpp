@@ -3,7 +3,7 @@
 #include "GameObjectManager.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Library/ModelsLibrary.h"
-#include "Arsenal/Bullet.h"
+#include "Arsenal/Bullets.h"
 #include "Window/Window.h"
 
 
@@ -76,9 +76,9 @@ void Player::Collision(GameObject& collidedObject)
 		{
 			if (distX < 0)
 				transform.position.x = boxPos.x - boxSize.x - transform.scale.x * hitbox.scaleModifier.x - hitbox.offset.x;
-			else																						 
+			else
 				transform.position.x = boxPos.x + boxSize.x + transform.scale.x * hitbox.scaleModifier.x - hitbox.offset.x;
-		}																								 
+		}
 		else
 		{
 			if (distZ < 0)
@@ -86,6 +86,14 @@ void Player::Collision(GameObject& collidedObject)
 			else
 				transform.position.z = boxPos.z + boxSize.z + transform.scale.z * hitbox.scaleModifier.z - hitbox.offset.z;
 		}
+	}
+	else if (collidedObject.GetType() == "bullet")
+	{
+		combat.health -= 10;
+	}
+	else if (collidedObject.GetType() == "enemy_bullet")
+	{
+		combat.health -= 50;
 	}
 	else if (collidedObject.GetType() == "healthkit")
 	{
@@ -140,7 +148,7 @@ void Player::Shoot()
 	if (timer - combat.lastAttackTime > combat.timeBetweenAttack)
 	{
 		combat.lastAttackTime = timer;
-		GameObjectManager::GetInstance()->Add<Bullet>(
+		GameObjectManager::GetInstance()->Add<Player_Bullet>(
 			Transform(transform.position + glm::vec3(0, activeParams.height - 0.5f, 0), transform.rotation, glm::vec3(5)));
 	}
 }

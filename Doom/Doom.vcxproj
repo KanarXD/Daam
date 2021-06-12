@@ -11,7 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\Arsenal\Enemy_Bullet.cpp" />
     <ClCompile Include="src\Game\Arsenal\Bullet.cpp" />
+    <ClCompile Include="src\Game\Arsenal\Player_Bullet.cpp" />
     <ClCompile Include="src\Game\Components\Healthbar.cpp" />
     <ClCompile Include="src\Game\World\Enemies\Spawner.cpp" />
     <ClCompile Include="src\Game\World\Enemies\Types\Enemy_Boss.cpp" />
@@ -90,7 +92,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\Arsenal\Bullets.h" />
+    <ClInclude Include="src\Game\Arsenal\Enemy_Bullet.h" />
     <ClInclude Include="src\Game\Arsenal\Bullet.h" />
+    <ClInclude Include="src\Game\Arsenal\Player_Bullet.h" />
     <ClInclude Include="src\Game\Components\Healthbar.h" />
     <ClInclude Include="src\Game\World\Enemies\Spawner.h" />
     <ClInclude Include="src\Game\World\Enemies\Types\Enemy_Boss.h" />
