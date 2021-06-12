@@ -18,6 +18,7 @@ Enemy::Enemy(const Transform& transform, const std::string& type)
 
 void Enemy::Update(float dt)
 {
+	playerInBound = false;
 	GameObject::Update(dt);
 	glm::vec3 playerPos = Player::GetInstance()->GetTransform().position;
 	float inRange = glm::distance(transform.position, playerPos) < activeSpecs.viewDist;
@@ -28,6 +29,7 @@ void Enemy::Update(float dt)
 		healthbar.rotY = angToPlayer;
 		if (PlayerInBound(playerPos, angToPlayer))
 		{
+			playerInBound = true;
 			transform.rotation.y = angToPlayer;
 			if (glm::distance(transform.position, playerPos) <= 10)
 			{
@@ -92,6 +94,10 @@ void Enemy::Draw()
 void Enemy::Collision(const GameObject& collidedObject)
 {
 	if (collidedObject.GetType() == "bullet")
+	{
+		activeSpecs.combat.health -= 10;
+	}
+	else if (collidedObject.GetType() == "player_bullet")
 	{
 		activeSpecs.combat.health -= Player::GetInstance()->GetCombat().DealDamage();
 	}

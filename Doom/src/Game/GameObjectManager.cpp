@@ -2,7 +2,7 @@
 #include "GameObjectManager.h"
 #include "Renderer/Renderer.h"
 #include "World/Enemies/Types/Enemy.h"
-#include "Arsenal/Bullet.h"
+#include "Arsenal/Bullets.h"
 #include "World/Enemies/Spawner.h"
 #include "Utility/Collisions.h"
 
@@ -33,7 +33,7 @@ void GameObjectManager::Update(float dt)
 			}
 			else (*it).get()->Update(dt);
 		}
-		else if ((*it).get()->GetType() == "bullet")
+		else if ((*it).get()->GetType() == "bullet" || (*it).get()->GetType() == "enemy_bullet" || (*it).get()->GetType() == "player_bullet" )
 		{
 			if (dynamic_cast<Bullet*>((*it).get())->IsHit())
 			{
@@ -46,16 +46,19 @@ void GameObjectManager::Update(float dt)
 			(*it).get()->Update(dt);
 		}
 	}
+	std::string t1, t2;
 
 	// Collisions
 	for (int i{}; i < gameObjects.size(); i++)
 	{
-		if (gameObjects[i]->GetType() == "bullet")
+		t1 = gameObjects[i]->GetType();
+		if (t1 == "bullet" || t1 == "enemy_bullet" || t1 == "player_bullet")
 			if (dynamic_cast<Bullet*>(gameObjects[i].get())->IsHit()) continue;
 
 		for (int j = i + 1; j < gameObjects.size(); j++)
 		{
-			if (gameObjects[j]->GetType() == "bullet")
+			t2 = gameObjects[j]->GetType();
+			if (t2 == "bullet" || t2 == "enemy_bullet" || t2 == "player_bullet")
 				if (dynamic_cast<Bullet*>(gameObjects[j].get())->IsHit()) continue;
 
 			if (gameObjects[i]->GetCollideWith().find(gameObjects[j]->GetType()) != gameObjects[i]->GetCollideWith().end())

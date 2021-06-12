@@ -12,5 +12,7 @@ public:
 	Enemy_Tank(const Transform& transform, const std::string& type = "enemy_tank");
 
 	void Update(float dt) override;
+
+	void Shoot();
 };
 

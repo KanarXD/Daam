@@ -3,7 +3,7 @@
 
 class Bullet : public GameObject
 {
-private:
+protected:
 	bool isHit{ false };
 	RigidBody rigidbody;
 
