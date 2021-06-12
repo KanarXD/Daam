@@ -15,16 +15,18 @@ surface:
 
 box:
 {
-	texturePath: res/textures/bricks.png
+	texturePath: res/textures/bricks2_diffuse.png
 	shaderName: shaderCTL
 	size: 10
+	normalsMapPath: res/textures/bricks2_normal.png
+	heightsMapPath: res/textures/bricks2_height.png
 }
 
 boxMap:
 {
 	0:  OOOOOOOOOOOOOOOOOOOO
-	1:  OL................LO
-	2:  O.H......P.......H.O
+	1:  O...............P.LO
+	2:  O.H..............H.O
 	3:  O...OOO............O
 	4:  O...O..............O
 	5:  O..................O
@@ -40,7 +42,7 @@ boxMap:
 	15: O..................O
 	16: O....O...S.........O
 	17: O.H.............OOOO
-	18: OL...............HLO
+	18: O................HLO
 	19: OOOOOOOOOOOOOOOOOOOO
 }
 

@@ -61,6 +61,20 @@ std::optional<const Map*> MapLibrary::Load(const std::string& mapPath)
         return {};
     }
 
+    auto boxNormalsMap = TextureLibrary::GetInstance()->Load(params["box:"]["normalsMapPath:"], false);
+    if (!boxNormalsMap.has_value())
+    {
+        LOGERROR("surfaceTexture", mapPath);
+        return {};
+    }
+
+    auto boxHeightsMap = TextureLibrary::GetInstance()->Load(params["box:"]["heightsMapPath:"], false);
+    if (!boxHeightsMap.has_value())
+    {
+        LOGERROR("surfaceTexture", mapPath);
+        return {};
+    }
+
     std::vector<std::string> skyBoxSidesTextureNamesVector;
     std::string_view texturePaths = params["skyBox:"]["sides:"];
     size_t start = 0, end = 0;
@@ -92,7 +106,7 @@ std::optional<const Map*> MapLibrary::Load(const std::string& mapPath)
                 // player
             case 'P': Player::GetInstance()->SetTransform(Transform(glm::vec3(i * boxSize, 5, j * boxSize), glm::vec3(0, glm::half_pi<float>(), 0))); break;
                 // light
-            case 'L': Renderer::AddLightSource({ i * boxSize, 200.0f, j * boxSize }); break;
+            case 'L': Renderer::AddLightSource({ i * boxSize, 250.0f, j * boxSize }); break;
             }
 
             j++;
@@ -106,6 +120,8 @@ std::optional<const Map*> MapLibrary::Load(const std::string& mapPath)
 
     Mesh boxMesh(Map::GetCubeVertexes(boxSize), Map::GetCubeIndices());
     boxMesh.AddTexture(boxTexture.value());
+    boxMesh.AddTexture(boxNormalsMap.value());
+    boxMesh.AddTexture(boxHeightsMap.value());
     boxMesh.SetUseTextures(true);
 
     Map::Params mapParams = {

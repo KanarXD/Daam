@@ -1,4 +1,4 @@
-#include "pch.h"
+	#include "pch.h"
 
 #include "Window/Window.h"
 #include "Renderer/Renderer.h"
@@ -26,6 +26,7 @@ int main()
 	ShadersLibrary::GetInstance()->Load("shaderSkyBox", "res/shaders/v_cube_map.glsl", NULL, "res/shaders/f_cube_map.glsl");
 	ShadersLibrary::GetInstance()->Load("shaderT", "res/shaders/v_simple_texture.glsl", NULL, "res/shaders/f_simple_texture.glsl");
 	ShadersLibrary::GetInstance()->Load("shaderCTL", "res/shaders/v_simple_texture_color_light.glsl", NULL, "res/shaders/f_simple_texture_color_light.glsl");
+	ShadersLibrary::GetInstance()->Load("shaderNCTL", "res/shaders/v_normal_texture_color_light.glsl", NULL, "res/shaders/f_normal_texture_color_light.glsl");
 	auto player = Player::GetInstance();
 	auto gameObjectManager = GameObjectManager::GetInstance();
 
@@ -44,7 +45,7 @@ int main()
 
 	auto map = MapLibrary::GetInstance()->Load("res/maps/map1.txt");
 
-	// Renderer::AddLightSource({ 250.0f, 200.0f, 300.0f });
+	//auto ls = Renderer::AddLightSource({ 50.0f,10.0f,50.0f });
 
 	LOGINFO("drawing...");
 	glfwSetTime(0);
@@ -56,6 +57,8 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		player->Update(dt);
+
+		//ls->position = { player->GetTransform().position.x, player->GetTransform().position.y + 20.0f, player->GetTransform().position.z };
 
 		Renderer::SetProjection(player->GetCamera(), window->GetAspectRatio());
 		Renderer::SetCamera(player->GetCamera());
