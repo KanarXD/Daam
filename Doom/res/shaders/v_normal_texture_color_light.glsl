@@ -13,15 +13,21 @@ uniform vec3 LightPositions[5];
 
 out vec2 iTexCoord0;
 
-out vec4 n;
 out vec4 l[5];
 
 void main(void) {
+    
+    vec4 T = normalize(M*vec4(tangent, 0));
+    vec4 N = normalize(M*vec4(normal, 0));
+    T = normalize(T - dot(T, N) * N);
+    vec4 B = normalize(vec4(cross(vec3(N), vec3(T)), 0));
+
+    mat4 invTBN = transpose(mat4(T, B, N, vec4(0,0,0,1)));
+    
     vec4 vertex4 = vec4(vertex, 1.0f);
 
-    n = normalize(V*M*vec4(normal, 0.0f));
-
     for(int i = 0; i < LightSourcesCount; i++) {
+        //l[i] = normalize(invTBN*inverse(M)*vec4(LightPositions[i],1.0f) - invTBN*vertex4);
         l[i] = normalize(V*vec4(LightPositions[i],1.0f) - V*M*vertex4);
     }
 
