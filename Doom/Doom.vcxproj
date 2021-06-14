@@ -92,6 +92,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\DataStructures\Sprite.h" />
     <ClInclude Include="src\Game\Arsenal\Bullets.h" />
     <ClInclude Include="src\Game\Arsenal\Enemy_Bullet.h" />
     <ClInclude Include="src\Game\Arsenal\Bullet.h" />
@@ -137,7 +138,6 @@
     <ClInclude Include="src\Renderer\Library\ShadersLibrary.h" />
     <ClInclude Include="src\Renderer\Library\TextureLibrary.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
-    <ClInclude Include="src\Utility\Constants.h" />
     <ClInclude Include="src\Window\Input.h" />
     <ClInclude Include="src\Window\Window.h" />
   </ItemGroup>

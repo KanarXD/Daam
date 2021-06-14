@@ -179,9 +179,6 @@
     <ClInclude Include="src\Renderer\DataStructures\IndexBuffer.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\Constants.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="src\Utility\Log.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
@@ -279,6 +276,9 @@
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="src\Game\Arsenal\Bullets.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\DataStructures\Sprite.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>

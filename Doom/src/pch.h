@@ -36,6 +36,5 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 //Custom
-#include "Utility/Constants.h"
 #include "Utility/Log.h"
 #include "Utility/Collisions.h"

@@ -18,34 +18,37 @@
 
 int main()
 {
+
 	auto window = Window::GetInstance();
 	window->Create("DOOM", 800, 600);
 
-	ShadersLibrary::GetInstance()->Load("shaderCT", "res/shaders/v_simple_texture_color.glsl", NULL, "res/shaders/f_simple_texture_color.glsl");
-	ShadersLibrary::GetInstance()->Load("shaderD", "res/shaders/v_debug.glsl", NULL, "res/shaders/f_debug.glsl");
-	ShadersLibrary::GetInstance()->Load("shaderSkyBox", "res/shaders/v_cube_map.glsl", NULL, "res/shaders/f_cube_map.glsl");
-	ShadersLibrary::GetInstance()->Load("shaderT", "res/shaders/v_simple_texture.glsl", NULL, "res/shaders/f_simple_texture.glsl");
-	ShadersLibrary::GetInstance()->Load("shaderCTL", "res/shaders/v_simple_texture_color_light.glsl", NULL, "res/shaders/f_simple_texture_color_light.glsl");
-	ShadersLibrary::GetInstance()->Load("shaderNCTL", "res/shaders/v_normal_texture_color_light.glsl", NULL, "res/shaders/f_normal_texture_color_light.glsl");
+	auto shadersLibrary = ShadersLibrary::GetInstance();
+	shadersLibrary->Load("shaderD",		 "res/shaders/v_debug.glsl",					  NULL, "res/shaders/f_debug.glsl");
+	shadersLibrary->Load("shaderSkyBox", "res/shaders/v_cube_map.glsl",					  NULL, "res/shaders/f_cube_map.glsl");
+	shadersLibrary->Load("shaderT",		 "res/shaders/v_texture.glsl",					  NULL, "res/shaders/f_texture.glsl");
+	shadersLibrary->Load("shaderCT",	 "res/shaders/v_texture_color.glsl",			  NULL, "res/shaders/f_texture_color.glsl");
+	shadersLibrary->Load("shaderCTL",	 "res/shaders/v_texture_color_light.glsl",		  NULL, "res/shaders/f_texture_color_light.glsl");
+	shadersLibrary->Load("shaderNCTL",	 "res/shaders/v_normal_texture_color_light.glsl", NULL, "res/shaders/f_normal_texture_color_light.glsl");
+	
 	auto player = Player::GetInstance();
-	auto gameObjectManager = GameObjectManager::GetInstance();
-
 	player->SetTransform(Transform(glm::vec3(100.0f, 0, 100.0f), glm::vec3(0), glm::vec3(1)));
+	
 	Input::GetInstance()->Init(true);
+	
 
+	auto modelsLibrary = ModelsLibrary::GetInstance();
 	for (const auto& goModel : GOModels)
 		if (goModel.second.modelPath != "")
-			ModelsLibrary::GetInstance()->Load(goModel.second.modelPath, goModel.second.shader);
+			modelsLibrary->Load(goModel.second.modelPath, goModel.second.shader);
 
 	Hitbox::showHitbox = false;
-	ModelsLibrary::GetInstance()->Load(Hitbox::rdModelPath, "shaderCT");
-	ModelsLibrary::GetInstance()->Load(Hitbox::sqModelPath, "shaderCT");
-	ModelsLibrary::GetInstance()->Load(Healthbar::modelPath, "shaderCT");
-	ModelsLibrary::GetInstance()->Load(Spawner::modelPath, "shaderCTL");
+	modelsLibrary->Load(Hitbox::rdModelPath, "shaderCT");
+	modelsLibrary->Load(Hitbox::sqModelPath, "shaderCT");
+	modelsLibrary->Load(Healthbar::modelPath, "shaderCT");
+	modelsLibrary->Load(Spawner::modelPath, "shaderCTL");
 
+	auto gameObjectManager = GameObjectManager::GetInstance();
 	auto map = MapLibrary::GetInstance()->Load("res/maps/map1.txt");
-
-	//auto ls = Renderer::AddLightSource({ 50.0f,10.0f,50.0f });
 
 	LOGINFO("drawing...");
 	glfwSetTime(0);
@@ -53,12 +56,11 @@ int main()
 	while (!window->WindowShouldClose())
 	{
 		dt = (float)glfwGetTime();
+
 		glfwSetTime(0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		player->Update(dt);
-
-		//ls->position = { player->GetTransform().position.x, player->GetTransform().position.y + 20.0f, player->GetTransform().position.z };
 
 		Renderer::SetProjection(player->GetCamera(), window->GetAspectRatio());
 		Renderer::SetCamera(player->GetCamera());

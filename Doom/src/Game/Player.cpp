@@ -27,7 +27,7 @@ void Player::Update(float dt)
 		Window::GetInstance()->SetWindowShouldClose();
 	}
 	if (transform.position.y > 0)
-		rigidbody.velocity.y -= 2 * Consts::G * dt;
+		rigidbody.velocity.y -= 2 * 9.81 * dt;
 	else if (transform.position.y < 0)
 	{
 		transform.position.y = 0.0f;
@@ -52,10 +52,9 @@ void Player::Draw()
 	
 	M = glm::translate(M, transform.position + (activeParams.height + healthbar.offsetY) * glm::vec3(0, 1, 0));
 	M = glm::rotate(M, transform.rotation.y - glm::half_pi<float>(), glm::vec3(0, 1, 0));
-	// M = glm::rotate(M, transform.rotation.z, glm::vec3(0, 0, 1));
 	M = glm::translate(M, glm::vec3(1, 0, 0));
 	M = glm::rotate(M, glm::half_pi<float>(), glm::vec3(0, 1, 0));
-	M = glm::scale(M, glm::vec3(healthbar.scaleX * combat.health / combat.maxHealth, 1, 1));
+	M = glm::scale(M, glm::vec3(healthbar.scaleX * (Window::GetInstance()->GetWidth() / 1000.0f) * (combat.health / combat.maxHealth), 1, 1));
 
 	Renderer::DrawModel(*model.value(), M);
 

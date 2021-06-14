@@ -1,6 +1,6 @@
 #version 330
 
-out vec4 pixelColor; //Zmienna wyjsciowa fragment shadera. Zapisuje sie do niej ostateczny (prawie) kolor piksela
+out vec4 pixelColor;
 
 void main(void) {
 	pixelColor= vec4(1,1,1,1);

@@ -21,7 +21,7 @@ public:
 	const glm::vec3& GetFront() const { return front; }
 
 	void SetFov(float newFov) { fov = newFov; }
-	float GetFov() const { return fov * Consts::PI / 180.0f; }
+	float GetFov() const { return glm::radians(fov); }
 
 	void SetNearClip(float newNearClip) { nearClip = newNearClip; }
 	float GetNearClip() const { return nearClip; }

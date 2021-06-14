@@ -2,7 +2,7 @@ skyBox:
 {
 	directory: res/textures/skybox
 	shaderName: shaderSkyBox
-	sides: right.png|left.png|top.png|bottom.png|front.png|back.png
+	sides: rt.png|lf.png|up.png|dn.png|ft.png|bk.png
 }
 
 surface:
@@ -15,11 +15,11 @@ surface:
 
 box:
 {
-	texturePath: res/textures/bricks2_diffuse.png
+	texturePath: res/textures/bricks_diffuse.png
 	shaderName: shaderNCTL
 	size: 10
-	normalsMapPath: res/textures/bricks2_normal.png
-	heightsMapPath: res/textures/bricks2_height.png
+	normalsMapPath: res/textures/bricks_normal.png
+	heightsMapPath: res/textures/bricks_height.png
 }
 
 boxMap:
