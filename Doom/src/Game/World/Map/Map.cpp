@@ -52,25 +52,25 @@ std::vector<uint32_t>& Map::GetPlaneIndices() {
 std::vector<Vertex>& Map::GetCubeVertexes(float size) {
 	static std::vector<Vertex> vertexes;
 	vertexes = {
-		{ -0.5f * size, 0.0f * size,  0.5f * size,  0, 0,  1.0f, 0, 0, 0, 0.0f, 0.0f },
-		{  0.5f * size, 0.0f * size,  0.5f * size,  0, 0,  1.0f, 0, 0, 0, 1.0f, 0.0f },
-		{  0.5f * size, 1.0f * size,  0.5f * size,  0, 0,  1.0f, 0, 0, 0, 1.0f, 1.0f },
-		{ -0.5f * size, 1.0f * size,  0.5f * size,  0, 0,  1.0f, 0, 0, 0, 0.0f, 1.0f },
+		{ -0.5f * size, 0.0f * size,  0.5f * size,  0, 0,  1.0f,  1.0f, 0, 0, 0.0f, 0.0f },
+		{  0.5f * size, 0.0f * size,  0.5f * size,  0, 0,  1.0f,  1.0f, 0, 0, 1.0f, 0.0f },
+		{  0.5f * size, 1.0f * size,  0.5f * size,  0, 0,  1.0f,  1.0f, 0, 0, 1.0f, 1.0f },
+		{ -0.5f * size, 1.0f * size,  0.5f * size,  0, 0,  1.0f,  1.0f, 0, 0, 0.0f, 1.0f },
 		
-		{ -0.5f * size, 1.0f * size, -0.5f * size,  0, 0, -1.0f, 0, 0, 0, 0.0f, 0.0f },
-		{  0.5f * size, 1.0f * size, -0.5f * size,  0, 0, -1.0f, 0, 0, 0, 1.0f, 0.0f },
-		{  0.5f * size, 0.0f * size, -0.5f * size,  0, 0, -1.0f, 0, 0, 0, 1.0f, 1.0f },
-		{ -0.5f * size, 0.0f * size, -0.5f * size,  0, 0, -1.0f, 0, 0, 0, 0.0f, 1.0f },
+		{ -0.5f * size, 1.0f * size, -0.5f * size,  0, 0, -1.0f,  1.0f, 0, 0, 0.0f, 0.0f },
+		{  0.5f * size, 1.0f * size, -0.5f * size,  0, 0, -1.0f,  1.0f, 0, 0, 1.0f, 0.0f },
+		{  0.5f * size, 0.0f * size, -0.5f * size,  0, 0, -1.0f,  1.0f, 0, 0, 1.0f, 1.0f },
+		{ -0.5f * size, 0.0f * size, -0.5f * size,  0, 0, -1.0f,  1.0f, 0, 0, 0.0f, 1.0f },
 
-		{  0.5f * size, 0.0f * size,  0.5f * size,  1.0f,  0, 0, 0, 0, 0, 0.0f, 0.0f },
-		{  0.5f * size, 0.0f * size, -0.5f * size,  1.0f,  0, 0, 0, 0, 0, 1.0f, 0.0f },
-		{  0.5f * size, 1.0f * size, -0.5f * size,  1.0f,  0, 0, 0, 0, 0, 1.0f, 1.0f },
-		{  0.5f * size, 1.0f * size,  0.5f * size,  1.0f,  0, 0, 0, 0, 0, 0.0f, 1.0f },
+		{  0.5f * size, 0.0f * size,  0.5f * size,  1.0f,  0, 0, 0, 0, -1.0f, 0.0f, 0.0f },
+		{  0.5f * size, 0.0f * size, -0.5f * size,  1.0f,  0, 0, 0, 0, -1.0f, 1.0f, 0.0f },
+		{  0.5f * size, 1.0f * size, -0.5f * size,  1.0f,  0, 0, 0, 0, -1.0f, 1.0f, 1.0f },
+		{  0.5f * size, 1.0f * size,  0.5f * size,  1.0f,  0, 0, 0, 0, -1.0f, 0.0f, 1.0f },
 
-		{ -0.5f * size, 0.0f * size, -0.5f * size, -1.0f,  0, 0, 0, 0, 0, 0.0f, 0.0f },
-		{ -0.5f * size, 0.0f * size,  0.5f * size, -1.0f,  0, 0, 0, 0, 0, 1.0f, 0.0f },
-		{ -0.5f * size, 1.0f * size,  0.5f * size, -1.0f,  0, 0, 0, 0, 0, 1.0f, 1.0f },
-		{ -0.5f * size, 1.0f * size, -0.5f * size, -1.0f,  0, 0, 0, 0, 0, 0.0f, 1.0f }
+		{ -0.5f * size, 0.0f * size, -0.5f * size, -1.0f,  0, 0, 0, 0,  1.0f, 0.0f, 0.0f },
+		{ -0.5f * size, 0.0f * size,  0.5f * size, -1.0f,  0, 0, 0, 0,  1.0f, 1.0f, 0.0f },
+		{ -0.5f * size, 1.0f * size,  0.5f * size, -1.0f,  0, 0, 0, 0,  1.0f, 1.0f, 1.0f },
+		{ -0.5f * size, 1.0f * size, -0.5f * size, -1.0f,  0, 0, 0, 0,  1.0f, 0.0f, 1.0f }
 	};
 	return vertexes;
 }

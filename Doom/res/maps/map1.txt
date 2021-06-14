@@ -25,7 +25,7 @@ box:
 boxMap:
 {
 	0:  OOOOOOOOOOOOOOOOOOOO
-	1:  O...............P.LO
+	1:  OL..............P.LO
 	2:  O.H..............H.O
 	3:  O...OOO............O
 	4:  O...O..............O
@@ -42,7 +42,7 @@ boxMap:
 	15: O..................O
 	16: O....O...S.........O
 	17: O.H.............OOOO
-	18: O................HLO
+	18: OL...............HLO
 	19: OOOOOOOOOOOOOOOOOOOO
 }
 

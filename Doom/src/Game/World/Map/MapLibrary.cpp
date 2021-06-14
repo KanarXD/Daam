@@ -106,7 +106,7 @@ std::optional<const Map*> MapLibrary::Load(const std::string& mapPath)
                 // player
             case 'P': Player::GetInstance()->SetTransform(Transform(glm::vec3(i * boxSize, 5, j * boxSize), glm::vec3(0, glm::half_pi<float>(), 0))); break;
                 // light
-            case 'L': Renderer::AddLightSource({ i * boxSize, 250.0f, j * boxSize }); break;
+            case 'L': Renderer::AddLightSource({ i * boxSize, 100.0f, j * boxSize }); break;
             }
 
             j++;

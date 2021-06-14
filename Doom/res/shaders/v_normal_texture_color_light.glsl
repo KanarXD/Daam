@@ -12,7 +12,7 @@ uniform int LightSourcesCount;
 uniform vec3 LightPositions[5];
 
 out vec2 iTexCoord0;
-
+out vec4 v;
 out vec4 l[5];
 
 void main(void) {
@@ -25,10 +25,10 @@ void main(void) {
     mat4 invTBN = transpose(mat4(T, B, N, vec4(0,0,0,1)));
     
     vec4 vertex4 = vec4(vertex, 1.0f);
+    v = normalize(invTBN * inverse(V*M) * vec4(0, 0, 0, 1) - invTBN * vertex4);
 
     for(int i = 0; i < LightSourcesCount; i++) {
-        //l[i] = normalize(invTBN*inverse(M)*vec4(LightPositions[i],1.0f) - invTBN*vertex4);
-        l[i] = normalize(V*vec4(LightPositions[i],1.0f) - V*M*vertex4);
+        l[i] = normalize(invTBN*inverse(M)*vec4(LightPositions[i],1.0f) - invTBN*vertex4);
     }
 
     iTexCoord0 = texCoord0;
