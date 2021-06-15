@@ -28,7 +28,7 @@ int main()
 	shadersLibrary->Load("shaderT",		 "res/shaders/v_texture.glsl",					  NULL, "res/shaders/f_texture.glsl");
 	shadersLibrary->Load("shaderCT",	 "res/shaders/v_texture_color.glsl",			  NULL, "res/shaders/f_texture_color.glsl");
 	shadersLibrary->Load("shaderCTL",	 "res/shaders/v_texture_color_light.glsl",		  NULL, "res/shaders/f_texture_color_light.glsl");
-	shadersLibrary->Load("shaderNCTL",	 "res/shaders/v_normal_texture_color_light.glsl", NULL, "res/shaders/f_normal_texture_color_light.glsl");
+	shadersLibrary->Load("shaderCTLN",	 "res/shaders/v_texture_color_light_normal.glsl", NULL, "res/shaders/f_texture_color_light_normal.glsl");
 	
 	auto player = Player::GetInstance();
 	player->SetTransform(Transform(glm::vec3(100.0f, 0, 100.0f), glm::vec3(0), glm::vec3(1)));

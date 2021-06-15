@@ -16,7 +16,7 @@ surface:
 box:
 {
 	texturePath: res/textures/bricks_diffuse.png
-	shaderName: shaderNCTL
+	shaderName: shaderCTLN
 	size: 10
 	normalsMapPath: res/textures/bricks_normal.png
 	heightsMapPath: res/textures/bricks_height.png
